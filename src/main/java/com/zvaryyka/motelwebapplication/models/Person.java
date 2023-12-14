@@ -11,11 +11,12 @@ import java.util.Date;
 public class Person {
     //TODO конструктор класса с параметрами
     private int id;
+    private String login;
     private String name;
     private String surname;
     private Date dateOfBirth;
     private String password;
-    private String user_role;
+    private String userRole;
     private int salary;
 
 }
