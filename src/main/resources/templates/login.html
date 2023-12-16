@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+<form name="f" method="post" action="/process_login" class="p-5 bg-light rounded">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <div class="mb-3">
+        <label for="username" class="form-label">Enter login: </label>
+        <input  type="text" name="username" id="username" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Enter password: </label>
+        <input  type="password" name="password" id="password" class="form-control"/>
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary"/>
+
+    <div th:if="${param.error}" style="color: red" class="mt-3">
+        Неправильные имя или пароль
+    </div>
+</form>
+</body>
+</html>
