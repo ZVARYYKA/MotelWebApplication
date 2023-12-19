@@ -21,9 +21,28 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void register(Person person) {
+    public void regGuest(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_USER");
         peopleRepository.save(person);
     }
+    @Transactional
+    public void regStaff(Person person) {
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setUserRole("ROLE_STAFF");
+        peopleRepository.save(person);
+    }
+    @Transactional
+    public void regAdmin(Person person) {
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setUserRole("ROLE_ADMIN");
+        peopleRepository.save(person);
+    }
+    @Transactional
+    public void regOwner(Person person) {
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setUserRole("ROLE_OWNER");
+        peopleRepository.save(person);
+    }
+
 }

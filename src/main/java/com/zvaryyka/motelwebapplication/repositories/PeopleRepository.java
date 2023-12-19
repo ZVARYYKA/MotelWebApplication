@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -40,7 +41,32 @@ public class PeopleRepository extends JdbcTemplateClass {
                 person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth());
     }
 
+    public void update(int id, Person updatedPerson) {
+
+        jdbcTemplate.update("UPDATE person SET login = ?, name = ?, surname = ?, password = ?, user_role = ?, date_of_birth = ? WHERE id = ?",
+                updatedPerson.getLogin(), updatedPerson.getName(), updatedPerson.getSurname(), updatedPerson.getPassword(), updatedPerson.getUserRole(), updatedPerson.getDateOfBirth(), id);
+
+    }
+
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM person WHERE id = ?", id);
+    }
+
+    public List<Person> showStaff() {
+        return jdbcTemplate.query("SELECT * FROM person WHERE user_role = 'ROLE_STAFF'", personRowMapper);
+    }
+
+    public List<Person> showAdmins() {
+        return jdbcTemplate.query("SELECT * FROM person WHERE user_role = 'ROLE_ADMIN'", personRowMapper);
+    }
+
+    public List<Person> showAll() {
+        return jdbcTemplate.query("SELECT * FROM person", personRowMapper);
+    }
+
+
     public Optional<Person> findByLogin(String login) {
         return jdbcTemplate.query("SELECT * FROM person WHERE login = ?", personRowMapper, login).stream().findAny();
     }
+
 }

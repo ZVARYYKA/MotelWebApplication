@@ -41,7 +41,7 @@ public class AuthController {
             return "reg";
     }
 
-    @InitBinder //TODO Rewrite thos code
+    @InitBinder //TODO Rewrite this code
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
@@ -56,8 +56,9 @@ public class AuthController {
             return "reg";
         }
 
-        registrationService.register(person);
+        registrationService.regGuest(person);
 
         return "redirect:/login";
+
     }
 }
