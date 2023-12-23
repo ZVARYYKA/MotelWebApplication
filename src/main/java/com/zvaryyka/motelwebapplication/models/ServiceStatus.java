@@ -1,6 +1,6 @@
 package com.zvaryyka.motelwebapplication.models;
 
-enum ServiceStatus {
+public enum ServiceStatus {
     wait,
     success,
     denied;

@@ -10,7 +10,15 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Booking {
-    //TODO конструктор класса с параметрами
+    public Booking(int bookingId, int userId, int roomId, Date checkInDate, Date checkOutDate, boolean status) {
+        this.bookingId = bookingId;
+        this.userId = userId;
+        this.roomId = roomId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.status = status;
+    }
+
     private int bookingId;
     private int userId;
     private int roomId;

@@ -25,5 +25,6 @@ public class RoomsRepository extends JdbcTemplateClass {
     public void makeRoomFree(int id) {
         jdbcTemplate.update("UPDATE rooms SET occupatied_by = false, WHERE id = ?", id);
     }
+    //TODO add add method
 
 }

@@ -8,7 +8,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Rooms {
-    //TODO конструктор класса с параметрами
+
+    public Rooms(int roomId, int roomTypeId, boolean occupied_by) {
+        this.RoomId = roomId;
+        this.roomTypeId = roomTypeId;
+        this.occupied_by = occupied_by;
+    }
     private int RoomId;
     private int roomTypeId;
     private boolean occupied_by;
