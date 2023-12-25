@@ -16,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
     private final PersonDetailsService personDetailsService;
+
     @Autowired
     public SecurityConfig(PersonDetailsService personDetailsService) {
         this.personDetailsService = personDetailsService;
@@ -24,16 +25,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
+                .authorizeHttpRequests((requests) -> requests.requestMatchers("/owner")
+                        .hasAuthority("OWNER")
+                        .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/guest").hasAuthority("ROLE_USER")
+                        .requestMatchers("/staff").hasAuthority("ROLE_STAFF")
                         .requestMatchers("/index", "/registration").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/login").loginProcessingUrl("/process_login").defaultSuccessUrl("/system", true)
+                        .loginPage("/login")
+                        .loginProcessingUrl("/process_login")
+                        .defaultSuccessUrl("/index", true)
                         .permitAll()
                 )
                 .logout((logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // указание Matcher для выхода из системы
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/index")
                         .permitAll()
                 );
