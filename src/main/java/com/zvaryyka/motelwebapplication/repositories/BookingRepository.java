@@ -4,6 +4,7 @@ import com.zvaryyka.motelwebapplication.models.Booking;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Book;
 import java.util.List;
 
 @Repository
@@ -35,5 +36,11 @@ public class BookingRepository extends JdbcTemplateClass {
         } else {
             return null; // Возвращаем null, если бронь не найдена
         }
+    }
+    public List<Booking> getActivityBookingById(int id) {
+        return jdbcTemplate.query("SELECT * FROM Booking WHERE user_id = ? and status = true",new Object[]{id},new BeanPropertyRowMapper<>(Booking.class));
+
+
+
     }
 }

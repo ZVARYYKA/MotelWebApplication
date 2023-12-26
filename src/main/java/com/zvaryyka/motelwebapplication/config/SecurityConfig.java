@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .hasAuthority("OWNER")
                         .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/guest").hasAuthority("ROLE_USER")
-                        .requestMatchers("/staff").hasAuthority("ROLE_STAFF")
+                        .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
                         .requestMatchers("/index", "/registration").permitAll()
                         .anyRequest().authenticated()
                 )
