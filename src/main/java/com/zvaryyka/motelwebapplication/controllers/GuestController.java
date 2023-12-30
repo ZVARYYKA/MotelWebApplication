@@ -2,6 +2,7 @@ package com.zvaryyka.motelwebapplication.controllers;
 
 import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
+import com.zvaryyka.motelwebapplication.services.BookingService;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,29 +14,26 @@ import java.security.Principal;
 
 @Controller
 public class GuestController {
-    private final BookingRepository bookingRepository;
+
+    private final BookingService bookingService;
     private final PersonDetailsService personDetailsService;
 
     @Autowired
-    public GuestController(BookingRepository bookingRepository, PersonDetailsService personDetailsService) {
-        this.bookingRepository = bookingRepository;
+    public GuestController(BookingService bookingService, PersonDetailsService personDetailsService) {
+        this.bookingService = bookingService;
         this.personDetailsService = personDetailsService;
     }
 
     @GetMapping("/guest")
     public String mainGuestPage(Principal principal, Model model) {
-        Person person = getCurrentPerson(principal);
-        model.addAttribute("activeBooking", bookingRepository.getActivityBookingById(person.getId()));
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("activeBooking", bookingService.getActivityBookingById(person.getId()));
+        model.addAttribute("historyBooking", bookingService.getHistoryBookingById(person.getId()));
+        model.addAttribute("futureBooking", bookingService.getFutureBookingById(person.getId()));
+        model.addAttribute("person", person);
         return "guest";
     }
 
-    private Person getCurrentPerson(Principal principal) {
-        if (principal == null) {
-            return new Person();
-        } else {
-            return personDetailsService.findByLogin(principal.getName())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        }
 
-    }
 }

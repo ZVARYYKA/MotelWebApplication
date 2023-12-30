@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,15 @@ public class PersonDetailsService implements UserDetailsService {
 
     public Optional<Person> findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+    private Person getCurrentPerson(Principal principal) {
+        if (principal == null) {
+            return new Person();
+        } else {
+            return findByLogin(principal.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        }
+
     }
 }
 

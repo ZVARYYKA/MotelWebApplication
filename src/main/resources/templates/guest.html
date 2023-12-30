@@ -1,13 +1,34 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Guest</title>
+    <title>Guest profile</title>
 </head>
 <body>
-<div th:each ="booking : ${activeBooking}">
-    <a th:text = "${booking.getCheckInDate() + ' , ' + booking.getCheckOutDate()}">ActiveBooking</a>
-</div>
+
 <h1>Guest</h1>
+<h1 th:text="${'Hello, ' + person.getName() + ' ' + person.getSurname()}">Greetings</h1>
+<h1>Active Booking</h1>
+<div th:each="booking : ${activeBooking}">
+    <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
+    <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
+    <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
+    <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+</div>
+<h1>Future Booking</h1>
+<div th:each="booking : ${futureBooking}">
+    <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
+    <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
+    <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
+    <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+</div>
+<h1>Booking history</h1>
+<div th:each="booking : ${historyBooking}">
+    <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
+    <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
+    <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
+    <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+</div>
+
 </body>
 </html>

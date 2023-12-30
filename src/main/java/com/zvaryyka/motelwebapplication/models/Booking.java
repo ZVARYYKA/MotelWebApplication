@@ -25,4 +25,7 @@ public class Booking {
     private Date checkInDate;
     private Date checkOutDate;
     private boolean status;
+
+    private String roomNumber;
+    private String roomType;
 }

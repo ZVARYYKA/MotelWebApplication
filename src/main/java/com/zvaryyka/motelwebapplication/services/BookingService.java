@@ -13,6 +13,7 @@ import java.util.List;
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final RoomsRepository roomRepository;
+
     //TODO ReWrite logic, use RoomService instead of RoomRepository
     public BookingService(BookingRepository bookingRepository, RoomsRepository roomRepository) {
         this.bookingRepository = bookingRepository;
@@ -53,5 +54,22 @@ public class BookingService {
 
     public List<Booking> showAllHistory() {
         return bookingRepository.showAllHistory();
+    }
+
+    public List<Booking> getActivityBookingById(int id) {
+        return bookingRepository.getActivityBookingById(id);
+
+
+    }
+
+    public List<Booking> getHistoryBookingById(int id) {
+        return bookingRepository.getHistoryBookingById(id);
+
+
+    }
+
+    public List<Booking> getFutureBookingById(int id) {
+        return bookingRepository.getFutureBookingById(id);
+
     }
 }
