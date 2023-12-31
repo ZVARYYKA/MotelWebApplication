@@ -17,4 +17,7 @@ public class TypeOfRoomsRepository extends JdbcTemplateClass {
     public void deleteTypesOfRooms(int id ) {
         jdbcTemplate.update("DELETE types_of_id where type_id = ?",id);
     }
+    public int getRoomTypeIdByName(String roomType) {
+        return jdbcTemplate.queryForObject("SELECT type_id FROM types_of_rooms WHERE room_type = ?", new Object[]{roomType}, Integer.class);
+    }
 }

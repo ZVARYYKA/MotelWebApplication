@@ -22,7 +22,7 @@ public class BookingRepository extends JdbcTemplateClass {
 
     public void addNewBooking(Booking booking) {
 
-        jdbcTemplate.update("INSERT INTO bookings(userId, roomId, checkInDate, checkOutDate, status) VALUES(?,?,?,?,?)", booking.getUserId(), booking.getRoomId(), booking.getCheckInDate(), booking.getCheckOutDate(), booking.isStatus());
+        jdbcTemplate.update("INSERT INTO booking(user_id, room_id, check_in_date, check_out_date, status) VALUES(?,?,?,?,?)", booking.getUserId(), booking.getRoomId(), booking.getCheckInDate(), booking.getCheckOutDate(), booking.isStatus());
     }
 
 
@@ -69,6 +69,12 @@ public class BookingRepository extends JdbcTemplateClass {
 
         return jdbcTemplate.query(sql, new Object[]{id}, new BookingWithRoomRowMapper());
     }
+
+    public List<Booking> showAll() {
+    return jdbcTemplate.query("SELECT * FROM Booking", new BeanPropertyRowMapper<>(Booking.class));
+    }
+
+
     private static class BookingWithRoomRowMapper implements RowMapper<Booking> {
         @Override
         public Booking mapRow(ResultSet rs, int rowNum) throws SQLException {

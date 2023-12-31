@@ -9,18 +9,51 @@
 <h1>Guest</h1>
 <h1 th:text="${'Hello, ' + person.getName() + ' ' + person.getSurname()}">Greetings</h1>
 <h1>Active Booking</h1>
-<div th:each="booking : ${activeBooking}">
-    <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
-    <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
-    <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
-    <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+<div th:if="${activeBooking.isEmpty()}">
+    <h2>На данный момент нет активных броней</h2>
 </div>
-<h1>Future Booking</h1>
-<div th:each="booking : ${futureBooking}">
-    <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
-    <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
-    <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
-    <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+<div th:if="${!activeBooking.isEmpty()}">
+    <div th:each="booking : ${activeBooking}">
+        <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
+        <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
+        <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
+        <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+    </div>
+</div>
+<div th:if="${!futureBooking.isEmpty()}">
+    <h1>Future Booking</h1>
+    <div th:each="booking : ${futureBooking}">
+        <p th:text="${'Room Number: ' + booking.getRoomNumber()}"></p>
+        <p th:text="${'Check-In Date: ' + booking.getCheckInDate()}"></p>
+        <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
+        <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
+    </div>
+</div>
+<div>
+<!-- Форма Созданиее брони, ввод типа номера, дата вьезда, дата отьезда, также контроль ошибок  -->
+    <form action="#" th:action="@{/createNewBooking}" th:object="${booking}" method="post">
+        <table>
+            <tr>
+                <td>Room Type:</td>
+                <td><input type="text" th:field="*{roomType}" /></td>
+                <td th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">Room Type Error</td>
+            </tr>
+            <tr>
+                <td>Check-In Date:</td>
+                <td><input type="date" th:field="*{checkInDate}" /></td>
+                <td th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}">Check-In Date Error</td>
+            </tr>
+            <tr>
+                <td>Check-Out Date:</td>
+                <td><input type="date" th:field="*{checkOutDate}" /></td>
+                <td th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}">Check-Out Date Error</td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Book</button></td>
+            </tr>
+        </table>
+    </form>
+
 </div>
 <h1>Booking history</h1>
 <div th:each="booking : ${historyBooking}">
