@@ -40,6 +40,10 @@ public class PeopleRepository extends JdbcTemplateClass {
         jdbcTemplate.update("INSERT INTO person (login, name, surname, password, user_role, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)",
                 person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth());
     }
+    public void saveWithSalary(Person person) {
+        jdbcTemplate.update("INSERT INTO person (login, name, surname, password, user_role, date_of_birth,salary) VALUES (?, ?, ?, ?, ?, ?,?)",
+                person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth(),person.getSalary());
+    }
 
     public void update(int id, Person updatedPerson) {
 

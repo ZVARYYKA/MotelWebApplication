@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,6 +42,9 @@ public class PersonDetailsService implements UserDetailsService {
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         }
 
+    }
+    public List<Person> showAllStuffs() {
+        return userRepository.showStaff();
     }
 }
 

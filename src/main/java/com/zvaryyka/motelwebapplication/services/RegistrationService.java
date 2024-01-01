@@ -30,19 +30,19 @@ public class RegistrationService {
     public void regStaff(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_STAFF");
-        peopleRepository.save(person);
+        peopleRepository.saveWithSalary(person);
     }
     @Transactional
     public void regAdmin(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_ADMIN");
-        peopleRepository.save(person);
+        peopleRepository.saveWithSalary(person);
     }
     @Transactional
     public void regOwner(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_OWNER");
-        peopleRepository.save(person);
+        peopleRepository.saveWithSalary(person);
     }
 
 }
