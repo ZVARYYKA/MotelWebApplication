@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,5 +21,9 @@ public class Person {
     private String password;
     private String userRole;
     private int salary;
+
+
+    //Поле для овнера, которому нужно выбирать
+    private String StuffType;
 
 }

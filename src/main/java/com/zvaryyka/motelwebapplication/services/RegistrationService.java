@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 
 public class RegistrationService {
@@ -44,5 +46,12 @@ public class RegistrationService {
         person.setUserRole("ROLE_OWNER");
         peopleRepository.saveWithSalary(person);
     }
+    @Transactional
+    public void regWorker(Person person) {
+        if(Objects.equals(person.getStuffType(), "Администратор"))
+            regAdmin(person);
+        else if(Objects.equals(person.getStuffType(), "Персонал"))
+            regOwner(person);
 
+    }
 }
