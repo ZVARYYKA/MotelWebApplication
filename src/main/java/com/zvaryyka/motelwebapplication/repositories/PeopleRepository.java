@@ -5,9 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,15 +37,16 @@ public class PeopleRepository extends JdbcTemplateClass {
         jdbcTemplate.update("INSERT INTO person (login, name, surname, password, user_role, date_of_birth) VALUES (?, ?, ?, ?, ?, ?)",
                 person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth());
     }
+
     public void saveWithSalary(Person person) {
         jdbcTemplate.update("INSERT INTO person (login, name, surname, password, user_role, date_of_birth,salary) VALUES (?, ?, ?, ?, ?, ?,?)",
-                person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth(),person.getSalary());
+                person.getLogin(), person.getName(), person.getSurname(), person.getPassword(), person.getUserRole(), person.getDateOfBirth(), person.getSalary());
     }
 
-    public void update(int id, Person updatedPerson) {
+    public void updateWorker(int id, Person updatedPerson) {
 
-        jdbcTemplate.update("UPDATE person SET login = ?, name = ?, surname = ?, password = ?, user_role = ?, date_of_birth = ? WHERE id = ?",
-                updatedPerson.getLogin(), updatedPerson.getName(), updatedPerson.getSurname(), updatedPerson.getPassword(), updatedPerson.getUserRole(), updatedPerson.getDateOfBirth(), id);
+        jdbcTemplate.update("UPDATE person SET login = ?, name = ?, surname = ?, password = ?, user_role = ?, date_of_birth = ?,salary = ? WHERE id = ?",
+                updatedPerson.getLogin(), updatedPerson.getName(), updatedPerson.getSurname(), updatedPerson.getPassword(), updatedPerson.getUserRole(), updatedPerson.getDateOfBirth(), updatedPerson.getSalary(), id);
 
     }
 
@@ -57,7 +55,7 @@ public class PeopleRepository extends JdbcTemplateClass {
     }
 
     public List<Person> showStaff() {
-        return jdbcTemplate.query("SELECT * FROM person WHERE user_role = 'ROLE_STAFF'", personRowMapper);
+        return jdbcTemplate.query("SELECT * FROM person WHERE user_role = 'ROLE_STUFF'", personRowMapper);
     }
 
     public List<Person> showAdmins() {
@@ -73,4 +71,8 @@ public class PeopleRepository extends JdbcTemplateClass {
         return jdbcTemplate.query("SELECT * FROM person WHERE login = ?", personRowMapper, login).stream().findAny();
     }
 
+
+    public List<Person> showWorkers() {
+        return jdbcTemplate.query("SELECT * FROM person WHERE user_role = 'ROLE_STUFF' or  user_role = 'ROLE_ADMIN' ", personRowMapper);
+    }
 }

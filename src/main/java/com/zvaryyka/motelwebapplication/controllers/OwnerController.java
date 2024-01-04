@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -29,7 +28,10 @@ public class OwnerController {
     public String mainOwnerPage(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("allWorker",personDetailsService.showAllWorkers());
         model.addAttribute("person", person);
+        model.addAttribute("worker",new Person());
+        model.addAttribute("editWorker",new Person());
         {
             return "owner";
         }
@@ -38,6 +40,19 @@ public class OwnerController {
     public String createNewWorker(@ModelAttribute("person") Person person, Model model) {
         registrationService.regWorker(person);
 
-        return "owner";
+        return "redirect:/owner";
+    }
+    @PostMapping("/editWorker/{id}")
+    public String editWorker(@ModelAttribute("editWorker") Person person, Model model, @PathVariable("id") int id) {
+        registrationService.editWorker(person,id);
+        return "redirect:/owner";
+    }
+    @PostMapping("/deleteWorker/{id}")
+    public String deleteWorker( @PathVariable("id") int id) {
+        //TODO Add binding result
+
+
+        registrationService.delete(id);
+        return "redirect:/owner";
     }
 }

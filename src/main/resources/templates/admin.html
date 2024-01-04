@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+    <style>
+        .edit-form {
+            display: none; /* Скрыть форму по умолчанию */
+        }
+
+
+
+    </style>
 </head>
 <body>
 <h1>Admin</h1>
 <h1 th:text="${'Hello, ' + person.getName() + ' ' + person.getSurname()}"></h1>
 <div>
     <h1>Stuff</h1>
+
     <form th:method="POST" th:action="@{/createNewStuff}" th:object="${person}" class="mt-5">
         <div class="mb-3">
             <label for="login" class="form-label">Enter login:</label>
@@ -16,19 +25,19 @@
             <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
         </div>
         <div class="mb-3">
-            <label for="name" class="form-label">Enter your name:</label>
+            <label for="name" class="form-label">Enter name:</label>
             <input type="text" th:field="*{name}" id="name" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
         </div>
         <div class="mb-3">
-            <label for="surname" class="form-label">Enter your surname:</label>
+            <label for="surname" class="form-label">Enter surname:</label>
             <input type="text" th:field="*{surname}" id="surname" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth
                 Error
             </div>
         </div>
         <div class="mb-3">
-            <label for="dateOfBirth" class="form-label">Enter your date of birth:</label>
+            <label for="dateOfBirth" class="form-label">Enter date of birth:</label>
             <input type="date" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth
                 Error
@@ -48,13 +57,61 @@
     </form>
 </div>
 <div>
+    <h1>Stuffer</h1>
     <div th:each="stuff : ${allStuff}">
         <p th:text="${'Name ' + stuff.getName()}"></p>
         <p th:text="${'Surname' + stuff.getSurname()}"></p>
         <p th:text="${'Salary' + stuff.getSalary()}"></p>
-   
+        <button onclick="showEditForm(this)" class="btn btn-secondary me-2 mt-2">Change</button>
+        <!-- Передаем ссылку на кнопку в функцию -->
+        <form th:method="PATCH" th:action="@{/editPerson/{id}(id = ${stuff.getId()})}" th:object="${editPerson}"
+              class="edit-form">
+            <div class="mb-3">
+                <label for="editLogin" class="form-label">Enter new login:</label>
+                <input type="text" th:field="*{login}" id="editLogin" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
+            </div>
+            <div class="mb-3">
+                <label for="editName" class="form-label">Enter your name:</label>
+                <input type="text" th:field="*{name}" id="editName" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editSurname" class="form-label">Enter your surname:</label>
+                <input type="text" th:field="*{surname}" id="editSurname" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth
+                    Error
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editDateOfBirth" class="form-label">Enter your date of birth:</label>
+                <input type="date" th:field="*{dateOfBirth}" id="editDateOfBirth" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of
+                    birth
+                    Error
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editPassword" class="form-label">Enter password:</label>
+                <input type="password" th:field="*{password}" id="editPassword" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="editSalary" class="form-label">Enter salary:</label>
+                <input type="number" th:field="*{salary}" id="editSalary" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Change data</button>
+        </form>
+        <form th:method="DELETE" th:action="@{/deletePerson/{id}(id=${stuff.getId()})}" class="d-inline">
+            <input type="submit" value="Delete" class="btn btn-danger mt-2"/>
+        </form>
     </div>
 </div>
+<script src="/script.js"></script>
+
 </body>
 
 </html>
