@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Motel</title>
+</head>
+<body>
+<h1>Welcome to Motel!</h1>
+<a href="/login">Login</a>
+<a href="/registration">Reg</a>
+<a href="guest">Guest</a>
+<a href="admin">Admin</a>
+<a href="owner">Owner</a>
+<a href="stuff">Stuff</a>
+
+<div>
+    <h1>Отзывы</h1>
+    <div th:each = "UserfeedBack : ${feedBacks}">
+        <a th:text = "${UserfeedBack.getLogin()}"></a>
+        <a th:text = "${UserfeedBack.getMark()}"></a>
+        <a th:text = "${UserfeedBack.getMessage()}"></a>
+    </div>
+    <div th:if = "${person.getName() == null}">
+        <a> Авторизуйтесь, чтобы оставить отзык</a>
+    </div>
+    <div th:if="${person.getName() != null}">
+        <form th:method="POST" th:action="@{/createNewFeedBack}" th:object="${feedBack}" class="mt-5">
+            <div class="mb-3">
+                <label for="mark" class="form-label">Enter mark:</label>
+                <input type="number" th:field="*{mark}" id="mark" class="form-control" min="0" max="6"/>
+                <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark error</div>
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Enter message:</label>
+                <textarea th:field="*{message}" id="message" class="form-control"></textarea>
+                <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message error</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create new</button>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

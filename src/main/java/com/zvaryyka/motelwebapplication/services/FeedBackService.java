@@ -5,9 +5,12 @@ import com.zvaryyka.motelwebapplication.repositories.FeedBackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FeedBackService {
     private final FeedBackRepository feedBackRepository;
+
 
     @Autowired
     public FeedBackService(FeedBackRepository feedBackRepository) {
@@ -18,6 +21,9 @@ public class FeedBackService {
     }
     public void delete(int id) {
         feedBackRepository.delete(id);
+    }
+    public List<FeedBack> getAllFeedBacksWithUserLogin() {
+        return feedBackRepository.getAllFeedBacksWithUserLogin();
     }
 
 }

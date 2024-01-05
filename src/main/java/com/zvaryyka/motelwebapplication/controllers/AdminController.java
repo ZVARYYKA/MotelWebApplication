@@ -30,7 +30,7 @@ public class AdminController {
         model.addAttribute("person", person);
         model.addAttribute("allStuff", personDetailsService.showAllStuffs());
         model.addAttribute("editPerson", new Person());
-        return "admin";
+        return "cabinets/admin";
     }
 
     @PostMapping("/createNewStuff")
@@ -43,7 +43,7 @@ public class AdminController {
     @PostMapping("/editPerson/{id}")
     public String updatePerson(@ModelAttribute("editPerson") Person editPerson, BindingResult bindingResult, @PathVariable("id") int id) {
         if(bindingResult.hasErrors()){
-            return "admin";
+            return "cabinets/admin";
         }
         registrationService.updateStuff(editPerson,id);
         return "redirect:/admin";

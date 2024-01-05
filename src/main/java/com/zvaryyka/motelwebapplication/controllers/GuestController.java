@@ -2,7 +2,6 @@ package com.zvaryyka.motelwebapplication.controllers;
 
 import com.zvaryyka.motelwebapplication.models.Booking;
 import com.zvaryyka.motelwebapplication.models.Person;
-import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
 import com.zvaryyka.motelwebapplication.services.BookingService;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class GuestController {
         model.addAttribute("historyBooking", bookingService.getHistoryBookingById(person.getId()));
         model.addAttribute("futureBooking", bookingService.getFutureBookingById(person.getId()));
         model.addAttribute("person", person);
-        return "guest";
+        return "cabinets/guest";
     }
     @PostMapping("/createNewBooking")
     public String createBooking(Principal principal, @ModelAttribute("booking") Booking booking, Model model, BindingResult bindingResult) {

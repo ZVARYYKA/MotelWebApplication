@@ -1,5 +1,6 @@
 package com.zvaryyka.motelwebapplication.models;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,11 +25,13 @@ public class Booking {
     private int userId;
     private int roomId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Данное поле не должно быть пустым.")
     private Date checkInDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkOutDate;
     private boolean status;
 
     private String roomNumber;
+    @NotNull(message = "Данное поле не должно быть пустым.")
     private String roomType;
 }

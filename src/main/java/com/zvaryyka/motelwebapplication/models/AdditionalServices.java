@@ -11,6 +11,7 @@ public class AdditionalServices {
     //TODO конструктор класса с параметрами
     private int serviceId;
     private int userId;
+
     private String serviceDescription;
     private ServiceStatus serviceStatus;
 }
