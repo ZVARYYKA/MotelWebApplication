@@ -8,5 +8,28 @@
 <h1>Your Stuff</h1>
 <h1 th:text = "${'Hello, ' + person.getName() + ' ' + person.getSurname()}"></h1>
 
+<div>
+    <h1>Дополнительные услуги</h1>
+    <div th:each = "service : ${allAddServices}">
+        <div>
+            <p th:text="${service.getServiceDescription()}"></p>
+            <form th:method="PATCH" th:action="@{/deniedService/{id}(id=${service.getServiceId()})}" th:object="${deniedService}">
+                <label for="responseMessage">Введите ответ: </label>
+                <input type="text" th:field="*{responseMessage}" id="responseMessage"/>
+                <div style="color:red" th:if="${#fields.hasErrors('responseMessage')}" th:errors="*{responseMessage}">responseMessage Error</div>
+
+                <input type="submit" value="Denied!"/>
+            </form>
+        </div>
+        <div>
+            <p th:text="${service.getServiceDescription()}"></p>
+            <form th:method="PATCH" th:action="@{/applyService/{id}(id=${service.getServiceId()})}" th:object="${applyService}">
+
+                <input type="submit" value="Apply!"/>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

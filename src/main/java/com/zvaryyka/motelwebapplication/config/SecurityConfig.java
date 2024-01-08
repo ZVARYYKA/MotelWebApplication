@@ -25,12 +25,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests.requestMatchers("/owner")
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/owner")
                         .hasAuthority("ROLE_OWNER")
                         .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/guest").hasAuthority("ROLE_USER")
                         .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
-                        .requestMatchers("/index", "/registration").permitAll()
+                        .requestMatchers("/index", "/registration","/static/**","/style.css").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

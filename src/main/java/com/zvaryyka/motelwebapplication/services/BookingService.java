@@ -5,6 +5,7 @@ import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
 import com.zvaryyka.motelwebapplication.repositories.RoomsRepository;
 import com.zvaryyka.motelwebapplication.repositories.TypeOfRoomsRepository;
+import com.zvaryyka.motelwebapplication.util.exceptions.RoomUnavailableException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +110,7 @@ public class BookingService {
             }
         }
         if(availableRooms.isEmpty()) {
-            throw new RuntimeException("No available rooms at the moment.");
+            throw new RoomUnavailableException();
         } else {
             // Занимаем первую доступную комнату и делаем бронирование
             Rooms roomToBook = availableRooms.get(0);

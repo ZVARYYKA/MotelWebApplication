@@ -30,12 +30,19 @@
     </div>
 </div>
 <div>
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}" class="error-text"></p>
+    </div>
 <!-- Форма Созданиее брони, ввод типа номера, дата вьезда, дата отьезда, также контроль ошибок  -->
     <form action="#" th:action="@{/createNewBooking}" th:object="${booking}" method="post">
+
         <table>
             <tr>
                 <td>Room Type:</td>
-                <td><input type="text" th:field="*{roomType}" /></td>
+                <label for="stuffType"></label><select th:field="*{roomType}" id="stuffType" class="form-control">
+                    <option value="Luxe">Люкс</option>
+
+                </select>
                 <td th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">Room Type Error</td>
             </tr>
             <tr>
@@ -62,6 +69,26 @@
     <p th:text="${'Check-Out Date: ' + booking.getCheckOutDate()}"></p>
     <p th:text="${'Room Type: ' + booking.getRoomType()}"></p>
 </div>
+<div>
+    <h1>Дополнительные услуги</h1>
+    <div th:each="services : ${additionalServicesByUserId}">
+        <p th:text = "${'Сообщение: ' + services.getServiceDescription() + 'Статус: ' + services.getServiceStatus() }">
+
+
+        </p>
+        <p th:text="${'Сообщение от персонала:' + services.getResponseMessage()}"></p>
+    </div>
+    <form th:method="POST" th:action="@{/createNewAdditionalService}" th:object="${addService}" class="mt-5">
+        <div class="mb-3">
+            <label for="serviceDescription" class="form-label">Enter text:</label>
+            <input type="text" th:field="*{serviceDescription}" id="serviceDescription" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('serviceDescription')}" th:errors="*{serviceDescription}">text error</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create new</button>
+    </form>
+</div>
+
 
 </body>
 </html>

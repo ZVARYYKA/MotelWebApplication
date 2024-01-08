@@ -24,8 +24,19 @@ public class AdditionalServiceService {
     public void updateServiceStatus(int serviceId,ServiceStatus serviceStatus) { //TODO Rewrite this method,because need add response message
         additionalServiceRepository.updateServiceStatus(serviceId,serviceStatus);
     }
+    public List<AdditionalServices> showAdditionalServicesByUserId(int id) {
+       return additionalServiceRepository.showAdditionalServicesByUserId(id);
+    }
     public List<AdditionalServices> showAll() {
-        return additionalServiceRepository.showAll();
+        return additionalServiceRepository.showAllByStatus();
     }
 
+    public void changeStatusOnSuccess(int id) {
+        additionalServiceRepository.changeStatusOnSuccess(id);
+
+    }
+
+    public void changeStatusOnDenied(int id, String responseMessage) {
+        additionalServiceRepository.changeStatusOnDenied(responseMessage,id);
+    }
 }

@@ -14,5 +14,6 @@ public class AdditionalServices {
 
     private String serviceDescription;
     private ServiceStatus serviceStatus;
+    private String responseMessage;
 }
 
