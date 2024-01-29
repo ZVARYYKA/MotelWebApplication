@@ -7,11 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rooms {
-
-
-    private int RoomId;
-    private int roomTypeId;
-
-
+public class Article {
+    private int articleId;
+    private String title;
+    private int stuffId;
+    private String article;
 }

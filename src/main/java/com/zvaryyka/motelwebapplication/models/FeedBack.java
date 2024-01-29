@@ -22,6 +22,4 @@ public class FeedBack {
     @NotNull(message = "Данное поле не должно быть пустым.")
     @Size(min = 10, max = 300, message = "Ваш отзыв должен состоять от 10 до 300 символов")
     private String message;
-//Логин пользователя
-    private String login;
 }

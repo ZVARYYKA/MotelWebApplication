@@ -63,14 +63,7 @@ public class RegistrationService {
         peopleRepository.updateWorker(id,person);
     }
 
-    @Transactional
-    public void regWorker(Person person) {
-        if (Objects.equals(person.getStuffType(), "Администратор"))
-            regAdmin(person);
-        else if (Objects.equals(person.getStuffType(), "Персонал"))
-            regOwner(person);
 
-    }
 
 
     @Transactional
@@ -85,12 +78,5 @@ public class RegistrationService {
         peopleRepository.delete(id);
     }
 
-    @Transactional
-    public void editWorker(Person person, int id) {
-        if (Objects.equals(person.getStuffType(), "Администратор"))
-            editAdmin(person,id);
-        else if (Objects.equals(person.getStuffType(), "Персонал"))
-            editOwner(person,id);
 
-    }
 }

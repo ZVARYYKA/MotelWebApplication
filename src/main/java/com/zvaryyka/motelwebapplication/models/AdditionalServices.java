@@ -9,11 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AdditionalServices {
     //TODO конструктор класса с параметрами
+    private int addServiceId;
+    private int bookingId;
     private int serviceId;
-    private int userId;
-
-    private String serviceDescription;
-    private ServiceStatus serviceStatus;
-    private String responseMessage;
+    private String comment;
+    private boolean status;
 }
 
