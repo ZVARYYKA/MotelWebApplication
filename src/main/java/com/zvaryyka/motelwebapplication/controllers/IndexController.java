@@ -2,6 +2,7 @@ package com.zvaryyka.motelwebapplication.controllers;
 
 import com.zvaryyka.motelwebapplication.models.FeedBack;
 import com.zvaryyka.motelwebapplication.models.Person;
+import com.zvaryyka.motelwebapplication.services.FeedBackService;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,19 @@ import java.security.Principal;
 @RequestMapping()
 public class IndexController {
     private final PersonDetailsService personDetailsService;
+    private final FeedBackService feedBackService;
 
 
     @Autowired
-    public IndexController(PersonDetailsService personDetailsService) {
+    public IndexController(PersonDetailsService personDetailsService, FeedBackService feedBackService) {
         this.personDetailsService = personDetailsService;
 
+        this.feedBackService = feedBackService;
     }
 
     @GetMapping("/index")
     public String index( Principal principal, Model model) {
+        model.addAttribute("feedbacks",feedBackService.getAllFeedBacks());
 
         if (principal == null)
             model.addAttribute("person", new Person());
@@ -37,6 +41,7 @@ public class IndexController {
             Person person = personDetailsService.findByLogin(principal.getName())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
             model.addAttribute("person", person);
+
         }
 
 
@@ -44,18 +49,5 @@ public class IndexController {
         return "main/index";
     }
 
-    @PostMapping("/createNewFeedBack")
-    public String createNewFeedBack( Principal principal,BindingResult bindingResult) {
-        //TODO FIX VALIDATION
-        if (bindingResult.hasErrors())
-            return "main/index";
-        Person person = personDetailsService.findByLogin(principal.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-
-
-        return "redirect:/index";
-
-
-    }
 }
