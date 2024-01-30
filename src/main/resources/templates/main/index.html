@@ -22,38 +22,34 @@
         <a href="/registration">Регистрация</a>
         <a href="/login">Логин</a>
     </div>
-    <div class="banner_main">
-        <div class="container">
-            <div class="container_first_block">
-                <h1>Почувствуй новый уровень кайфа! Вместе с Motel</h1>
-            </div>
-            <div class="container_second_block"></div>
-        </div>
-        
+    <h1>Отзывы</h1>
+    <div th:each="feedback : ${feedBacksDTO}">
+        <p th:text = "${feedback.getUserName() + feedback.getUserSurname()}"></p>
+        <p th:text = "${feedback.getMark()}"></p>
+        <p th:text = "${feedback.getMessage()}"></p>
+        <p>_____________________________________________________</p>
+
     </div>
-    <div class="banner_about">
-        <div class="container">
-            <div class="container_first_block">
-                <h1>Почувствуй новый уровень кайфа! Вместе с Motel</h1>
-            </div>
-            <div class="container_second_block"></div>
-        </div>
-        
+    <div th:if="${person.getName() == null}">
+        <P>Авторизуйтесь, чтобы оставлять отзыв</P>
     </div>
-    <div class="banner_contacts">
-        <div class="container">
-            <div class="container_first_block">
-                <h1>Почувствуй новый уровень кайфа! Вместе с Motel</h1>
-            </div>
-            <div class="container_second_block"></div>
+    <div th:if="${person.getName() != null}">
+        <h1>Добавить отзыв</h1>
+        <div>
+            <form th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
+                <label for="mark">Введите оценку:</label>
+                <input type="number" th:field="*{mark}" id="mark"/>
+                <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>
+                <br/>
+                <label for="message">Введите сообщение:</label>
+                <input type="text" th:field="*{message}" id="message"/>
+                <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message Error</div>
+                <br/>
+                <input type="submit" value="Создать"/>
+            </form>
         </div>
-        
-    
     </div>
 
-    <footer class="footer">
-        <p>© 2023 Motel. All rights reserved.</p>
-        
-    </footer>
+
 </body>
 </html>

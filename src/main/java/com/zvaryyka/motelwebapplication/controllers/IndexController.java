@@ -1,5 +1,6 @@
 package com.zvaryyka.motelwebapplication.controllers;
 
+import com.zvaryyka.motelwebapplication.dto.FeedBackDTO;
 import com.zvaryyka.motelwebapplication.models.FeedBack;
 import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.services.FeedBackService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.naming.Binding;
 import java.security.Principal;
 
 @Controller
@@ -32,8 +34,9 @@ public class IndexController {
     }
 
     @GetMapping("/index")
-    public String index( Principal principal, Model model) {
-        model.addAttribute("feedbacks",feedBackService.getAllFeedBacks());
+    public String index(Principal principal, Model model) {
+        model.addAttribute("feedBacksDTO", feedBackService.getAllFeedBacksDTO());
+        model.addAttribute("feedBackDTO", new FeedBackDTO());
 
         if (principal == null)
             model.addAttribute("person", new Person());
@@ -45,8 +48,17 @@ public class IndexController {
         }
 
 
-
         return "main/index";
+    }
+
+    @PostMapping("/index/createNewFeedBack")
+    public String index(@ModelAttribute("feedbackDTO") @Valid FeedBackDTO feedBackDTO, Principal principal, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            return "main/index";
+        Person person = personDetailsService.findByLogin(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        feedBackDTO.setUserId(person.getId());
+        feedBackService.save(FeedBack.convertToFeedBack(feedBackDTO));
+        return "redirect:/index";
     }
 
 

@@ -1,6 +1,5 @@
-package com.zvaryyka.motelwebapplication.models;
+package com.zvaryyka.motelwebapplication.dto;
 
-import com.zvaryyka.motelwebapplication.dto.FeedBackDTO;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -12,9 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FeedBack {
-    //TODO конструктор класса с параметрами
-    private int feedbackId;
+public class FeedBackDTO {
     @NotNull(message = "Данное поле не должно быть пустым.")
     @Min(value = 0, message = "Оценка должна быть больше 0")
     @Max(value = 6,message = "Оценка должна быть меньше 6")
@@ -23,12 +20,7 @@ public class FeedBack {
     @NotNull(message = "Данное поле не должно быть пустым.")
     @Size(min = 10, max = 300, message = "Ваш отзыв должен состоять от 10 до 300 символов")
     private String message;
+    private String userName; //Имя пользователя
+    private String userSurname; //Фамилия пользователя
 
-    public static FeedBack convertToFeedBack(FeedBackDTO feedBackDTO) { //TODO Rewrite this code
-        FeedBack feedBack = new FeedBack();
-        feedBack.setUserId(feedBackDTO.getUserId());
-        feedBack.setMark(feedBackDTO.getMark());
-        feedBack.setMessage(feedBackDTO.getMessage());
-        return feedBack;
-    }
 }
