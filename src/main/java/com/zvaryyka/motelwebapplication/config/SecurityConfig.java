@@ -7,10 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.Collection;
 
 @Configuration
 @EnableWebSecurity
@@ -26,18 +29,34 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/owner")
-                        .hasAuthority("ROLE_OWNER")
+                        .requestMatchers("/owner").hasAuthority("ROLE_OWNER")
                         .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/guest").hasAuthority("ROLE_USER")
                         .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
-                        .requestMatchers("/index", "/registration","/static/**","/style.css").permitAll()
+                        .requestMatchers("/index/**", "/registration","/resources/static/css/**","/style.css").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/process_login")
-                        .defaultSuccessUrl("/index", true)
+                        .successHandler((request, response, authentication) -> {
+                            // Получаем роли пользователя
+                            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+                            // Перенаправляем на страницу в зависимости от роли
+                            if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_OWNER"))) {
+                                response.sendRedirect("/owner");
+                            } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
+                                response.sendRedirect("/admin");
+                            } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER"))) {
+                                response.sendRedirect("/guest");
+                            } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_STUFF"))) {
+                                response.sendRedirect("/stuff");
+                            } else {
+                                // Если у пользователя нет определенной роли, перенаправляем на общую страницу
+                                response.sendRedirect("/index");
+                            }
+                        })
                         .permitAll()
                 )
                 .logout((logout) -> logout

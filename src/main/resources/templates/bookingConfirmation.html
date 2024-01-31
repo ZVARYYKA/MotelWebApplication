@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+</head>
+<body>
+
+<h1>Booking Confirmation</h1>
+
+<p th:text="'Check-in: ' + ${bookingDTO.checkInDate}"></p>
+<p th:text="'Check-out: ' + ${bookingDTO.checkOutDate}"></p>
+<p th:text="'Room Type: ' + ${bookingDTO.roomType}"></p>
+<p th:text="'Total Cost: ' + ${totalCost}"></p>
+
+<form action="/guest/saveBooking" method="post">
+    <!-- Add hidden fields to pass booking data to the saveBooking endpoint -->
+    <input type="hidden" th:name="checkInDate" th:value="${bookingDTO.checkInDate}">
+    <input type="hidden" th:name="checkOutDate" th:value="${bookingDTO.checkOutDate}">
+    <input type="hidden" th:name="roomType" th:value="${bookingDTO.roomType}">
+    <input type="hidden" th:name="totalCost" th:value="${totalCost}">
+    <button type="submit">Confirm Booking</button>
+</form>
+
+</body>
+</html>

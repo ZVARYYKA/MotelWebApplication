@@ -19,7 +19,7 @@ public class FeedBackRepository extends JdbcTemplateClass {
                 feedBack.getUserId(),
                 feedBack.getMessage());
     }
-    public List<FeedBackDTO> getAllFeedBacksDTO() {
+    public List<FeedBackDTO> getAllFeedBacksDTO() { //TODO Rewrite
         String sql = "SELECT fb.mark, fb.user_id, fb.message, p.name as userName, p.surname as userSurname " +
                 "FROM feedback fb " +
                 "JOIN person p ON fb.user_id = p.id";

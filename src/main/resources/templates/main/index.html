@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="../../static/style.css" th:href="@{../static/style.css}" rel="stylesheet" type="text/css">
+    <link media="all" rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
     <title>Motel</title>
 </head>
 <body>
@@ -49,7 +49,12 @@
             </form>
         </div>
     </div>
-
+    <div>
+        <h1>Статьи о нашем отеле</h1>
+        <div th:each="articleDTO : ${articlesDTO}">
+            <a th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}" th:text = "${articleDTO.getTitle()}">Article title</a>
+        </div>
+    </div>
 
 </body>
 </html>

@@ -6,7 +6,39 @@
 </head>
 <body>
 <h2 th:text="${person.getName()}">Name</h2>
-<h2 th:text="${person.getName()}">Surname</h2>
+<h2 th:text="${person.getSurname()}">Surname</h2>
+<h1>Actual Booking</h1>
+<div th:each="actualBooking : ${actualBookings}">
+    <p th:text="'Check-in: ' + ${actualBooking.getCheckInDate()} + ' - Check-out: ' + ${actualBooking.getCheckOutDate()} + ' Room ID: ' + ${actualBooking.getRoomId()} + ' Room Type: ' + ${actualBooking.getRoomType()}">Booking</p>
+</div>
+<h1>Future Booking</h1>
+<div th:each="futureBooking : ${futureBookings}">
+    <p th:text="'Check-in: ' + ${futureBooking.getCheckInDate()} + ' - Check-out: ' + ${futureBooking.getCheckOutDate()} + ' Room ID: ' + ${futureBooking.getRoomId()} + ' Room Type: ' + ${futureBooking.getRoomType()}">Booking</p>
+</div>
+<h1>History Booking</h1>
+<div th:each="historyBooking : ${historyBookings}">
+    <p th:text="'Check-in: ' + ${historyBooking.getCheckInDate()} + ' - Check-out: ' + ${historyBooking.getCheckOutDate()} + ' Room ID: ' + ${historyBooking.getRoomId()} + ' Room Type: ' + ${historyBooking.getRoomType()}">Booking</p>
+</div>
+<h1>Создать бронь</h1>
+<div>
+    <form th:method="POST" th:action="@{/guest/proceedNewBooking}" th:object="${bookingDTO}">
+        <label for="checkInDate">Введите дату начала брони:</label>
+        <input type="date" th:field="*{checkInDate}" id="checkInDate"/>
+        <div style="color:red" th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}">checkInDate Error</div>
+        <br/>
+        <label for="checkOutDate">Введите дату окончания брони:</label>
+        <input type="date" th:field="*{checkOutDate}" id="checkOutDate"/>
+        <div style="color:red" th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}">checkOutDate Error</div>
+        <br/>
+        <label for="roomType">Введите тип номера</label>
+        <input type="text" th:field="*{roomType}" id="roomType"/>
+        <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">roomType Error</div>
+        <br/>
+
+        <input type="submit" value="Далее"/>
+    </form>
+</div>
+
 
 </body>
 </html>
