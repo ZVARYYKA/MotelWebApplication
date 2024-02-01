@@ -20,19 +20,34 @@ public class BookingService {
         this.bookingRepository = bookingRepository;
         this.roomTypeRepository = roomTypeRepository;
     }
+
     public List<BookingDTO> getFutureBookings(int id) {
         return bookingRepository.getFutureBookings(id);
     }
+
     public List<BookingDTO> getHistoryBookings(int id) {
         return bookingRepository.getHistoryBookings(id);
 
     }
+
     public List<BookingDTO> getActualBookings(int id) {
         return bookingRepository.getActualBookings(id);
 
     }
-    public   Booking convertToBooking(BookingDTO bookingDTO, BigDecimal bigDecimal) {
+
+    public Booking convertToBooking(BookingDTO bookingDTO, BigDecimal bigDecimal) {
         Booking booking = new Booking();
         booking.setRoomId(roomTypeRepository.findRoomIdByRoomName(bookingDTO.getRoomType()));
+        booking.setCheckInDate(bookingDTO.getCheckInDate());
+        booking.setCheckOutDate(bookingDTO.getCheckOutDate());
+        booking.setUserId(bookingDTO.getUserId());
+        booking.setSummary_cost(bigDecimal.intValue()); //TODO REWRITE SHIT CODE
+        return booking;
+
+    }
+
+    public void save(Booking booking) {
+        bookingRepository.save(booking);
+
     }
 }

@@ -56,9 +56,16 @@ public class GuestController {
 
         return "bookingConfirmation";
     }
-    @PostMapping("/guest/saveBooking")
-    public String saveBooking(@ModelAttribute("bookingDTO") BookingDTO bookingDTO, Model model) { //TODO add BR
-        //TODO Write a save Booking method
+    //TODO I must rewrite Booking logic int future
+    @PostMapping("/guest/saveBooking") //TODO NOT WORK,NEED FIX
+    public String saveBooking(@ModelAttribute("bookingDTO") BookingDTO bookingDTO, Model model,Principal principal) { //TODO add BR
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        BigDecimal totalCost = calculateTotalCost(bookingDTO);
+        bookingDTO.setUserId(person.getId());
+
+
+        bookingService.save(bookingService.convertToBooking(bookingDTO, totalCost));;
         return "redirect:/guest";
     }
 
