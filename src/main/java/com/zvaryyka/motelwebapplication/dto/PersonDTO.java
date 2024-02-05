@@ -1,7 +1,5 @@
-package com.zvaryyka.motelwebapplication.models;
+package com.zvaryyka.motelwebapplication.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,13 +7,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class Person {
-
-    private int id;
-
+public class PersonDTO { //TODO Rewrite CRUD with person, use PersonDTO
     private String login;
 
     private String name;
@@ -24,8 +20,6 @@ public class Person {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private String password;
-    private String userRole;
-
+    private String role; // Выбранная роль для пользователя
     private int salary;
-
 }

@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Owner</title>
+    <title>Stuff</title>
 </head>
 <body>
+<h1 th:text = "${person.getName()}"></h1>
+<h1 th:text = "${person.getSurname()}"></h1>
+
+<h1>Запросы на дополнительные услуги</h1>
+<div th:if="${additionalServicesWhereStatusFalse.isEmpty()}">
+    <p>На данный момент нет заказов. Можете отдыхать :)</p>
+</div>
+<div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
+    <div th:each = "additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
+
+        <p th:text="${additionalServiceWhereStatusFalse.getServiceName()}"></p>
+        <p th:text="${additionalServiceWhereStatusFalse.getServiceDescription()}"></p>
+        <p th:text="${additionalServiceWhereStatusFalse.getComment()}"></p>
+        <p th:text="${additionalServiceWhereStatusFalse.getRoomId()}"></p>
+        <form th:method="PATCH" th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}" class="d-inline">
+            <input type="submit" value="Провести услугу" class="btn btn-danger mt-2"/>
+        </form>
+    </div>
+</div>
+
+
 
 </body>
 </html>

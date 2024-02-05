@@ -6,11 +6,17 @@ import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.services.BookingService;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import com.zvaryyka.motelwebapplication.services.RoomTypeService;
+import com.zvaryyka.motelwebapplication.util.validation.BookingValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -27,11 +33,14 @@ public class GuestController {
     private final PersonDetailsService personDetailsService;
     private final BookingService bookingService;
     private final RoomTypeService roomTypeService;
+    private final BookingValidator bookingValidator;
+
     @Autowired
-    public GuestController(PersonDetailsService personDetailsService, BookingService bookingService, RoomTypeService roomTypeService) {
+    public GuestController(PersonDetailsService personDetailsService, BookingService bookingService, RoomTypeService roomTypeService, BookingValidator bookingValidator) {
         this.personDetailsService = personDetailsService;
         this.bookingService = bookingService;
         this.roomTypeService = roomTypeService;
+        this.bookingValidator = bookingValidator;
     }
 
     @GetMapping("/guest")
@@ -43,22 +52,37 @@ public class GuestController {
         model.addAttribute("actualBookings", bookingService.getActualBookings(person.getId()));
         model.addAttribute("futureBookings",bookingService.getFutureBookings(person.getId()));
         model.addAttribute("historyBookings",bookingService.getHistoryBookings(person.getId()));
+        model.addAttribute("typeOfRooms",roomTypeService.allTypeOfRooms());
         return "guest";
     }
-    @PostMapping("/guest/proceedNewBooking")
-    public String proceedNewBooking(@ModelAttribute("bookingDTO") BookingDTO bookingDTO, Model model) {
+    @InitBinder("bookingDTO")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(bookingValidator);
+    }
+    @PostMapping("/guest")
+    public String proceedNewBooking(@ModelAttribute("bookingDTO") @Valid BookingDTO bookingDTO, BindingResult bindingResult,Principal principal,Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("actualBookings", bookingService.getActualBookings(person.getId()));
+            model.addAttribute("futureBookings",bookingService.getFutureBookings(person.getId()));
+            model.addAttribute("historyBookings",bookingService.getHistoryBookings(person.getId()));
+            model.addAttribute("typeOfRooms",roomTypeService.allTypeOfRooms());
+            return "guest";
+        }
         // Рассчитайте стоимость проживания
         BigDecimal totalCost = calculateTotalCost(bookingDTO);
 
         // Передайте информацию о стоимости на новую страницу
         model.addAttribute("totalCost", totalCost);
-        model.addAttribute("bookingDTO", bookingDTO);
+        model.addAttribute("acceptBookingDTO", bookingDTO);
 
         return "bookingConfirmation";
     }
-    //TODO I must rewrite Booking logic int future
-    @PostMapping("/guest/saveBooking") //TODO NOT WORK,NEED FIX
-    public String saveBooking(@ModelAttribute("bookingDTO") BookingDTO bookingDTO, Model model,Principal principal) { //TODO add BR
+
+    @PostMapping("/guest/saveBooking")
+    public String saveBooking(@ModelAttribute("acceptBookingDTO")  BookingDTO bookingDTO, Model model, Principal principal) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         BigDecimal totalCost = calculateTotalCost(bookingDTO);

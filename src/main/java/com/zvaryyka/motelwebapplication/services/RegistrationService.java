@@ -1,5 +1,6 @@
 package com.zvaryyka.motelwebapplication.services;
 
+import com.zvaryyka.motelwebapplication.dto.PersonDTO;
 import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.repositories.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void regStaff(Person person) {
+    public void regStuff(Person person) {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_STUFF");
         peopleRepository.saveWithSalary(person);
@@ -79,4 +80,26 @@ public class RegistrationService {
     }
 
 
+    public void regWorker(PersonDTO personDTO) {
+        if(Objects.equals(personDTO.getRole(), "Администратор")) {
+
+            regAdmin(convertToPerson(personDTO));
+        }
+        if(Objects.equals(personDTO.getRole(), "Персонал")) {
+
+            regStuff(convertToPerson(personDTO));
+        }
+    }
+    public Person convertToPerson(PersonDTO personDTO) {
+        Person person = new Person();
+        person.setPassword(personDTO.getPassword());
+        person.setLogin(personDTO.getLogin());
+        person.setName(personDTO.getName());
+        person.setSurname(personDTO.getSurname());
+        person.setDateOfBirth(personDTO.getDateOfBirth());
+        person.setSalary(personDTO.getSalary());
+
+        return person;
+
+    }
 }

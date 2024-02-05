@@ -28,17 +28,18 @@ public class AuthController {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
     }
+
     @GetMapping("/login")
     public String loginPage(Principal principal) {
 
-            return "auth/login";
+        return "auth/login";
     }
 
 
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") Person person, Principal principal) {
 
-            return "auth/reg";
+        return "auth/reg";
     }
 
     @InitBinder //TODO Rewrite this code

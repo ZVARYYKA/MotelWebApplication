@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AdditionalServices {
-    //TODO конструктор класса с параметрами
     private int addServiceId;
     private int bookingId;
     private int serviceId;

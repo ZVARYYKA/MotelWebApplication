@@ -5,6 +5,52 @@
     <title>Admin</title>
 </head>
 <body>
+<div>
+    <h1>Составление отчета</h1>
+    <p>Не реализовано</p>
+</div>
+<div>
+    <h1>Персонал</h1>
+    <div th:each="stuff : ${stuffs}">
+        <p th:text="'Name ' + ${stuff.getName()} + '  Surname: ' + ${stuff.getSurname()} + ' Salary ' + ${stuff.getSalary()}">Stuff</p>
+    </div>
+</div>
+<div>
+    <h1>Создать новый персонал</h1>
+    <form th:method="POST" th:action="@{/admin/regNewStuff}" th:object="${person}" class="mt-5">
+        <div class="mb-3">
+            <label for="login" class="form-label">Enter login:</label>
+            <input type="text" th:field="*{login}" id="login" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Enter your name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="surname" class="form-label">Enter your surname:</label>
+            <input type="text" th:field="*{surname}" id="surname" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="dateOfBirth" class="form-label">Enter your date of birth:</label>
+            <input type="date" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Enter password:</label>
+            <input type="password" th:field="*{password}" id="password" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+        </div>
+        <div class="mb-3">
+            <label for="salary" class="form-label">Enter salary:</label>
+            <input type="number" th:field="*{salary}" id="salary" class="form-control"/>
+            <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
+        </div>
 
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
 </body>
 </html>

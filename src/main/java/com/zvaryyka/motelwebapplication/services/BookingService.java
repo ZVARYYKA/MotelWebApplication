@@ -2,6 +2,7 @@ package com.zvaryyka.motelwebapplication.services;
 
 import com.zvaryyka.motelwebapplication.dto.BookingDTO;
 import com.zvaryyka.motelwebapplication.models.Booking;
+import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
 import com.zvaryyka.motelwebapplication.repositories.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class BookingService {
 
     public Booking convertToBooking(BookingDTO bookingDTO, BigDecimal bigDecimal) {
         Booking booking = new Booking();
-        booking.setRoomId(roomTypeRepository.findRoomIdByRoomName(bookingDTO.getRoomType()));
+        List<Rooms> rooms = roomTypeRepository.findRoomsByTypeIdAndDate(roomTypeRepository.findTypeIdByRoomName(bookingDTO),
+                bookingDTO);
+        booking.setRoomId(rooms.get(0).getRoomId());
         booking.setCheckInDate(bookingDTO.getCheckInDate());
         booking.setCheckOutDate(bookingDTO.getCheckOutDate());
         booking.setUserId(bookingDTO.getUserId());

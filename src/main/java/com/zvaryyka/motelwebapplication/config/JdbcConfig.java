@@ -13,14 +13,13 @@ public class JdbcConfig {
 
     @Bean
     public  static DataSource postgreDataSource() {
+
         //TODO change string to properties config
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://****/motel_db");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("****"); //postgres or adm
-
+        dataSource.setUrl("jdbc:postgresql://*****/motel_db");
+        dataSource.setUsername("*****");
+        dataSource.setPassword("****");
         return dataSource;
     }
 }
