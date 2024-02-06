@@ -5,6 +5,7 @@ import com.zvaryyka.motelwebapplication.models.Booking;
 import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
 import com.zvaryyka.motelwebapplication.repositories.RoomTypeRepository;
+import com.zvaryyka.motelwebapplication.repositories.ServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,16 @@ import java.util.List;
 @Service
 public class BookingService {
     private final BookingRepository bookingRepository;
-    private final RoomTypeRepository roomTypeRepository;//TODO Rewrite this code
-
+    private final RoomTypeRepository roomTypeRepository;
+    private final ServicesRepository servicesRepository;
     @Autowired
-    public BookingService(BookingRepository bookingRepository, RoomTypeRepository roomTypeRepository) {
+    public BookingService(BookingRepository bookingRepository,
+                          RoomTypeRepository roomTypeRepository,
+                          ServicesService servicesService, ServicesRepository servicesRepository) {
         this.bookingRepository = bookingRepository;
         this.roomTypeRepository = roomTypeRepository;
+
+        this.servicesRepository = servicesRepository;
     }
 
     public List<BookingDTO> getFutureBookings(int id) {
@@ -52,5 +57,11 @@ public class BookingService {
     public void save(Booking booking) {
         bookingRepository.save(booking);
 
+    }
+
+
+    public void serviceCostPlusSummaryCostInBooking(int bookingId, int serviceId) {
+        int cost = servicesRepository.getCostByServiceId(serviceId);
+        bookingRepository.costPlusSummaryCost(bookingId,cost);
     }
 }

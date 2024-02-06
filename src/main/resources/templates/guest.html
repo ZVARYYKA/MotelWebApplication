@@ -61,6 +61,73 @@
     </form>
 </div>
 <h1>Дополнительная услуга</h1>
+<div>
+    <h2>Необработанные заявки</h2>
+    <div th:each ="unprocessedAdditionalService : ${unprocessedAdditionalServices}">
+        <p th:text = "${unprocessedAdditionalService.getServiceName()}">Service name</p>
+        <p th:text = "${unprocessedAdditionalService.getServiceDescription()}">Service des</p>
+        <p th:text = "${unprocessedAdditionalService.getComment()}">Service comment</p>
+        <p th:text = "${unprocessedAdditionalService.isStatus()}">Service status</p>
 
+        <br>
+    </div>
+</div>
+
+<div>
+    <h2>Обработанные заявки</h2>
+    <div th:each ="processedAdditionalService : ${processedAdditionalServices}">
+        <p th:text = "${processedAdditionalService.getServiceName()}">Service name</p>
+        <p th:text = "${processedAdditionalService.getServiceDescription()}">Service des</p>
+        <p th:text = "${processedAdditionalService.getComment()}">Service comment</p>
+        <p th:text = "${processedAdditionalService.isStatus()}">Service status</p>
+
+        <form th:method="DELETE" th:action="@{/guest/deleteAddService/{id}(id=${processedAdditionalService.getAddServiceId()})}" >
+            <input type="submit" value="Отлично!" />
+        </form>
+        <br>
+    </div>
+
+
+</div>
+
+<div>
+    <form th:method="POST" th:action="@{/quest/saveAddService}" th:object="${additionalServiceDTO}">
+        <label for="serviceName">Выберите услугу</label>
+        <select th:field="*{serviceName}" id="serviceName" onchange="updateServiceDetails()">
+            <option value="">Выберите услугу</option>
+            <th:block th:each="service : ${services}">
+                <option th:value="${service.getServiceName()}" th:text="${service.getServiceName()}"></option>
+            </th:block>
+        </select>
+
+        <p>Описание сервиса: <span id="serviceDescription"></span></p>
+        <p>Стоимость: <span id="serviceCost"></span></p>
+
+        <div style="color:red" th:if="${#fields.hasErrors('serviceName')}" th:errors="*{serviceName}">serviceName
+            Error
+        </div>
+        <br/>
+        <label for="comment">Введите комментарий:</label>
+        <input type="text" th:field="*{comment}" id="comment"/>
+        <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">comment
+            Error
+        </div>
+        <br/>
+
+        <input type="submit" value="Запросить услугу"/>
+    </form>
+</div>
+<script th:inline="javascript">
+    function updateServiceDetails() {
+        let selectedService = document.getElementById("serviceName").value;
+        let services = /*[[${services}]]*/ [];
+        services.forEach(function(service) {
+            if (service.serviceName === selectedService) {
+                document.getElementById("serviceDescription").textContent = service.serviceDescription;
+                document.getElementById("serviceCost").textContent = service.cost;
+            }
+        });
+    }
+</script>
 </body>
 </html>

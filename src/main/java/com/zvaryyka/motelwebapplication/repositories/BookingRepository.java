@@ -38,10 +38,26 @@ public class BookingRepository extends JdbcTemplateClass { //TODO Maybe rewrite 
     }
 
     public void save(Booking booking) {
-         jdbcTemplate.update("INSERT INTO booking(user_id,room_id,check_in_date,check_out_date,summary_cost) VALUES(?,?,?,?,?)",
-                 booking.getUserId(),
-                 booking.getRoomId(),
-                 booking.getCheckInDate(),
-                 booking.getCheckOutDate(),booking.getSummary_cost());
+        jdbcTemplate.update("INSERT INTO booking(user_id,room_id,check_in_date,check_out_date,summary_cost) VALUES(?,?,?,?,?)",
+                booking.getUserId(),
+                booking.getRoomId(),
+                booking.getCheckInDate(),
+                booking.getCheckOutDate(), booking.getSummary_cost());
+    }
+
+    public int getActualBookingId(int userId) {
+        String sql = "SELECT b.booking_id " +
+                "FROM Booking b " +
+                "WHERE b.user_id = ? " +
+                "AND b.check_in_date <= CURRENT_DATE " +
+                "AND b.check_out_date >= CURRENT_DATE";
+
+        return jdbcTemplate.queryForObject(sql, Integer.class, userId);
+    }
+
+    public void costPlusSummaryCost(int bookingId, int cost) {
+        jdbcTemplate.update(
+                "UPDATE Booking SET summary_cost = summary_cost + ? WHERE booking_id = ?",
+                cost, bookingId);
     }
 }
