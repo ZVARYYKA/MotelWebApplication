@@ -81,10 +81,17 @@ public class GuestController {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
         if (bindingResult.hasErrors()) {
+
             model.addAttribute("actualBookings", bookingService.getActualBookings(person.getId()));
             model.addAttribute("futureBookings", bookingService.getFutureBookings(person.getId()));
             model.addAttribute("historyBookings", bookingService.getHistoryBookings(person.getId()));
             model.addAttribute("typeOfRooms", roomTypeService.allTypeOfRooms());
+            model.addAttribute("additionalServiceDTO", new AdditionalServicesDTO());
+            model.addAttribute("services", servicesService.getAllServicesDTO());
+            model.addAttribute("unprocessedAdditionalServices",
+                    additionalServiceService.getUserAdditionalServicesWhereStatusFalse(person.getId()));
+            model.addAttribute("processedAdditionalServices",
+                    additionalServiceService.getUserAdditionalServicesWhereStatusTrue(person.getId()));
             return "guest";
         }
         // Рассчитайте стоимость проживания
