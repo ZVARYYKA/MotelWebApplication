@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -33,6 +31,7 @@ public class AdminController {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
+        model.addAttribute("updatePerson",new Person());
         model.addAttribute("stuffs",personDetailsService.showAllStuffs());
         return "admin";
     }
@@ -49,7 +48,18 @@ public class AdminController {
 
         return "redirect:/admin";
     }
-    @GetMapping("/admin/graphic")
+    @PostMapping("/admin/deleteStuff/{id}")
+    public String deleteStuff(@PathVariable("id") int id) {
+        personDetailsService.delete(id);
+        return "redirect:/admin";
+    }
+    @PostMapping("/admin/updateStuff/{id}")
+    public String updateStuff(@PathVariable("id") int id,@ModelAttribute("updatePerson") @Valid Person person) {
+        personDetailsService.updateStuff(id,person);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/graphic")
     public String viewGraphic() {
         return "graphic";
     }

@@ -4,57 +4,133 @@
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link media="all" rel="stylesheet" th:href="@{/css/style.css}" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <title>Motel</title>
+
 </head>
 <body>
-    <div class="nav-bar">
+<div class="nav-bar">
+    <div class="nav_bar_container">
         <div class="logo">
-            <img class = "logo_img" th:src="@{/img/logo/logo.png}" alt="logo">
+            <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
         </div>
-        <a href="/" class="active">Motel</a>
-        <a href="/" class="active">Главная</a>
-        <a href="/about">О нас</a>
-        <a href="/contacts">Контакты</a>
-        <a href="/articles">Статьи</a>
-        <a href="/profile">Личный кабинет</a>
-        <a href="/registration">Регистрация</a>
-        <a href="/login">Логин</a>
+        <a href="#main">Motel</a>
+        <a href="#about">О нас</a>
+        <a href="#contacts">Контакты</a>
+        <a href="#articles">Статьи</a>
+        <a href="#feedback">Отзывы</a>
+        <a href="/index">Личный кабинет</a>
+        <a class="button_login_blue" href="/registration">Регистрация</a>
+        <a class="button_login_black" href="/login">Логин</a>
     </div>
-    <h1>Отзывы</h1>
-    <div th:each="feedback : ${feedBacksDTO}">
-        <p th:text = "${feedback.getUserName() + feedback.getUserSurname()}"></p>
-        <p th:text = "${feedback.getMark()}"></p>
-        <p th:text = "${feedback.getMessage()}"></p>
-        <p>_____________________________________________________</p>
+</div>
+<div id="main" class="banner_main" th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${mainBannerImageUrl} + ');'">
+    <div class="container">
+        <div class="main_information">
+            <h1 class="main_title" >Почувствуй уровень кайфа</h1>
+            <h2 class="main_des" >Вместе с Motel</h2>
+        </div>
+    </div>
+</div>
+
+<div id="about" class="banner_about" th:style="'background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%),url(' + ${aboutBannerImageUrl} + ');'">
+    <div class="container">
+        <div class="about_information">
+            <h1 class="main_title">О нас</h1>
+            <h2 class="main_des">Отель с 500 летней истории</h2>
+            <h2 class="main_des">1000000 посетителей</h2>
+            <h2 class="main_des">Лучшие условия на острове</h2>
+            <h2 class="main_des">Демократичные цены для всех!</h2>
+            <h2 class="main_des">Интересные мероприятия</h2>
+            <h2 class="main_des">Вежливый персонал</h2>
+            <h2 class="main_des">Бассейны на любой вкус + аквапарк</h2>
+            <h1 class="main_title">И так далее!</h1>
+        </div>
+    </div>
+</div>
+<div id="contacts" class="banner_contacts" th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${contactsBannerImageUrl} + ');'">
+    <div class="container">
+        <div class="contact_information">
+            <h1 class="main_title">Контакты</h1>
+            <h2 class="main_des">ИП: Зварыкин Никита Александрович</h2>
+            <h2 class="main_des">+45438958935789347895</h2>
+            <h2 class="main_des">Юрисдикция США, Мальдивы</h2>
+            <h1 class="main_title">Карта</h1>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.5843077786303!2d73.09727630624853!3d-0.6205585746101838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1707332046362!5m2!1sen!2sca"
+                    width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</div>
+
+<div id="articles" class="article">
+    <div class="container">
+        <div class="main_information">
+            <h1>Статьи о нашем отеле</h1>
+            <div class="article_cards" th:each="articleDTO : ${articlesDTO}">
+                <a class="article_card" th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}"
+                   th:text="${articleDTO.getTitle()}">Article title</a>
+
+            </div>
+
+        </div>
 
     </div>
-    <div th:if="${person.getName() == null}">
-        <P>Авторизуйтесь, чтобы оставлять отзыв</P>
-    </div>
-    <div th:if="${person.getName() != null}">
-        <h1>Добавить отзыв</h1>
-        <div>
-            <form th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
-                <label for="mark">Введите оценку:</label>
-                <input type="number" th:field="*{mark}" id="mark"/>
-                <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>
-                <br/>
-                <label for="message">Введите сообщение:</label>
-                <input type="text" th:field="*{message}" id="message"/>
-                <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message Error</div>
-                <br/>
-                <input type="submit" value="Создать"/>
-            </form>
+
+</div>
+<div id= "feedback" class="feedbacks">
+    <div class="container_feedback">
+        <div class="feedback_information">
+
+            <h1>Отзывы</h1>
+            <div class="all_feedbacks" th:each="feedback : ${feedBacksDTO}">
+                <p th:text="${feedback.getUserName() + feedback.getUserSurname()}">Имя</p>
+                <p th:text="${feedback.getMark()}">Оценка</p>
+                <p th:text="${feedback.getMessage()}">Сообщение о отеле</p><br>
+            </div>
+            <div th:if="${person.getName() == null}">
+                <P>Авторизуйтесь, чтобы оставлять отзыв</P>
+            </div>
+            <div class="feedback_form" th:if="${person.getName() != null}">
+                <h1>Добавить отзыв</h1>
+                <div>
+                    <form th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
+                        <label for="mark">Введите оценку:</label>
+                        <input type="number" th:field="*{mark}" id="mark"/>
+                        <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>
+                        <br/>
+                        <label for="message">Введите сообщение:</label>
+                        <input type="text" th:field="*{message}" id="message"/>
+                        <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message
+                            Error
+                        </div>
+                        <br/>
+                        <input type="submit" value="Создать"/>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <h1>Статьи о нашем отеле</h1>
-        <div th:each="articleDTO : ${articlesDTO}">
-            <a th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}" th:text = "${articleDTO.getTitle()}">Article title</a>
-        </div>
-    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

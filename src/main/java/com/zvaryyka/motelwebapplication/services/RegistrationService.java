@@ -90,6 +90,24 @@ public class RegistrationService {
             regStuff(convertToPerson(personDTO));
         }
     }
+    @Transactional
+    public void updateAdmin(Person person, int id) {
+        person.setPassword(passwordEncoder.encode(person.getPassword()));
+        person.setUserRole("ROLE_ADMIN");
+        peopleRepository.updateWorker(id, person);
+    }
+
+    public void changeWorker(PersonDTO personDTO,int id) {
+        if(Objects.equals(personDTO.getRole(), "Администратор")) {
+
+            updateAdmin(convertToPerson(personDTO),id);
+        }
+        if(Objects.equals(personDTO.getRole(), "Персонал")) {
+
+            updateStuff(convertToPerson(personDTO),id);
+        }
+    }
+
     public Person convertToPerson(PersonDTO personDTO) {
         Person person = new Person();
         person.setPassword(personDTO.getPassword());
@@ -102,4 +120,6 @@ public class RegistrationService {
         return person;
 
     }
+
+
 }

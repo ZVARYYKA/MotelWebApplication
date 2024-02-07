@@ -51,5 +51,14 @@ public class PersonDetailsService implements UserDetailsService {
     }
 
 
+    public void delete(int id) {
+        userRepository.delete(id);
+    }
+
+    public void updateStuff(int id, Person person) {
+        person.setUserRole("ROLE_STUFF");
+
+        userRepository.updateWorker(id,person);
+    }
 }
 

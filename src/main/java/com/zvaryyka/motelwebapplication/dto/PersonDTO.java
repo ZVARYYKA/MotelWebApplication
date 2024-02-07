@@ -12,6 +12,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class PersonDTO { //TODO Rewrite CRUD with person, use PersonDTO
+
+
     private String login;
 
     private String name;

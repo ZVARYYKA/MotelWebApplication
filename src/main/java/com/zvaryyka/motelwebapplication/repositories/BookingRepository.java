@@ -1,10 +1,12 @@
 package com.zvaryyka.motelwebapplication.repositories;
 
 import com.zvaryyka.motelwebapplication.dto.BookingDTO;
+import com.zvaryyka.motelwebapplication.dto.BookingStatisticDTO;
 import com.zvaryyka.motelwebapplication.models.Booking;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -59,5 +61,27 @@ public class BookingRepository extends JdbcTemplateClass { //TODO Maybe rewrite 
         jdbcTemplate.update(
                 "UPDATE Booking SET summary_cost = summary_cost + ? WHERE booking_id = ?",
                 cost, bookingId);
+    }
+
+    public List<BookingStatisticDTO> getBookingStatistics(Date startDate, Date endDate) {
+        String sql = "SELECT check_in_date AS booking_date, COUNT(*) AS count FROM Booking WHERE check_in_date BETWEEN ? AND ? GROUP BY check_in_date";
+
+        // Выполняем запрос к базе данных и маппим результаты в DTO объекты
+        return jdbcTemplate.query(sql, new Object[]{startDate, endDate}, (rs, rowNum) -> {
+            BookingStatisticDTO statisticDTO = new BookingStatisticDTO();
+            statisticDTO.setDate(rs.getDate("booking_date"));
+            statisticDTO.setValue(rs.getInt("count"));
+            return statisticDTO;
+        });
+    }
+
+    public Double getTotalRevenue(Date startDate, Date endDate) {
+        String sql = "SELECT SUM(summary_cost) FROM booking WHERE check_in_date BETWEEN ? AND ?";
+        return jdbcTemplate.queryForObject(sql, Double.class, startDate, endDate);
+    }
+
+    public Integer getTotalBookingsCount(Date startDate, Date endDate) {
+        String sql = "SELECT COUNT(*) FROM booking WHERE check_in_date BETWEEN ? AND ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, startDate, endDate);
     }
 }

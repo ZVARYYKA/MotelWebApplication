@@ -1,124 +1,135 @@
 .nothing {
     display: none;
 }
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-  }
-  
-  /* Шрифт для всего текста на странице */
-  body {
+}
+
+/* Шрифт для всего текста на странице */
+body {
+    color: white;
     font-family: 'Inter', sans-serif;
-  }
-  
-  /* Стили для баннера с фоновым изображением и текстом */
-  .banner_main {
-    height: 100vh; /* Высота баннера равна высоте окна браузера */
-    background-image: url(/static/img/main/main_pic.png), linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%); /* Фоновое изображение с градиентом поверх него */
+    background-color: #121212;
+}
+
+/* Стили для баннера с фоновым изображением и текстом */
+.banner_main {
+    height: 970px; /* Указываем высоту баннера */
+    background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_pic.png); /* Градиент поверх изображения */
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.banner_about {
+    height: 1080px; /* Высота баннера равна высоте окна браузера */
+    background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%), url(/static/img/main/main_about.png); /* Фоновое изображение с градиентом поверх него */
     background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
     display: flex; /* Делаем баннер флекс-контейнером */
-    align-items: center; /* Выравниваем текст по вертикали по центру */
-    justify-content: left; /* Выравниваем текст по горизонтали по центру */
-  }
-  .banner_about {
-    height: 100vh; /* Высота баннера равна высоте окна браузера */
-    background-image: url(/static/img/main/main_about.png), linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%); /* Фоновое изображение с градиентом поверх него */
+    align-items: flex-start; /* Выравниваем текст по вертикали по центру */
+    justify-content: right; /* Выравниваем текст по горизонтали по центру */
+}
+
+.banner_contacts {
+    height: 1080px; /* Высота баннера равна высоте окна браузера */
+  background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_contacts.png); /* Градиент поверх изображения */
     background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
     display: flex; /* Делаем баннер флекс-контейнером */
-    align-items: center; /* Выравниваем текст по вертикали по центру */
+     /* Выравниваем текст по вертикали по центру */
     justify-content: left; /* Выравниваем текст по горизонтали по центру */
-  }
-  .banner_contacts {
-    height: 100vh; /* Высота баннера равна высоте окна браузера */
-    background-image: url(/static/img/main/main_contacts.png), linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%); /* Фоновое изображение с градиентом поверх него */
-    background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
-    display: flex; /* Делаем баннер флекс-контейнером */
-    align-items: center; /* Выравниваем текст по вертикали по центру */
-    justify-content: left; /* Выравниваем текст по горизонтали по центру */
-  }
-  
-  /* Стили для текста на баннере */
-  .banner h1 {
-    font-size:48px; /* Размер шрифта для заголовка */
+}
+
+/* Стили для текста на баннере */
+.banner h1 {
+    font-size: 48px; /* Размер шрифта для заголовка */
     color: white; /* Цвет шрифта для заголовка */
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тень для текста, чтобы он был более читаемым на фоне */
-  }
-  
-  /* Стили для навигационного меню */
-  .nav-bar {
+}
+
+/* Стили для навигационного меню */
+.nav-bar {
+
+    background-color: #2F2F2F; /* Цвет фона для навигационного меню */
+}
+
+.nav_bar_container {
+    max-width: 1700px;
+    margin: 0 auto;
     display: flex; /* Делаем навигационное меню флекс-контейнером */
     align-items: center; /* Выравниваем ссылки по вертикали по центру */
     justify-content: space-between; /* Распределяем ссылки по горизонтали с равными отступами */
-    padding: 20px; /* Отступы для навигационного меню */
-    background-color: #121212; /* Цвет фона для навигационного меню */
-  }
-  
-  /* Стили для ссылок в навигационном меню */
-  .nav-bar a {
+
+}
+
+/* Стили для ссылок в навигационном меню */
+.nav-bar a {
     color: white; /* Цвет шрифта для ссылок */
     text-decoration: none; /* Убираем подчеркивание для ссылок */
     font-weight: bold; /* Делаем шрифт жирным */
     margin: 0 10px; /* Отступы между ссылками */
-  }
-  
-  /* Стили для активной ссылки в навигационном меню */
-  .nav-bar a.active {
-    color: #ff9800; /* Цвет шрифта для активной ссылки */
-  }
-  
-  /* Стили для контейнера, который центрирует контент по ширине */
-  .container {
-    max-width: 1200px; /* Максимальная ширина контейнера */
-    margin: 0 auto; /* Автоматические отступы по бокам для центрирования */
+}
+
+/* Стили для активной ссылки в навигационном меню */
+.nav-bar a.active {
+
+    color: white; /* Цвет шрифта для активной ссылки */
+
+}
+
+/* Стили для контейнера, который центрирует контент по ширине */
+.container {
+    display: flex;
+
+    max-width: 1900px; /* Максимальная ширина контейнера */
+
     padding: 20px; /* Отступы для контейнера */
-  }
-  
-  /* Стили для заголовка с отзывами */
-  .container h1 {
-    font-size: 3rem; /* Размер шрифта для заголовка */
-    color: #121212; /* Цвет шрифта для заголовка */
-    margin-bottom: 20px; /* Отступ снизу для заголовка */
-  }
-  
-  /* Стили для блока с отзывом */
-  .container div {
+}
+
+/* Стили для заголовка с отзывами */
+
+
+/* Стили для блока с отзывом */
+.container div {
     display: flex; /* Делаем блок с отзывом флекс-контейнером */
-    align-items: center; /* Выравниваем элементы по вертикали по центру */
+    /* Выравниваем элементы по вертикали по центру */
     margin-bottom: 10px; /* Отступ снизу для блока с отзывом */
-  }
-  
-  /* Стили для имени пользователя, оставившего отзыв */
-  .container div a:first-child {
+}
+
+/* Стили для имени пользователя, оставившего отзыв */
+.container div a:first-child {
     font-weight: bold; /* Делаем шрифт жирным */
     margin-right: 10px; /* Отступ справа для имени пользователя */
-  }
-  
-  /* Стили для оценки, которую поставил пользователь */
-  .container div a:nth-child(2) {
+}
+
+/* Стили для оценки, которую поставил пользователь */
+.container div a:nth-child(2) {
     color: #ff9800; /* Цвет шрифта для оценки */
     margin-right: 10px; /* Отступ справа для оценки */
-  }
-  
-  /* Стили для текста отзыва */
-  .container div a:last-child {
+}
+
+/* Стили для текста отзыва */
+.container div a:last-child {
     color: #757575; /* Цвет шрифта для текста отзыва */
-  }
-  
-  /* Стили для формы, которая позволяет оставить отзыв */
-  .container form {
+}
+
+/* Стили для формы, которая позволяет оставить отзыв */
+.container form {
     display: flex; /* Делаем форму флекс-контейнером */
     flex-direction: column; /* Меняем направление оси флекс-контейнера на вертикальное */
     margin-top: 20px; /* Отступ сверху для формы */
-  }
-  
-  /* Стили для элементов формы */
-  .container form div {
+}
+
+/* Стили для элементов формы */
+.container form div {
     margin-bottom: 10px; /* Отступ снизу для элементов формы */
-  }
-  
-  /* Стили для кнопки, которая отправляет форму */
-  .container form button {
+}
+
+/* Стили для кнопки, которая отправляет форму */
+.container form button {
     width: 200px; /* Ширина кнопки */
     align-self: center; /* Выравниваем кнопку по горизонтали по центру */
     background-color: #ff9800; /* Цвет фона для кнопки */
@@ -126,8 +137,112 @@
     border: none; /* Убираем рамку для кнопки */
     padding: 10px; /* Отступы для кнопки */
     cursor: pointer; /* Меняем курсор на указатель при наведении на кнопку */
-  }
-  .logo_img {
-    
-    max-width: 30%;
-  }
+}
+
+.logo_img {
+
+    max-width: 70%;
+    padding: 5px;
+}
+
+.button_login_blue {
+    border-radius: 10px;
+    border: 1px solid #0094FF;
+    padding: 20px;
+    background-color: #0094FF;
+
+}
+
+.button_login_black {
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 20px;
+}
+
+.main_title {
+    color: white;
+    font-size: 46px;
+
+}
+
+.main_des {
+    margin-top: 15px;
+
+}
+
+
+.main_information {
+  margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.about_information {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contact_information {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.article_card {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px 50px 20px;
+  border: 2px white;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+
+}
+
+.article_cards {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback_information {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.all_feedbacks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.feedback {
+  margin-bottom: 20px; /* Добавляем пробел между отзывами */
+}
+.feedback p {
+  margin: 0; /* Убираем внутренние отступы у абзацев внутри отзывов */
+}
+
+.feedback_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.container_feedback {
+  display: flex;
+
+  max-width: 1900px; /* Максимальная ширина контейнера */
+
+  padding: 20px; /* Отступы для контейнера */
+  justify-content: center;
+
+}

@@ -52,5 +52,24 @@ public class OwnerController {
         return "redirect:/owner";
 
     }
+    @PostMapping("/owner/changeWorker/{id}")
+    public String changeWorker(@ModelAttribute("personDTO") @Valid PersonDTO personDTO,
+                               BindingResult bindingResult, @PathVariable("id") int id) {
+        personValidator.validate(registrationService.convertToPerson(personDTO), bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "owner";
+        }
+        registrationService.changeWorker(personDTO,id);
+        return "redirect:/owner";
+
+    }
+    @PostMapping("/owner/deleteWorker/{id}")
+    public String deleteWorker(@PathVariable("id") int id) {
+        personDetailsService.delete(id);
+        return "redirect:/owner";
+    }
+
+
 
 }

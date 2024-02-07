@@ -1,44 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <meta charset="UTF-8">
     <title>Graphic</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
+<form id="dateForm">
+    <label for="startDate">Дата начала:</label>
+    <input type="date" id="startDate" name="startDate">
+    <label for="endDate">Дата конца:</label>
+    <input type="date" id="endDate" name="endDate">
+    <button type="submit">Получить статистику</button>
+</form>
+<p id="totalRevenue"></p>
+<p id="totalBookings"></p>
+<div id="chartContainer"></div>
 <script>
-    // Данные для графика
-    let data = [10, 30, 50, 20, 40];
+    document.getElementById('dateForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем отправку формы по умолчанию
 
-    // Создание контейнера для графика
-    let svg = d3.select("body")
-        .append("svg")
-        .attr("width", 400)
-        .attr("height", 200);
+        let startDate = document.getElementById('startDate').value;
+        let endDate = document.getElementById('endDate').value;
 
-    // Создание столбцов графика
-    svg.selectAll("rect")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d, i) { return i * 80; })
-        .attr("y", function(d) { return 200 - d; })
-        .attr("width", 75)
-        .attr("height", function(d) { return d; });
+        // Формируем URL с параметрами для получения статистики
+        let statisticsUrl = '/statistics?startDate=' + startDate + '&endDate=' + endDate;
 
-    // Добавление подписей к столбцам
-    svg.selectAll("text")
-        .data(data)
-        .enter()
-        .append("text")
-        .text(function(d) { return d; })
-        .attr("x", function(d, i) { return i * 80 + 37.5; })
-        .attr("y", function(d) { return 195 - d; })
-        .attr("text-anchor", "middle")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
-        .attr("fill", "black");
+        // Формируем URL с параметрами для получения общей суммы за период
+        let totalRevenueUrl = '/totalRevenue?startDate=' + startDate + '&endDate=' + endDate;
+
+        // Формируем URL с параметрами для получения общего количества бронирований за период
+        let totalBookingsUrl = '/totalBookings?startDate=' + startDate + '&endDate=' + endDate;
+
+        // Отправка запросов на сервер и обработка результатов
+        Promise.all([
+            fetch(statisticsUrl).then(response => response.json()),
+            fetch(totalRevenueUrl).then(response => response.json()),
+            fetch(totalBookingsUrl).then(response => response.json())
+        ])
+            .then(data => {
+                let statistics = data[0];
+                let totalRevenue = data[1];
+                let totalBookings = data[2];
+
+                // Создание графика на основе полученных данных
+                createChart(statistics);
+
+                // Вывод информации о общей сумме и количестве бронирований
+                document.getElementById('totalRevenue').innerText = 'Total Revenue: ' + totalRevenue;
+                document.getElementById('totalBookings').innerText = 'Total Bookings: ' + totalBookings;
+            })
+            .catch(error => console.error('Ошибка:', error));
+    });
+
+    function createChart(data) {
+        // Удаление предыдущего графика, если он уже существует
+        d3.select("#chartContainer").selectAll("*").remove();
+
+        // Создание контейнера для графика
+        let svgWidth = 600;
+        let svgHeight = 400;
+        let margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        let width = svgWidth - margin.left - margin.right;
+        let height = svgHeight - margin.top - margin.bottom;
+
+        let svg = d3.select("#chartContainer")
+            .append("svg")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // Создание шкал для осей X и Y
+        let x = d3.scaleBand().range([0, width]).padding(0.1);
+        let y = d3.scaleLinear().range([height, 0]);
+
+        // Установка доменов для шкал
+        x.domain(data.map(function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+        // Создание оси X
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+        // Создание оси Y
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Создание столбцов графика
+        svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.date); })
+            .attr("width", x.bandwidth())
+            .attr("y", function(d) { return y(d.value); })
+            .attr("height", function(d) { return height - y(d.value); });
+    }
 </script>
 </body>
 </html>

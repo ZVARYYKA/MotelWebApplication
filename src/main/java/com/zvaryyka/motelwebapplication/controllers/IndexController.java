@@ -36,6 +36,14 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(Principal principal, Model model) {
+        String mainBannerImageUrl = "/img/main/main_pic.png";
+        String aboutBannerImageUrl = "/img/main/main_pic.png";
+        String contactsBannerImageUrl = "/img/main/main_pic.png";
+
+        model.addAttribute("mainBannerImageUrl", mainBannerImageUrl);
+        model.addAttribute("aboutBannerImageUrl", aboutBannerImageUrl);
+        model.addAttribute("contactsBannerImageUrl", contactsBannerImageUrl);
+
         model.addAttribute("feedBacksDTO", feedBackService.getAllFeedBacksDTO());
         model.addAttribute("feedBackDTO", new FeedBackDTO());
         model.addAttribute("articlesDTO",articleService.getAllArticleDTO());

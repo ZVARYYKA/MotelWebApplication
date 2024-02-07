@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.services;
 
 import com.zvaryyka.motelwebapplication.dto.BookingDTO;
+import com.zvaryyka.motelwebapplication.dto.BookingStatisticDTO;
 import com.zvaryyka.motelwebapplication.models.Booking;
 import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.repositories.BookingRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -63,5 +65,19 @@ public class BookingService {
     public void serviceCostPlusSummaryCostInBooking(int bookingId, int serviceId) {
         int cost = servicesRepository.getCostByServiceId(serviceId);
         bookingRepository.costPlusSummaryCost(bookingId,cost);
+    }
+
+    public List<BookingStatisticDTO> getBookingStatistics(Date startDate, Date endDate) {
+        return bookingRepository.getBookingStatistics(startDate,endDate);
+    }
+
+    public Double getTotalRevenue(Date startDate, Date endDate) {
+
+        return bookingRepository.getTotalRevenue(startDate,endDate);
+    }
+
+    public Integer getTotalBookings(Date startDate, Date endDate) {
+
+        return bookingRepository.getTotalBookingsCount(startDate,endDate);
     }
 }

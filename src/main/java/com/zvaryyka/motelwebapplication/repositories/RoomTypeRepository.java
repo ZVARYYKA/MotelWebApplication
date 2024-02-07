@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -49,4 +50,6 @@ public class RoomTypeRepository extends JdbcTemplateClass {
     public int findTypeIdByRoomTypeName(String roomType) {
         return jdbcTemplate.queryForObject("SELECT type_id from types_of_rooms where room_type = ?",new Object[]{roomType},Integer.class);
     }
+
+
 }
