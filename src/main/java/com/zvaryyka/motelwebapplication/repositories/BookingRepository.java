@@ -47,14 +47,15 @@ public class BookingRepository extends JdbcTemplateClass { //TODO Maybe rewrite 
                 booking.getCheckOutDate(), booking.getSummary_cost());
     }
 
-    public int getActualBookingId(int userId) {
+    public Integer getActualBookingId(int userId) {
         String sql = "SELECT b.booking_id " +
                 "FROM Booking b " +
                 "WHERE b.user_id = ? " +
                 "AND b.check_in_date <= CURRENT_DATE " +
                 "AND b.check_out_date >= CURRENT_DATE";
 
-        return jdbcTemplate.queryForObject(sql, Integer.class, userId);
+        List<Integer> bookingIds = jdbcTemplate.queryForList(sql, Integer.class, userId);
+        return bookingIds.isEmpty() ? null : bookingIds.get(0);
     }
 
     public void costPlusSummaryCost(int bookingId, int cost) {

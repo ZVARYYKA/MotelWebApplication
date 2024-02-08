@@ -9,6 +9,7 @@ import com.zvaryyka.motelwebapplication.repositories.ServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -49,13 +50,20 @@ public class AdditionalServiceService {
         return additionalServices;
     }
 
-    public List<AdditionalServicesDTO> getUserAdditionalServicesWhereStatusFalse(int user_id) {
-        int booking_id = bookingRepository.getActualBookingId(user_id);
-        return additionalServiceRepository.getUserAdditionalServicesWhereStatusFalse(booking_id);
+    public List<AdditionalServicesDTO> getUserAdditionalServicesWhereStatusFalse(int userId) {
+        Integer bookingId = bookingRepository.getActualBookingId(userId);
+        if (bookingId == null) {
+            return Collections.emptyList(); // Возвращаем пустой список, если бронирование не найдено
+        }
+        return additionalServiceRepository.getUserAdditionalServicesWhereStatusFalse(bookingId);
     }
-    public List<AdditionalServicesDTO> getUserAdditionalServicesWhereStatusTrue(int user_id) {
-        int booking_id = bookingRepository.getActualBookingId(user_id);
-        return additionalServiceRepository.getUserAdditionalServicesWhereStatusTrue(booking_id);
+
+    public List<AdditionalServicesDTO> getUserAdditionalServicesWhereStatusTrue(int userId) {
+        Integer bookingId = bookingRepository.getActualBookingId(userId);
+        if (bookingId == null) {
+            return Collections.emptyList(); // Возвращаем пустой список, если бронирование не найдено
+        }
+        return additionalServiceRepository.getUserAdditionalServicesWhereStatusTrue(bookingId);
     }
 
     public void delete(int id) {

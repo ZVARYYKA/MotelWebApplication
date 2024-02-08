@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.naming.Binding;
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 @RequestMapping()
@@ -36,9 +37,10 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(Principal principal, Model model) {
+
         String mainBannerImageUrl = "/img/main/main_pic.png";
         String aboutBannerImageUrl = "/img/main/main_pic.png";
-        String contactsBannerImageUrl = "/img/main/main_pic.png";
+        String contactsBannerImageUrl = "/img/main/main_contacts.png";
 
         model.addAttribute("mainBannerImageUrl", mainBannerImageUrl);
         model.addAttribute("aboutBannerImageUrl", aboutBannerImageUrl);
@@ -46,13 +48,29 @@ public class IndexController {
 
         model.addAttribute("feedBacksDTO", feedBackService.getAllFeedBacksDTO());
         model.addAttribute("feedBackDTO", new FeedBackDTO());
-        model.addAttribute("articlesDTO",articleService.getAllArticleDTO());
+        model.addAttribute("articlesDTO", articleService.getAllArticleDTO());
 
-        if (principal == null)
+        if (principal == null) {
             model.addAttribute("person", new Person());
+            model.addAttribute("perAccount", "/login");
+        }
         else {
+
             Person person = personDetailsService.findByLogin(principal.getName())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            if(Objects.equals(person.getUserRole(), "ROLE_USER")) {
+                model.addAttribute("perAccount", "/guest");
+            }
+            else if(Objects.equals(person.getUserRole(), "ROLE_STUFF")) {
+                model.addAttribute("perAccount", "/stuff");
+            }
+            else if(Objects.equals(person.getUserRole(), "ROLE_ADMIN")) {
+                model.addAttribute("perAccount", "/admin");
+            }
+            else if(Objects.equals(person.getUserRole(), "ROLE_OWNER")) {
+                model.addAttribute("perAccount", "/owner");
+            }
+
             model.addAttribute("person", person);
 
         }

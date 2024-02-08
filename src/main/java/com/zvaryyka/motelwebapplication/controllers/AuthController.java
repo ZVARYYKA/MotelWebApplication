@@ -31,15 +31,25 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage(Principal principal) {
-
-        return "auth/login";
+        if (principal == null) {
+            // Если principal пустой, значит, пользователь не аутентифицирован
+            return "auth/login";
+        } else {
+            // Если principal не пустой, значит, пользователь уже аутентифицирован
+            return "errors/error_login";
+        }
     }
 
 
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") Person person, Principal principal) {
+        if(principal == null) {
+            return "auth/reg";
+        }
+        else {
+            return "errors/error_reg";
+        }
 
-        return "auth/reg";
     }
 
     @InitBinder //TODO Rewrite this code

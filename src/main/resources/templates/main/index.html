@@ -11,21 +11,41 @@
 
 </head>
 <body>
-<div class="nav-bar">
-    <div class="nav_bar_container">
-        <div class="logo">
-            <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+<div  th:if="${person.getName() != null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="#main">Motel</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#articles">Статьи</a>
+            <a href="#feedback">Отзывы</a>
+            <a th:href="${perAccount}">Личный кабинет</a>
+            <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
+            <a class="button_login_black" href="/logout">Выход</a>
         </div>
-        <a href="#main">Motel</a>
-        <a href="#about">О нас</a>
-        <a href="#contacts">Контакты</a>
-        <a href="#articles">Статьи</a>
-        <a href="#feedback">Отзывы</a>
-        <a href="/index">Личный кабинет</a>
-        <a class="button_login_blue" href="/registration">Регистрация</a>
-        <a class="button_login_black" href="/login">Логин</a>
     </div>
 </div>
+<div  th:if="${person.getName() == null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="#main">Motel</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#articles">Статьи</a>
+            <a href="#feedback">Отзывы</a>
+            <a th:href="${perAccount}">Личный кабинет</a>
+            <a class="button_login_blue" href="/registration">Регистрация</a>
+            <a class="button_login_black" href="/login">Логин</a>
+        </div>
+    </div>
+</div>
+
 <div id="main" class="banner_main" th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${mainBannerImageUrl} + ');'">
     <div class="container">
         <div class="main_information">
@@ -69,11 +89,14 @@
     <div class="container">
         <div class="main_information">
             <h1>Статьи о нашем отеле</h1>
-            <div class="article_cards" th:each="articleDTO : ${articlesDTO}">
-                <a class="article_card" th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}"
-                   th:text="${articleDTO.getTitle()}">Article title</a>
+            <div class="cards">
+                <div class="article_cards" th:each="articleDTO : ${articlesDTO}">
+                    <a class="article_card" th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}"
+                       th:text="${articleDTO.getTitle()}">Article title</a>
 
+                </div>
             </div>
+
 
         </div>
 
@@ -96,7 +119,7 @@
             <div class="feedback_form" th:if="${person.getName() != null}">
                 <h1>Добавить отзыв</h1>
                 <div>
-                    <form th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
+                    <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
                         <label for="mark">Введите оценку:</label>
                         <input type="number" th:field="*{mark}" id="mark"/>
                         <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>

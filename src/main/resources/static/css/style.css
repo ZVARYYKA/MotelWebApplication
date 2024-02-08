@@ -12,7 +12,7 @@
 body {
     color: white;
     font-family: 'Inter', sans-serif;
-    background-color: #121212;
+    background-color: #2F2F2F;
 }
 
 /* Стили для баннера с фоновым изображением и текстом */
@@ -245,4 +245,16 @@ body {
   padding: 20px; /* Отступы для контейнера */
   justify-content: center;
 
+}
+
+.createNewFeedBackForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
 }

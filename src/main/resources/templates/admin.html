@@ -15,6 +15,40 @@
     <p>Не реализовано</p>
 </div>
 <div>
+    <div  th:if="${person.getName() != null}">
+        <div class="nav-bar">
+            <div class="nav_bar_container">
+                <div class="logo">
+                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                </div>
+                <a href="/index">Motel</a>
+                <a href="/index">О нас</a>
+                <a href="/index">Контакты</a>
+                <a href="/index">Статьи</a>
+                <a href="/index">Отзывы</a>
+                <a th:href="${perAccount}">Личный кабинет</a>
+                <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
+                <a class="button_login_black" href="/logout">Выход</a>
+            </div>
+        </div>
+    </div>
+    <div  th:if="${person.getName() == null}">
+        <div class="nav-bar">
+            <div class="nav_bar_container">
+                <div class="logo">
+                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                </div>
+                <a href="/index">Motel</a>
+                <a href="/index">О нас</a>
+                <a href="/index">Контакты</a>
+                <a href="/index">Статьи</a>
+                <a href="/index">Отзывы</a>
+                <a th:href="${perAccount}">Личный кабинет</a>
+                <a class="button_login_blue" href="/registration">Регистрация</a>
+                <a class="button_login_black" href="/login">Логин</a>
+            </div>
+        </div>
+    </div>
     <h1>Персонал</h1>
     <div th:each="stuff : ${stuffs}">
 
