@@ -17,7 +17,7 @@ body {
 
 /* Стили для баннера с фоновым изображением и текстом */
 .banner_main {
-    height: 970px; /* Указываем высоту баннера */
+    height: 920px; /* Указываем высоту баннера */
     background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_pic.png); /* Градиент поверх изображения */
     background-size: cover;
     display: flex;
@@ -26,7 +26,7 @@ body {
 }
 
 .banner_about {
-    height: 1080px; /* Высота баннера равна высоте окна браузера */
+    height: 1000px; /* Высота баннера равна высоте окна браузера */
     background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%), url(/static/img/main/main_about.png); /* Фоновое изображение с градиентом поверх него */
     background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
     display: flex; /* Делаем баннер флекс-контейнером */
@@ -35,7 +35,7 @@ body {
 }
 
 .banner_contacts {
-    height: 1080px; /* Высота баннера равна высоте окна браузера */
+    height: 1000px; /* Высота баннера равна высоте окна браузера */
   background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_contacts.png); /* Градиент поверх изображения */
     background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
     display: flex; /* Делаем баннер флекс-контейнером */
@@ -253,8 +253,92 @@ body {
 }
 
 .cards {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
+}
+
+.article {
+    height: 800px;
+}
+
+.feedbacks {
+    height: 800px;
+}
+
+.login_form {
+    border-radius: 10px;
+    padding: 40px;
+    background-color: #3A3A3A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_form_login {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login_block {
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-label {
+    color: #F5F2F2;
+    padding: 10px;
+    text-align: left;
+
+}
+
+.form-control {
+    color: white;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #3A3A3A;
+
+    border: 2px solid #F5F2F2;
+}
+
+.form_button {
+    border-radius: 5px;
+    background-color: #3A3A3A;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    color: white;
+    border: 2px solid #F5F2F2;
+}
+
+.reg_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 850px;
+}
+
+.reg_block_form {
+    border-radius: 10px;
+    padding: 40px;
+    background-color: #3A3A3A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.reg_form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }

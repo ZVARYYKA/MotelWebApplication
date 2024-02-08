@@ -59,13 +59,13 @@
     <div class="container">
         <div class="about_information">
             <h1 class="main_title">О нас</h1>
-            <h2 class="main_des">Отель с 500 летней истории</h2>
-            <h2 class="main_des">1000000 посетителей</h2>
-            <h2 class="main_des">Лучшие условия на острове</h2>
-            <h2 class="main_des">Демократичные цены для всех!</h2>
-            <h2 class="main_des">Интересные мероприятия</h2>
-            <h2 class="main_des">Вежливый персонал</h2>
-            <h2 class="main_des">Бассейны на любой вкус + аквапарк</h2>
+            <p class="main_des">Отель с 500 летней истории</p>
+            <p class="main_des">1000000 посетителей</p>
+            <p class="main_des">Лучшие условия на острове</p>
+            <p class="main_des">Демократичные цены для всех!</p>
+            <p class="main_des">Интересные мероприятия</p>
+            <p class="main_des">Вежливый персонал</p>
+            <p class="main_des">Бассейны на любой вкус + аквапарк</p>
             <h1 class="main_title">И так далее!</h1>
         </div>
     </div>
@@ -74,9 +74,9 @@
     <div class="container">
         <div class="contact_information">
             <h1 class="main_title">Контакты</h1>
-            <h2 class="main_des">ИП: Зварыкин Никита Александрович</h2>
-            <h2 class="main_des">+45438958935789347895</h2>
-            <h2 class="main_des">Юрисдикция США, Мальдивы</h2>
+            <p class="main_des">ИП: Зварыкин Никита Александрович</p>
+            <p class="main_des">+45438958935789347895</p>
+            <p class="main_des">Юрисдикция США, Мальдивы</p>
             <h1 class="main_title">Карта</h1>
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.5843077786303!2d73.09727630624853!3d-0.6205585746101838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1707332046362!5m2!1sen!2sca"
                     width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
@@ -88,7 +88,7 @@
 <div id="articles" class="article">
     <div class="container">
         <div class="main_information">
-            <h1>Статьи о нашем отеле</h1>
+            <h1 class="main_title">Статьи о нашем отеле</h1>
             <div class="cards">
                 <div class="article_cards" th:each="articleDTO : ${articlesDTO}">
                     <a class="article_card" th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}"
@@ -107,7 +107,7 @@
     <div class="container_feedback">
         <div class="feedback_information">
 
-            <h1>Отзывы</h1>
+            <h1 class="main_title">Отзывы</h1>
             <div class="all_feedbacks" th:each="feedback : ${feedBacksDTO}">
                 <p th:text="${feedback.getUserName() + feedback.getUserSurname()}">Имя</p>
                 <p th:text="${feedback.getMark()}">Оценка</p>

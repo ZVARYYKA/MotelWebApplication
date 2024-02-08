@@ -10,10 +10,7 @@
     <title>Admin</title>
 </head>
 <body>
-<div>
-    <h1>Составление отчета</h1>
-    <p>Не реализовано</p>
-</div>
+
 <div>
     <div  th:if="${person.getName() != null}">
         <div class="nav-bar">
@@ -43,7 +40,7 @@
                 <a href="/index">Контакты</a>
                 <a href="/index">Статьи</a>
                 <a href="/index">Отзывы</a>
-                <a th:href="${perAccount}">Личный кабинет</a>
+                <a th:href="/admin">Личный кабинет</a>
                 <a class="button_login_blue" href="/registration">Регистрация</a>
                 <a class="button_login_black" href="/login">Логин</a>
             </div>
@@ -55,9 +52,10 @@
         <p  th:text="'Name ' + ${stuff.getName()} + '  Surname: ' + ${stuff.getSurname()} + ' Salary ' + ${stuff.getSalary()}">
             Stuff</p>
         <form th:action="@{/admin/deleteStuff/{id}(id=${stuff.getId()})}" th:method="DELETE">
-            <button type="submit">Delete</button>
+            <button type="submit">Удалить</button>
         </form>
-        <form th:method="PATCH" th:action="@{/admin/updateStuff/{id}(id=${stuff.getId()})}" th:object="${updatePerson}" method="post">
+        <button onclick="toggleForm(this)">Изменить</button>
+        <form th:method="PATCH" th:action="@{/admin/updateStuff/{id}(id=${stuff.getId()})}" th:object="${updatePerson}" method="post" style="display: none;">
 
             <label for="updateLogin" class="form-label">Enter login:</label>
             <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
@@ -92,7 +90,7 @@
             <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
 
 
-            <button type="submit" class="btn btn-primary">Обновить</button>
+            <button type="submit" class="form_button">Обновить</button>
         </form>
 
     </div>
@@ -137,5 +135,24 @@
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>
 </div>
+<div>
+    <h1>Составление отчета</h1>
+    <a href="/graphic">Составить отчет</a>
+</div>
+<script>
+    function toggleForm(button) {
+        // Получаем следующий элемент после кнопки, который является формой
+        var form = button.nextElementSibling;
+
+        // Проверяем текущее состояние отображения формы
+        if (form.style.display === 'none') {
+            // Если форма скрыта, показываем её
+            form.style.display = 'flex';
+        } else {
+            // Если форма видима, скрываем её
+            form.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>

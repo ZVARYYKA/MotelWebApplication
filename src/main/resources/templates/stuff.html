@@ -5,12 +5,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
-    <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
+    <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <meta charset="UTF-8">
     <title>Stuff</title>
 </head>
 <body>
-
+<div  th:if="${person.getName() != null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="#main">Motel</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+            <a href="#articles">Статьи</a>
+            <a href="#feedback">Отзывы</a>
+            <a th:href="${perAccount}">Личный кабинет</a>
+            <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
+            <a class="button_login_black" href="/logout">Выход</a>
+        </div>
+    </div>
+</div>
+<div  th:if="${person.getName() == null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="/index">Motel</a>
+            <a href="/index">О нас</a>
+            <a href="/index">Контакты</a>
+            <a href="/index">Статьи</a>
+            <a href="/index">Отзывы</a>
+            <a href="/stuff">Личный кабинет</a>
+            <a class="button_login_blue" href="/registration">Регистрация</a>
+            <a class="button_login_black" href="/login">Логин</a>
+        </div>
+    </div>
+</div>
 <h1 th:text = "${person.getName()}"></h1>
 <h1 th:text = "${person.getSurname()}"></h1>
 

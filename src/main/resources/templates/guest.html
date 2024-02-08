@@ -7,14 +7,14 @@
           rel="stylesheet">
     <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <meta charset="UTF-8">
-    <title>Guest</title>
+    <title>ЛК Гостя</title>
 </head>
 <body>
 <div  th:if="${person.getName() != null}">
     <div class="nav-bar">
         <div class="nav_bar_container">
             <div class="logo">
-                <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
             </div>
             <a href="/index">Motel</a>
             <a href="/index">О нас</a>
@@ -38,7 +38,7 @@
             <a href="/index">Контакты</a>
             <a href="/index">Статьи</a>
             <a href="/index">Отзывы</a>
-            <a th:href="${perAccount}">Личный кабинет</a>
+            <a href="/guest">Личный кабинет</a>
             <a class="button_login_blue" href="/registration">Регистрация</a>
             <a class="button_login_black" href="/login">Логин</a>
         </div>
