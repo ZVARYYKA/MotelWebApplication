@@ -18,9 +18,9 @@ public class JdbcConfig {
         //TODO change string to properties config
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://***/motel_db");
+        dataSource.setUrl("jdbc:postgresql://85.193.81.230/motel_db");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("***"); //postgres or adm
+        dataSource.setPassword("QWERTYZvAR228"); //postgres or adm
         return dataSource;
     }
 }

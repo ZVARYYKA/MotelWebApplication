@@ -16,11 +16,11 @@
             <div class="logo">
                 <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
             </div>
-            <a href="#main">Motel</a>
-            <a href="#about">О нас</a>
-            <a href="#contacts">Контакты</a>
-            <a href="#articles">Статьи</a>
-            <a href="#feedback">Отзывы</a>
+            <a href="/index">Motel</a>
+            <a href="/index">О нас</a>
+            <a href="/index">Контакты</a>
+            <a href="/index">Статьи</a>
+            <a href="/index">Отзывы</a>
             <a th:href="${perAccount}">Личный кабинет</a>
             <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
             <a class="button_login_black" href="/logout">Выход</a>
@@ -47,19 +47,21 @@
 <h1 th:text = "${person.getName()}"></h1>
 <h1 th:text = "${person.getSurname()}"></h1>
 
-<h1>Запросы на дополнительные услуги</h1>
+<h1 class="other_titles">Запросы на дополнительные услуги</h1>
 <div th:if="${additionalServicesWhereStatusFalse.isEmpty()}">
-    <p>На данный момент нет заказов. Можете отдыхать :)</p>
+    <p class="other_titles">На данный момент нет заказов. Можете отдыхать :)</p>
 </div>
 <div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
     <div th:each = "additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
+        <div class="box">
+            <p th:text = "${'Услуга'+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
+            +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
+            + additionalServiceWhereStatusFalse.getComment() +' Статус '
+            + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
+        </div>
 
-        <p th:text="${additionalServiceWhereStatusFalse.getServiceName()}"></p>
-        <p th:text="${additionalServiceWhereStatusFalse.getServiceDescription()}"></p>
-        <p th:text="${additionalServiceWhereStatusFalse.getComment()}"></p>
-        <p th:text="${additionalServiceWhereStatusFalse.getRoomId()}"></p>
-        <form th:method="PATCH" th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}" class="d-inline">
-            <input type="submit" value="Провести услугу" class="btn btn-danger mt-2"/>
+        <form th:method="PATCH" th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}" class="guest_forms">
+            <input  type="submit" value="Провести услугу" class="form_button"/>
         </form>
     </div>
 </div>

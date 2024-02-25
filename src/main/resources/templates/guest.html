@@ -44,39 +44,56 @@
         </div>
     </div>
 </div>
-<h2 th:text="${person.getName()}">Name</h2>
-<h2 th:text="${person.getSurname()}">Surname</h2>
-<h1>Actual Booking</h1>
+<h1 class="other_titles">Actual Booking</h1>
 <div th:if="${actualBookings.isEmpty()}">
-    <p> На данный момент у вас нет активных броней</p>
+    <p class="other_titles"> На данный момент у вас нет активных броней</p>
 </div>
 <div th:if="${!actualBookings.isEmpty()}">
     <div th:each="actualBooking : ${actualBookings}">
-        <p th:text="'Check-in: ' + ${actualBooking.getCheckInDate()} + ' - Check-out: ' + ${actualBooking.getCheckOutDate()} + ' Room ID: ' + ${actualBooking.getRoomId()} + ' Room Type: ' + ${actualBooking.getRoomType()}">
-            Booking</p>
+        <div class="box">
+            <p th:text="'Дата приезда: ' + ${actualBooking.getCheckInDate()}
+            + ' - Дата отьезда: ' + ${actualBooking.getCheckOutDate()}
+            + ' Номер комнаты: ' + ${actualBooking.getRoomId()}
+            + ' Тип комнаты: ' + ${actualBooking.getRoomType()}">
+                Booking</p>
+        </div>
+
     </div>
 </div>
 
 <div th:if="${!futureBookings.isEmpty()}">
-    <h1>Future Booking</h1>
+    <h1 class="other_titles">Future Booking</h1>
     <div th:each="futureBooking : ${futureBookings}">
-        <p th:text="'Check-in: ' + ${futureBooking.getCheckInDate()} + ' - Check-out: ' + ${futureBooking.getCheckOutDate()} + ' Room ID: ' + ${futureBooking.getRoomId()} + ' Room Type: ' + ${futureBooking.getRoomType()}">
-            Booking</p>
+        <div class="box">
+            <p th:text="'Дата приезда: ' + ${futureBooking.getCheckInDate()}
+            + ' - Дата отьезда:: ' + ${futureBooking.getCheckOutDate()}
+            + ' Номер комнаты:: ' + ${futureBooking.getRoomId()}
+            + ' Тип комнаты:: ' + ${futureBooking.getRoomType()}">
+                Booking</p>
+        </div>
+
     </div>
 
 </div>
 <div th:if="${!historyBookings.isEmpty()}">
-    <h1>History Booking</h1>
+    <h1 class="other_titles">History Booking</h1>
+
     <div th:each="historyBooking : ${historyBookings}">
-        <p th:text="'Check-in: ' + ${historyBooking.getCheckInDate()} + ' - Check-out: ' + ${historyBooking.getCheckOutDate()} + ' Room ID: ' + ${historyBooking.getRoomId()} + ' Room Type: ' + ${historyBooking.getRoomType()}">
-            Booking</p>
+        <div class="box">
+            <p th:text="'Дата приезда: ' + ${historyBooking.getCheckInDate()} +
+             ' - Дата отьезда: ' + ${historyBooking.getCheckOutDate()} +
+             ' Номер комнаты: ' + ${historyBooking.getRoomId()} +
+             ' Тип комнаты: ' + ${historyBooking.getRoomType()}">
+                Booking</p>
+        </div>
+
     </div>
 </div>
 
 
-<h1>Создать бронь</h1>
+<h1 class="other_titles">Создать бронь</h1>
 <div>
-    <form th:method="POST" th:action="@{/guest}" th:object="${bookingDTO}">
+    <form class="guest_forms" th:method="POST" th:action="@{/guest}" th:object="${bookingDTO}">
         <label for="checkInDate">Введите начальную дату:</label>
         <input type="date" th:field="*{checkInDate}" id="checkInDate"/>
         <div style="color:red" th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}">checkInDate
@@ -96,36 +113,40 @@
         <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">roomType Error</div>
         <br/>
 
-        <input type="submit" value="Далее"/>
+        <input class="form_button_guest" type="submit" value="Далее"/>
     </form>
 
 </div>
 
 <div th:if="${!actualBookings.isEmpty()}">
 
-    <h1>Дополнительная услуга</h1>
+    <h1 class="other_titles">Дополнительная услуга</h1>
     <div>
-        <h2>Необработанные заявки</h2>
+        <h2 class="other_titles">Необработанные заявки</h2>
         <div th:each ="unprocessedAdditionalService : ${unprocessedAdditionalServices}">
-            <p th:text = "${unprocessedAdditionalService.getServiceName()}">Service name</p>
-            <p th:text = "${unprocessedAdditionalService.getServiceDescription()}">Service des</p>
-            <p th:text = "${unprocessedAdditionalService.getComment()}">Service comment</p>
-            <p th:text = "${unprocessedAdditionalService.isStatus()}">Service status</p>
-
+            <div class="box">
+                <p th:text = "${'Услуга'+unprocessedAdditionalService.getServiceName()+' Описание услуги '
+            +unprocessedAdditionalService.getServiceDescription() + ' Комментарий '
+            + unprocessedAdditionalService.getComment() +' Статус '
+            + unprocessedAdditionalService.isStatus()}">Service info</p>
+            </div>
             <br>
         </div>
     </div>
 
     <div>
-        <h2>Обработанные заявки</h2>
+        <h2 class="other_titles">Обработанные заявки</h2>
         <div th:each ="processedAdditionalService : ${processedAdditionalServices}">
-            <p th:text = "${processedAdditionalService.getServiceName()}">Service name</p>
-            <p th:text = "${processedAdditionalService.getServiceDescription()}">Service des</p>
-            <p th:text = "${processedAdditionalService.getComment()}">Service comment</p>
-            <p th:text = "${processedAdditionalService.isStatus()}">Service status</p>
+            <div class="box">
+                <p th:text = "${'Услуга'+processedAdditionalService.getServiceName()+' Описание услуги '
+            +processedAdditionalService.getServiceDescription() + ' Комментарий '
+            + processedAdditionalService.getComment() +' Статус '
+            + processedAdditionalService.isStatus()}">Service info</p>
+            </div>
+
 
             <form th:method="DELETE" th:action="@{/guest/deleteAddService/{id}(id=${processedAdditionalService.getAddServiceId()})}" >
-                <input type="submit" value="Отлично!" />
+                <input class="form_button_guest" type="submit" value="Отлично!" />
             </form>
             <br>
         </div>
@@ -134,7 +155,7 @@
     </div>
 
     <div>
-        <form th:method="POST" th:action="@{/quest/saveAddService}" th:object="${additionalServiceDTO}">
+        <form class="guest_forms" th:method="POST" th:action="@{/quest/saveAddService}" th:object="${additionalServiceDTO}">
             <label for="serviceName">Выберите услугу</label>
             <select th:field="*{serviceName}" id="serviceName" onchange="updateServiceDetails()">
                 <option value="">Выберите услугу</option>
@@ -157,13 +178,13 @@
             </div>
             <br/>
 
-            <input type="submit" value="Запросить услугу"/>
+            <input class="form_button_guest" type="submit" value="Запросить услугу"/>
         </form>
     </div>
 
 </div>
 <div th:if="${actualBookings.isEmpty()}">
-    <p>У вас нет активных броней, поэтому вы не можете запрашивать дополнительные услуги</p>
+    <p class="other_titles">У вас нет активных броней, поэтому вы не можете запрашивать дополнительные услуги</p>
 </div>
 <script th:inline="javascript">
     function updateServiceDetails() {

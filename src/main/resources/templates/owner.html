@@ -15,7 +15,7 @@
         <div class="nav-bar">
             <div class="nav_bar_container">
                 <div class="logo">
-                    <img class="logo_img" src="../../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
                 </div>
                 <a href="/index">Motel</a>
                 <a href="/index">О нас</a>
@@ -47,7 +47,10 @@
     </div>
     <h1>Работники</h1>
     <div th:each="worker : ${workers}">
-        <p th:text="'Name ' + ${worker.getName()} + '  Surname: ' + ${worker.getSurname()} + ' Salary ' + ${worker.getSalary()}">worker</p>
+        <div class="box">
+            <p th:text="'Name ' + ${worker.getName()} + '  Surname: ' + ${worker.getSurname()} + ' Salary ' + ${worker.getSalary()}">worker</p>
+
+        </div>
         <form th:action="@{/owner/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
             <div class="mb-3">
                 <label for="updateLogin" class="form-label">Enter login:</label>
@@ -88,11 +91,11 @@
                 <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Обновить</button>
+            <button type="submit" class="form_button">Обновить</button>
         </form>
         <!-- Форма удаления работника -->
         <form th:action="@{/owner/deleteWorker/{id}(id=${worker.getId()})}" method="post">
-            <button type="submit">Удалить</button>
+            <button class="form_button" type="submit">Удалить</button>
         </form>
     </div>
 </div>
@@ -138,7 +141,7 @@
             <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Создать</button>
+        <button type="submit" class="form_button">Создать</button>
     </form>
 </div>
 <div>

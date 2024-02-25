@@ -69,8 +69,6 @@ public class BookingValidator implements Validator { //TODO ReWrite method in Ro
 
             List<Rooms> availableRooms = roomTypeService.findRoomsByTypeIdAndDate(typeId, bookingDTO);
 
-
-
         if (availableRooms.isEmpty()) {
             errors.rejectValue("roomType", "RoomNotAvailable", "На данную дату нет свободных комнат");
         }
