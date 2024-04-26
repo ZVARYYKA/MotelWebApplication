@@ -10,7 +10,7 @@
     <title>Stuff</title>
 </head>
 <body>
-<div  th:if="${person.getName() != null}">
+<div th:if="${person.getName() != null}">
     <div class="nav-bar">
         <div class="nav_bar_container">
             <div class="logo">
@@ -22,12 +22,12 @@
             <a href="/index">Статьи</a>
             <a href="/index">Отзывы</a>
             <a th:href="${perAccount}">Личный кабинет</a>
-            <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
+            <a class="button_login_blue" th:text="'Привет '+${person.getName()}">Person Name</a>
             <a class="button_login_black" href="/logout">Выход</a>
         </div>
     </div>
 </div>
-<div  th:if="${person.getName() == null}">
+<div th:if="${person.getName() == null}">
     <div class="nav-bar">
         <div class="nav_bar_container">
             <div class="logo">
@@ -44,35 +44,44 @@
         </div>
     </div>
 </div>
-<h1 th:text = "${person.getName()}"></h1>
-<h1 th:text = "${person.getSurname()}"></h1>
+<h1  style="margin-top: 10px" th:text="${ 'Здравствуйте, ' + person.getName() + ' ' + person.getSurname() + '!'}"></h1>
 
 <h1 class="other_titles">Запросы на дополнительные услуги</h1>
 <div th:if="${additionalServicesWhereStatusFalse.isEmpty()}">
     <p class="other_titles">На данный момент нет заказов. Можете отдыхать :)</p>
 </div>
 <div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
-    <div th:each = "additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
+    <div th:each="additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
         <div class="box">
-            <p th:text = "${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
+            <p th:text="${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
             +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
             + additionalServiceWhereStatusFalse.getComment() +' Статус '
             + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
         </div>
 
-        <form th:method="PATCH" th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}" class="guest_forms">
-            <input  type="submit" value="Провести услугу" class="form_button"/>
+        <form th:method="PATCH"
+              th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}"
+              class="guest_forms">
+            <input type="submit" value="Провести услугу" class="form_button"/>
         </form>
     </div>
 </div>
 <div>
     <h1>Статьи</h1>
     <div>
-<!--        All articles-->
+        <div class="article_cards_stuff" th:each="articleDTO : ${articles}">
+            <a class="box" th:href="@{/index/article/{id}(id=${articleDTO.getArticleId()})}"
+               th:text="${'Заголовок ' + articleDTO.getTitle() + ' Автор ' + articleDTO.getUserName() + ' ' + articleDTO.getUserSurname()
+               }">
+                Article title
+            </a>
+
+        </div>
+        <!--        All articles-->
     </div>
     <h1>Создать статью</h1>
     <div>
-        <form  th:method="POST" th:action="@{/stuff/createArticle}" th:object="${createdArticle}">
+        <form th:method="POST" th:action="@{/stuff/createArticle}" th:object="${createdArticle}">
             <label for="title">Введите название статьи:</label>
             <input type="text" th:field="*{title}" id="title"/>
             <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title

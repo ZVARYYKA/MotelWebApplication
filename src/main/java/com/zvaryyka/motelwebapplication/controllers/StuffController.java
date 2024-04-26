@@ -37,6 +37,7 @@ public class StuffController {
         model.addAttribute("additionalServicesWhereStatusFalse",
                 additionalServiceService.getAllAdditionalServicesWhereStatusFalse());
         model.addAttribute("createdArticle",new Article());
+        model.addAttribute("articles", articleService.getAllArticleDTO());
 
 
         return "stuff";

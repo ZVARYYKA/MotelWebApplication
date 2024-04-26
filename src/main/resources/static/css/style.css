@@ -212,11 +212,17 @@ body {
 
 }
 
-.article_cards {
-  margin-top: 20px;
+.article_cards_stuff {
+  margin-top: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+.article_cards {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .feedback_information {
@@ -380,6 +386,7 @@ body {
     width: 60%;
     margin-bottom: 10px;
     margin-top: 10px;
+    color: slateblue;
 }
 
 .other_titles {
