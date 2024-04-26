@@ -54,7 +54,7 @@
 <div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
     <div th:each = "additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
         <div class="box">
-            <p th:text = "${'Услуга'+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
+            <p th:text = "${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
             +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
             + additionalServiceWhereStatusFalse.getComment() +' Статус '
             + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
@@ -65,7 +65,32 @@
         </form>
     </div>
 </div>
+<div>
+    <h1>Статьи</h1>
+    <div>
+<!--        All articles-->
+    </div>
+    <h1>Создать статью</h1>
+    <div>
+        <form  th:method="POST" th:action="@{/stuff/createArticle}" th:object="${createdArticle}">
+            <label for="title">Введите название статьи:</label>
+            <input type="text" th:field="*{title}" id="title"/>
+            <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title
+                Error
+            </div>
+            <br/>
+            <label for="article">Введите содержание статьи</label>
+            <input type="text" th:field="*{article}" id="article"/>
+            <div style="color:red" th:if="${#fields.hasErrors('article')}" th:errors="*{article}">article
+                Error
+            </div>
+            <br/>
 
+            <input class="form_button" type="submit" value="Создать"/>
+        </form>
+    </div>
+
+</div>
 
 
 </body>

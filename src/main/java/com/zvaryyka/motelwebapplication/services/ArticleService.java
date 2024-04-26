@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.services;
 
 import com.zvaryyka.motelwebapplication.dto.ArticleDTO;
+import com.zvaryyka.motelwebapplication.models.Article;
 import com.zvaryyka.motelwebapplication.repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class ArticleService {
 
     public ArticleDTO getOneArticleDTO(int id) {
         return articleRepository.getOneArticleDTO(id);
+    }
+
+    public void createNewArticle(Article article) {
+        articleRepository.saveArticle(article);
     }
 }

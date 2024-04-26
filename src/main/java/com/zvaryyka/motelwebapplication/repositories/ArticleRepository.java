@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.repositories;
 
 import com.zvaryyka.motelwebapplication.dto.ArticleDTO;
+import com.zvaryyka.motelwebapplication.models.Article;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,13 @@ public class ArticleRepository extends JdbcTemplateClass {
         return jdbcTemplate.queryForObject("SELECT ar.article_id, ar.title, ar.stuff_id,ar.article ,p.name as userName, p.surname as userSurname" +
                 " FROM article ar" +
                 "         JOIN person p ON ar.stuff_id = p.id where article_id = ?",new Object[]{id},new BeanPropertyRowMapper<>(ArticleDTO.class));
+    }
+
+    public void saveArticle(Article article) {
+
+        jdbcTemplate.update("INSERT INTO article (title,stuff_id,article) VALUES (?,?,?)",
+                article.getTitle(),
+                article.getStuffId(),
+                article.getArticle());
     }
 }

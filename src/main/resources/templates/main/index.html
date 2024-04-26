@@ -56,7 +56,7 @@
 </div>
 
 <div id="about" class="banner_about" th:style="'background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%),url(' + ${aboutBannerImageUrl} + ');'">
-    <div class="container">
+    <div class="container_for_about_us">
         <div class="about_information">
             <h1 class="main_title">О нас</h1>
             <p class="main_des">Отель с 500 летней истории</p>
@@ -79,8 +79,8 @@
             <p class="main_des">Юрисдикция США, Мальдивы</p>
             <h1 class="main_title">Карта</h1>
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.5843077786303!2d73.09727630624853!3d-0.6205585746101838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1707332046362!5m2!1sen!2sca"
-                    width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    width="450" height="600" style="border:0; margin-top: 25px" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade" ></iframe>
         </div>
     </div>
 </div>
@@ -109,9 +109,20 @@
 
             <h1 class="main_title">Отзывы</h1>
             <div class="all_feedbacks" th:each="feedback : ${feedBacksDTO}">
-                <p th:text="${feedback.getUserName() + feedback.getUserSurname()}">Имя</p>
-                <p th:text="${feedback.getMark()}">Оценка</p>
-                <p th:text="${feedback.getMessage()}">Сообщение о отеле</p><br>
+                <div class="feedback_box">
+                    <div class="feedback_box_name_and_pick">
+                        <img class="feedback_box_pic" src="../../static/img/feedback/user.png" th:src="@{/img/feedback/user.png}" alt=""/>
+                        <p class="feedback_box_name" th:text="${feedback.getUserName() + feedback.getUserSurname()}">Имя</p>
+                    </div>
+                    <div class="feedback_box_mark">
+                        <p th:text="${feedback.getMark()}">Оценка: 5</p>
+                    </div>
+                    <div class="feedback_box_message">
+                        <p th:text="${feedback.getMessage()}">Сообщение о отеле Сообщение о отеле Сообщение о отеле</p><br>
+                    </div>
+                    
+                </div>
+
             </div>
             <div th:if="${person.getName() == null}">
                 <P>Авторизуйтесь, чтобы оставлять отзыв</P>
@@ -121,16 +132,16 @@
                 <div>
                     <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
                         <label for="mark">Введите оценку:</label>
-                        <input type="number" th:field="*{mark}" id="mark"/>
-                        <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>
+                        <input type="number" class = "form-control" th:field="*{mark}" id="mark"/>
+                        <div style="color:red" th:if="${#fields.hasErrors('mark')}"  th:errors="*{mark}">Mark Error</div>
                         <br/>
                         <label for="message">Введите сообщение:</label>
-                        <input type="text" th:field="*{message}" id="message"/>
+                        <input type="text" class = "form-control" th:field="*{message}" id="message"/>
                         <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message
                             Error
                         </div>
                         <br/>
-                        <input type="submit" value="Создать"/>
+                        <input type="submit" value="Создать" class="form_button"/>
                     </form>
                 </div>
             </div>
@@ -138,6 +149,9 @@
     </div>
 
 </div>
+<footer>
+    <p>Мотель на Мальдивах. Все права защищены. 2024</p>
+</footer>
 
 <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

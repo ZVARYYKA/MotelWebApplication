@@ -9,6 +9,11 @@
     <meta charset="UTF-8">
     <title>ЛК Владельца</title>
 </head>
+<style>
+    #editForm {
+        display: none;
+    }
+</style>
 <body>
 <div>
     <div  th:if="${person.getName() != null}">
@@ -52,44 +57,43 @@
 
         </div>
         <form th:action="@{/owner/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
-            <div class="mb-3">
+
                 <label for="updateLogin" class="form-label">Enter login:</label>
                 <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
-            </div>
-            <div class="mb-3">
+
+
                 <label for="updateName" class="form-label">Enter your name:</label>
                 <input type="text" th:field="*{name}" id="updateName" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
-            </div>
-            <div class="mb-3">
+
+
                 <label for="updateSurname" class="form-label">Enter your surname:</label>
                 <input type="text" th:field="*{surname}" id="updateSurname" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth Error</div>
-            </div>
-            <div class="mb-3">
+
+
                 <label for="updateDateOfBirth" class="form-label">Enter your date of birth:</label>
                 <input type="date" th:field="*{dateOfBirth}" id="updateDateOfBirth" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth Error</div>
-            </div>
-            <div class="mb-3">
+
+
                 <label for="updatePassword" class="form-label">Enter password:</label>
                 <input type="password" th:field="*{password}" id="updatePassword" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-            </div>
-            <div class="mb-3">
+
+
                 <label for="updateRole" class="form-label">Select role:</label>
                 <select th:field="*{role}" id="updateRole" class="form-select">
                     <option value="Администратор">Администратор</option>
                     <option value="Персонал">Персонал</option>
                 </select>
                 <div style="color:red" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
-            </div>
-            <div class="mb-3">
+
                 <label for="updateSalary" class="form-label">Enter salary:</label>
                 <input type="number" th:field="*{salary}" id="updateSalary" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
-            </div>
+
 
             <button type="submit" class="form_button">Обновить</button>
         </form>

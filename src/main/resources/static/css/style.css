@@ -88,7 +88,15 @@ body {
 
     padding: 20px; /* Отступы для контейнера */
 }
+.container_for_about_us {
+    display: flex;
 
+    max-width: 1900px; /* Максимальная ширина контейнера */
+
+    padding: 20px;
+    margin-right: 300px;
+
+}
 /* Стили для заголовка с отзывами */
 
 
@@ -181,6 +189,7 @@ body {
 .about_information {
     display: flex;
     flex-direction: column;
+    margin-right: 150px;
 
 }
 
@@ -221,7 +230,7 @@ body {
 .all_feedbacks {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 .feedback {
   margin-bottom: 20px; /* Добавляем пробел между отзывами */
@@ -269,7 +278,7 @@ body {
 }
 
 .feedbacks {
-    height: 800px;
+
 }
 
 .login_form {
@@ -302,11 +311,17 @@ body {
     text-align: left;
 
 }
+.feedback_box_mark {
+    margin-top: 10px;
+}
+.feedback_box_message {
+    margin-top: 10px;
+}
 
 .form-control {
     color: white;
     border-radius: 5px;
-    margin: 10px;
+
     padding: 10px;
     background-color: #3A3A3A;
 
@@ -363,8 +378,43 @@ body {
     padding: 20px;
     border-radius: 5px;
     width: 60%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .other_titles {
     margin-left: 10px;
+}
+
+.feedback_box {
+    margin-top: 20px;
+
+    padding: 30px;
+    background-color: #3A3A3A;
+    margin-bottom: 10px;
+    max-width: 550px;
+
+}
+.feedback_box_pic {
+    max-width: 60px ;
+    max-height: 80px;
+}
+
+.feedback_box_name_and_pick {
+    display: flex;
+    align-items: center;
+}
+
+.feedback_box_name {
+    margin-left: 10px;
+}
+.cards {
+    max-width: 800px;
+}
+footer {
+    background-color: #3A3A3A;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
