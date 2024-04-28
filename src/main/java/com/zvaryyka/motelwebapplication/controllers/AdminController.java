@@ -19,6 +19,7 @@ public class AdminController {
     private final PersonDetailsService personDetailsService;
     private final PersonValidator personValidator;
     private final RegistrationService registrationService;
+
     @Autowired
     public AdminController(PersonDetailsService personDetailsService, PersonValidator personValidator, RegistrationService registrationService) {
         this.personDetailsService = personDetailsService;
@@ -31,10 +32,11 @@ public class AdminController {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
-        model.addAttribute("updatePerson",new Person());
-        model.addAttribute("stuffs",personDetailsService.showAllStuffs());
+        model.addAttribute("updatePerson", new Person());
+        model.addAttribute("stuffs", personDetailsService.showAllStuffs());
         return "admin";
     }
+
     @PostMapping("/admin/regNewStuff")
     public String regNewStuff(@ModelAttribute("person") @Valid Person person,
                               BindingResult bindingResult) {
@@ -48,14 +50,16 @@ public class AdminController {
 
         return "redirect:/admin";
     }
+
     @PostMapping("/admin/deleteStuff/{id}")
     public String deleteStuff(@PathVariable("id") int id) {
         personDetailsService.delete(id);
         return "redirect:/admin";
     }
+
     @PostMapping("/admin/updateStuff/{id}")
-    public String updateStuff(@PathVariable("id") int id,@ModelAttribute("updatePerson") @Valid Person person) {
-        personDetailsService.updateStuff(id,person);
+    public String updateStuff(@PathVariable("id") int id, @ModelAttribute("updatePerson") @Valid Person person) {
+        personDetailsService.updateStuff(id, person);
         return "redirect:/admin";
     }
 
