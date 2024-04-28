@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/java/com/zvaryyka/motelwebapplication/config/DatabaseValueConfig.java
+/src/main/resources/application.properties
