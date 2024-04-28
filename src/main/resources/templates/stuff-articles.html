@@ -44,28 +44,7 @@
         </div>
     </div>
 </div>
-<h1  style="margin-top: 10px" th:text="${ 'Здравствуйте, ' + person.getName() + ' ' + person.getSurname() + '!'}"></h1>
 
-<h1 class="other_titles">Запросы на дополнительные услуги</h1>
-<div th:if="${additionalServicesWhereStatusFalse.isEmpty()}">
-    <p class="other_titles">На данный момент нет заказов. Можете отдыхать :)</p>
-</div>
-<div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
-    <div th:each="additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
-        <div class="box">
-            <p th:text="${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
-            +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
-            + additionalServiceWhereStatusFalse.getComment() +' Статус '
-            + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
-        </div>
-
-        <form th:method="PATCH"
-              th:action="@{/stuff/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}"
-              class="guest_forms">
-            <input type="submit" value="Провести услугу" class="form_button"/>
-        </form>
-    </div>
-</div>
 <div>
     <h1>Статьи</h1>
     <div>
@@ -81,23 +60,21 @@
     </div>
     <h1>Создать статью</h1>
     <div>
-        <form th:method="POST" th:action="@{/stuff/createArticle}" th:object="${createdArticle}">
+        <form th:method="POST" th:action="@{/stuff/articles/createArticle}" th:object="${createdArticle}">
             <label for="title">Введите название статьи:</label>
             <input type="text" th:field="*{title}" id="title"/>
-            <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title
-                Error
-            </div>
+            <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</div>
             <br/>
-            <label for="article">Введите содержание статьи</label>
-            <input type="text" th:field="*{article}" id="article"/>
-            <div style="color:red" th:if="${#fields.hasErrors('article')}" th:errors="*{article}">article
-                Error
-            </div>
+
+            <label for="article">Введите содержание статьи:</label><br>
+            <textarea class="large_text_box" th:field="*{article}" id="article"></textarea>
+            <div style="color:red" th:if="${#fields.hasErrors('article')}" th:errors="*{article}">article Error</div>
             <br/>
 
             <input class="form_button" type="submit" value="Создать"/>
         </form>
     </div>
+
 
 </div>
 

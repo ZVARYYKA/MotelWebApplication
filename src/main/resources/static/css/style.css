@@ -36,10 +36,10 @@ body {
 
 .banner_contacts {
     height: 1000px; /* Высота баннера равна высоте окна браузера */
-  background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_contacts.png); /* Градиент поверх изображения */
+    background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(/static/img/main/main_contacts.png); /* Градиент поверх изображения */
     background-size: cover; /* Фоновое изображение растягивается на всю ширину и высоту баннера */
     display: flex; /* Делаем баннер флекс-контейнером */
-     /* Выравниваем текст по вертикали по центру */
+    /* Выравниваем текст по вертикали по центру */
     justify-content: left; /* Выравниваем текст по горизонтали по центру */
 }
 
@@ -88,6 +88,7 @@ body {
 
     padding: 20px; /* Отступы для контейнера */
 }
+
 .container_for_about_us {
     display: flex;
 
@@ -97,6 +98,7 @@ body {
     margin-right: 300px;
 
 }
+
 /* Стили для заголовка с отзывами */
 
 
@@ -180,7 +182,7 @@ body {
 
 
 .main_information {
-  margin: 0 auto;
+    margin: 0 auto;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -194,30 +196,31 @@ body {
 }
 
 .contact_information {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
 .article_card {
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px 20px 50px 20px;
-  border: 2px white;
-  border-radius: 10px;
-  background-color: white;
-  color: black;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px 50px 20px;
+    border: 2px white;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
 
 }
 
 .article_cards_stuff {
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
+
 .article_cards {
     margin-top: 20px;
     display: flex;
@@ -226,43 +229,47 @@ body {
 }
 
 .feedback_information {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .all_feedbacks {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
+
 .feedback {
-  margin-bottom: 20px; /* Добавляем пробел между отзывами */
+    margin-bottom: 20px; /* Добавляем пробел между отзывами */
 }
+
 .feedback p {
-  margin: 0; /* Убираем внутренние отступы у абзацев внутри отзывов */
+    margin: 0; /* Убираем внутренние отступы у абзацев внутри отзывов */
 }
 
 .feedback_form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
 }
+
 .guest_forms {
     margin-left: 10px;
 
 
 }
+
 .container_feedback {
-  display: flex;
+    display: flex;
 
-  max-width: 1900px; /* Максимальная ширина контейнера */
+    max-width: 1900px; /* Максимальная ширина контейнера */
 
-  padding: 20px; /* Отступы для контейнера */
-  justify-content: center;
+    padding: 20px; /* Отступы для контейнера */
+    justify-content: center;
 
 }
 
@@ -317,9 +324,11 @@ body {
     text-align: left;
 
 }
+
 .feedback_box_mark {
     margin-top: 10px;
 }
+
 .feedback_box_message {
     margin-top: 10px;
 }
@@ -343,6 +352,7 @@ body {
     color: white;
     border: 2px solid #F5F2F2;
 }
+
 .form_button_guest {
     margin-left: 10px;
     border-radius: 5px;
@@ -402,8 +412,9 @@ body {
     max-width: 550px;
 
 }
+
 .feedback_box_pic {
-    max-width: 60px ;
+    max-width: 60px;
     max-height: 80px;
 }
 
@@ -415,13 +426,74 @@ body {
 .feedback_box_name {
     margin-left: 10px;
 }
+
 .cards {
     max-width: 800px;
 }
+
 footer {
     background-color: #3A3A3A;
     height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.large_text_box {
+    height: 400px;
+    width: 300px;
+}
+.error-container {
+    height: 1000px;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+}
+.error-message {
+    font-size: 24px;
+    color: #ff0000;
+    margin-bottom: 20px;
+}
+.redirect-link {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.greeting-title {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.panel-title {
+    text-align: center;
+}
+
+.panel-opportunity-box {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 800px;
+    flex-direction: column;
+}
+
+.opportunity-box {
+
+    font-size: 30px;
+    color: black;
+    padding: 20px;
+    background-color: #F5F2F2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.opportunity-title {
+    text-decoration: none;
 }

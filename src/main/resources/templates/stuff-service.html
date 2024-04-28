@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>Stuff</title>
+</head>
+<body>
+<div th:if="${person.getName() != null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="/index">Motel</a>
+            <a href="/index">О нас</a>
+            <a href="/index">Контакты</a>
+            <a href="/index">Статьи</a>
+            <a href="/index">Отзывы</a>
+            <a th:href="${perAccount}">Личный кабинет</a>
+            <a class="button_login_blue" th:text="'Привет '+${person.getName()}">Person Name</a>
+            <a class="button_login_black" href="/logout">Выход</a>
+        </div>
+    </div>
+</div>
+<div th:if="${person.getName() == null}">
+    <div class="nav-bar">
+        <div class="nav_bar_container">
+            <div class="logo">
+                <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+            </div>
+            <a href="/index">Motel</a>
+            <a href="/index">О нас</a>
+            <a href="/index">Контакты</a>
+            <a href="/index">Статьи</a>
+            <a href="/index">Отзывы</a>
+            <a href="/stuff">Личный кабинет</a>
+            <a class="button_login_blue" href="/registration">Регистрация</a>
+            <a class="button_login_black" href="/login">Логин</a>
+        </div>
+    </div>
+</div>
+
+<h1 class="other_titles">Запросы на дополнительные услуги</h1>
+<div th:if="${additionalServicesWhereStatusFalse.isEmpty()}">
+    <p class="other_titles">На данный момент нет заказов. Можете отдыхать :)</p>
+</div>
+<div th:if="${!additionalServicesWhereStatusFalse.isEmpty()}">
+    <div th:each="additionalServiceWhereStatusFalse : ${additionalServicesWhereStatusFalse}">
+        <div class="box">
+            <p th:text="${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
+            +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
+            + additionalServiceWhereStatusFalse.getComment() +' Статус '
+            + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
+        </div>
+
+        <form th:method="PATCH"
+              th:action="@{/stuff/service/executeService/{id}(id=${additionalServiceWhereStatusFalse.getAddServiceId()})}"
+              class="guest_forms">
+            <input type="submit" value="Провести услугу" class="form_button"/>
+        </form>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

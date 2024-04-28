@@ -22,6 +22,7 @@ public class StuffController {
     private final PersonDetailsService personDetailsService;
 
     private final ArticleService articleService;
+
     @Autowired
     public StuffController(AdditionalServiceService additionalServiceService, PersonDetailsService personDetailsService, ArticleService articleService) {
         this.additionalServiceService = additionalServiceService;
@@ -30,31 +31,51 @@ public class StuffController {
     }
 
     @GetMapping("/stuff")
-    public String stuff(Principal principal, Model model) {
+    public String getStuffPanel(Principal principal, Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+
+        return "stuffPanel";
+    }
+
+    @GetMapping("/stuff/articles")
+    public String getStuffArticles(Principal principal, Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+        model.addAttribute("createdArticle", new Article());
+        model.addAttribute("articles", articleService.getAllArticleDTO());
+
+        return "stuff-articles";
+    }
+
+    @GetMapping("/stuff/service")
+    public String getStuffAddService(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
         model.addAttribute("additionalServicesWhereStatusFalse",
                 additionalServiceService.getAllAdditionalServicesWhereStatusFalse());
-        model.addAttribute("createdArticle",new Article());
-        model.addAttribute("articles", articleService.getAllArticleDTO());
 
 
-        return "stuff";
+        return "stuff-service";
     }
-    @PostMapping("/stuff/executeService/{id}")
+
+    @PostMapping("/stuff/service/executeService/{id}")
     public String executeService(@PathVariable("id") int id) {
         additionalServiceService.changeStatusForAdditionalService(id);
-        return "redirect:/stuff";
+        return "redirect:/stuff/service";
     }
-    @PostMapping("/stuff/createArticle")
-    public String createArticle(@ModelAttribute("createdArticle") Article article,Principal principal) {
+
+    @PostMapping("/stuff/articles/createArticle")
+    public String createArticle(@ModelAttribute("createdArticle") Article article, Principal principal) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         article.setStuffId(person.getId());
         articleService.createNewArticle(article);
 
-        return "redirect:/stuff";
+        return "redirect:/stuff/articles";
     }
 
 }
