@@ -497,3 +497,11 @@ footer {
 .opportunity-title {
     text-decoration: none;
 }
+
+.feedback-title {
+        text-align: center;
+        color: white;
+        font-size: 46px;
+
+
+}

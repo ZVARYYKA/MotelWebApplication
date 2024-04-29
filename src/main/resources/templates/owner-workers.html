@@ -56,7 +56,7 @@
             <p th:text="'Name ' + ${worker.getName()} + '  Surname: ' + ${worker.getSurname()} + ' Salary ' + ${worker.getSalary()}">worker</p>
 
         </div>
-        <form th:action="@{/owner/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
+        <form th:action="@{/owner/workers/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
 
                 <label for="updateLogin" class="form-label">Enter login:</label>
                 <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
@@ -98,14 +98,14 @@
             <button type="submit" class="form_button">Обновить</button>
         </form>
         <!-- Форма удаления работника -->
-        <form th:action="@{/owner/deleteWorker/{id}(id=${worker.getId()})}" method="post">
+        <form th:action="@{/owner/workers/deleteWorker/{id}(id=${worker.getId()})}" method="post">
             <button class="form_button" type="submit">Удалить</button>
         </form>
     </div>
 </div>
 <div>
     <h1>Создать нового работника</h1>
-    <form th:method="POST" th:action="@{/owner/regNewWorker}" th:object="${personDTO}" class="mt-5">
+    <form th:method="POST" th:action="@{/owner/workers/regNewWorker}" th:object="${personDTO}" class="mt-5">
         <div class="mb-3">
             <label for="login" class="form-label">Enter login:</label>
             <input type="text" th:field="*{login}" id="login" class="form-control"/>

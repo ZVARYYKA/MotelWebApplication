@@ -28,42 +28,49 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
+    public String getAdminPanel(Principal principal,Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+
+        return "adminPanel";
+    }
+        @GetMapping("/admin/stuff")
     public String admin(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
         model.addAttribute("updatePerson", new Person());
         model.addAttribute("stuffs", personDetailsService.showAllStuffs());
-        return "admin";
+        return "admin-stuff";
     }
-
-    @PostMapping("/admin/regNewStuff")
+    @PostMapping("/admin/stuff/regNewStuff")
     public String regNewStuff(@ModelAttribute("person") @Valid Person person,
                               BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "admin";
+            return "admin-stuff";
         }
 
         registrationService.regStuff(person);
 
-        return "redirect:/admin";
+        return "redirect:/admin/stuff";
     }
 
-    @PostMapping("/admin/deleteStuff/{id}")
+    @PostMapping("/admin/stuff/deleteStuff/{id}")
     public String deleteStuff(@PathVariable("id") int id) {
         personDetailsService.delete(id);
-        return "redirect:/admin";
+        return "redirect:/admin/stuff";
     }
 
-    @PostMapping("/admin/updateStuff/{id}")
+    @PostMapping("/admin/stuff/updateStuff/{id}")
     public String updateStuff(@PathVariable("id") int id, @ModelAttribute("updatePerson") @Valid Person person) {
         personDetailsService.updateStuff(id, person);
-        return "redirect:/admin";
+        return "redirect:/admin/stuff";
     }
 
-    @GetMapping("/graphic")
+    @GetMapping("/admin/statistics")
     public String viewGraphic() {
         return "graphic";
     }

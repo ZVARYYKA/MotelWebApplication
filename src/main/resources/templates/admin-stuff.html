@@ -53,11 +53,11 @@
                     Stuff</p>
             </div>
 
-        <form class="guest_forms" th:action="@{/admin/deleteStuff/{id}(id=${stuff.getId()})}" th:method="DELETE">
+        <form class="guest_forms" th:action="@{/admin/stuff/deleteStuff/{id}(id=${stuff.getId()})}" th:method="DELETE">
             <button class="form_button" type="submit">Удалить</button>
         </form>
         <button class="form_button" onclick="toggleForm(this)">Изменить</button>
-        <form th:method="PATCH"  th:action="@{/admin/updateStuff/{id}(id=${stuff.getId()})}" th:object="${updatePerson}" method="post" style="display: none;">
+        <form th:method="PATCH"  th:action="@{/admin/stuff/updateStuff/{id}(id=${stuff.getId()})}" th:object="${updatePerson}" method="post" style="display: none;">
 
             <label for="updateLogin" class="form-label">Enter login:</label>
             <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
@@ -99,7 +99,7 @@
 </div>
 <div>
     <h1>Создать новый персонал</h1>
-    <form th:method="POST" th:action="@{/admin/regNewStuff}" th:object="${person}" class="mt-5">
+    <form th:method="POST" th:action="@{/admin/stuff/regNewStuff}" th:object="${person}" class="mt-5">
 
         <label for="login" class="form-label">Enter login:</label>
         <input type="text" th:field="*{login}" id="login" class="form-control"/>

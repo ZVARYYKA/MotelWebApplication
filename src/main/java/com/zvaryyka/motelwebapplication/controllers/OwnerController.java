@@ -29,47 +29,60 @@ public class OwnerController {
         this.personValidator = personValidator;
         this.personDetailsService = personDetailsService;
     }
-
     @GetMapping("/owner")
-    public String owner(Principal principal, Model model) {
+    public String getOwnerPanel(Principal principal, Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+
+
+        return "ownerPanel";
+    }
+
+    @GetMapping("/owner/workers")
+    public String getOwnerWorkers(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
         model.addAttribute("personDTO",new PersonDTO());
         model.addAttribute("workers",personDetailsService.showAllWorkers());
 
-        return "owner";
+        return "owner-workers";
     }
-    @PostMapping("/owner/regNewWorker")
+    @PostMapping("/owner/workers/regNewWorker")
     public String createNewWorker(@ModelAttribute("personDTO") @Valid PersonDTO personDTO,
                                   BindingResult bindingResult) {
         personValidator.validate(registrationService.convertToPerson(personDTO), bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "owner";
+            return "owner-workers";
         }
         registrationService.regWorker(personDTO);
-        return "redirect:/owner";
+        return "redirect:/owner/workers";
 
     }
-    @PostMapping("/owner/changeWorker/{id}")
+    @PostMapping("/owner/workers/changeWorker/{id}")
     public String changeWorker(@ModelAttribute("personDTO") @Valid PersonDTO personDTO,
                                BindingResult bindingResult, @PathVariable("id") int id) {
         personValidator.validate(registrationService.convertToPerson(personDTO), bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "owner";
+            return "owner-workers";
         }
         registrationService.changeWorker(personDTO,id);
-        return "redirect:/owner";
+        return "redirect:/owner/workers";
 
     }
-    @PostMapping("/owner/deleteWorker/{id}")
+    @PostMapping("/owner/workers/deleteWorker/{id}")
     public String deleteWorker(@PathVariable("id") int id) {
         personDetailsService.delete(id);
-        return "redirect:/owner";
+        return "redirect:/owner/workers";
     }
 
+    @GetMapping("/owner/statistics")
+    public String getStatisticsPage() {
+        return "graphic";
+    }
 
 
 }
