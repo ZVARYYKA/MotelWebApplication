@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.services;
 
 import com.zvaryyka.motelwebapplication.dto.ServicesDTO;
+import com.zvaryyka.motelwebapplication.models.Services;
 import com.zvaryyka.motelwebapplication.repositories.ServicesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,7 @@ public class ServicesService {
     }
 
 
-
+    public void addNewService(Services services) {
+        servicesRepository.addNewService(services);
+    }
 }

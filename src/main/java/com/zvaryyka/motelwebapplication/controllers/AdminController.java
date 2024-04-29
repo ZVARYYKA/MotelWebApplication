@@ -1,8 +1,10 @@
 package com.zvaryyka.motelwebapplication.controllers;
 
 import com.zvaryyka.motelwebapplication.models.Person;
+import com.zvaryyka.motelwebapplication.models.Services;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import com.zvaryyka.motelwebapplication.services.RegistrationService;
+import com.zvaryyka.motelwebapplication.services.ServicesService;
 import com.zvaryyka.motelwebapplication.util.validation.PersonValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,14 @@ public class AdminController {
     private final PersonValidator personValidator;
     private final RegistrationService registrationService;
 
+    private final ServicesService servicesService;
+
     @Autowired
-    public AdminController(PersonDetailsService personDetailsService, PersonValidator personValidator, RegistrationService registrationService) {
+    public AdminController(PersonDetailsService personDetailsService, PersonValidator personValidator, RegistrationService registrationService, ServicesService servicesService) {
         this.personDetailsService = personDetailsService;
         this.personValidator = personValidator;
         this.registrationService = registrationService;
+        this.servicesService = servicesService;
     }
 
     @GetMapping("/admin")
@@ -74,4 +79,21 @@ public class AdminController {
     public String viewGraphic() {
         return "graphic";
     }
+
+    @GetMapping("/admin/services")
+    public String getAddServicePage(Principal principal,Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+        model.addAttribute("services",servicesService.getAllServicesDTO());
+        model.addAttribute("addService",new Services());
+        return "admin-service";
+    }
+    @PostMapping("/admin/services/createNewService")
+    public String createNewService(@ModelAttribute("addService") @Valid  Services services) {
+
+        servicesService.addNewService(services);
+        return "redirect:/admin/services";
+    }
+
 }

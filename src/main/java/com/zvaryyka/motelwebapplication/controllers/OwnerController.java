@@ -1,9 +1,12 @@
 package com.zvaryyka.motelwebapplication.controllers;
 
 import com.zvaryyka.motelwebapplication.dto.PersonDTO;
+import com.zvaryyka.motelwebapplication.dto.RoomDTO;
 import com.zvaryyka.motelwebapplication.models.Person;
+import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import com.zvaryyka.motelwebapplication.services.RegistrationService;
+import com.zvaryyka.motelwebapplication.services.RoomTypeService;
 import com.zvaryyka.motelwebapplication.util.validation.PersonValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +26,16 @@ public class OwnerController {
     private final RegistrationService registrationService;
     private final PersonValidator personValidator;
     private final PersonDetailsService personDetailsService;
+
+    private final RoomTypeService roomTypeService;
+
+
     @Autowired
-    public OwnerController(RegistrationService registrationService, PersonValidator personValidator, PersonDetailsService personDetailsService) {
+    public OwnerController(RegistrationService registrationService, PersonValidator personValidator, PersonDetailsService personDetailsService, RoomTypeService roomTypeService) {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
         this.personDetailsService = personDetailsService;
+        this.roomTypeService = roomTypeService;
     }
     @GetMapping("/owner")
     public String getOwnerPanel(Principal principal, Model model) {
@@ -84,5 +92,36 @@ public class OwnerController {
         return "graphic";
     }
 
+    @GetMapping("/owner/rooms")
+    public String getOwnerRooms(Principal principal, Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+        model.addAttribute("rooms",roomTypeService.getAllRoomDTO());
+        model.addAttribute("roomDTO",new RoomDTO());
+        model.addAttribute("typeOfRooms", roomTypeService.allTypeOfRooms());
+
+
+        return "owner-rooms";
+    }
+    @PostMapping("/owner/rooms/addNewRoom")
+    public String addNewRoom(@ModelAttribute("room") RoomDTO roomDTO) {
+
+        roomTypeService.addNewRoom(roomDTO);
+
+
+
+        return "redirect:/owner/rooms";
+
+    }
+    @GetMapping("/owner/typeOfRooms")
+    public String getOwnerTypeOfRooms(Principal principal, Model model) {
+        Person person = personDetailsService.findByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("person", person);
+
+
+        return "owner-type-of-rooms";
+    }
 
 }

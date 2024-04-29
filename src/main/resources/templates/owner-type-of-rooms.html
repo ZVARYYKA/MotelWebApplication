@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+
+<div>
+    <div th:if="${person.getName() != null}">
+        <div class="nav-bar">
+            <div class="nav_bar_container">
+                <div class="logo">
+                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                </div>
+                <a href="/index">Motel</a>
+                <a href="/index">О нас</a>
+                <a href="/index">Контакты</a>
+                <a href="/index">Статьи</a>
+                <a href="/index">Отзывы</a>
+                <a th:href="${perAccount}">Личный кабинет</a>
+                <a class="button_login_blue" th:text="'Привет '+${person.getName()}">Person Name</a>
+                <a class="button_login_black" href="/logout">Выход</a>
+            </div>
+        </div>
+    </div>
+    <div th:if="${person.getName() == null}">
+        <div class="nav-bar">
+            <div class="nav_bar_container">
+                <div class="logo">
+                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+                </div>
+                <a href="/index">Motel</a>
+                <a href="/index">О нас</a>
+                <a href="/index">Контакты</a>
+                <a href="/index">Статьи</a>
+                <a href="/index">Отзывы</a>
+                <a th:href="/admin">Личный кабинет</a>
+                <a class="button_login_blue" href="/registration">Регистрация</a>
+                <a class="button_login_black" href="/login">Логин</a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h1>Услуги</h1>
+        <div>
+            <div class="article_cards_stuff" th:each="service : ${services}">
+                <a class="box"
+                   th:text="${'Услуга ' + service.getServiceName() + ' Описание ' + service.getServiceDescription()
+               + ' Стоимость '
+               + service.getCost()
+               }">
+                    Service title
+                </a>
+
+            </div>
+            <!--        All articles-->
+        </div>
+        <h1>Создать услугу</h1>
+        <div>
+            <form th:method="POST" th:action="@{/admin/services/createNewService}" th:object="${addService}">
+                <label for="serviceName">Введите название услуги</label>
+                <input type="text" th:field="*{serviceName}" id="serviceName"/>
+                <div style="color:red" th:if="${#fields.hasErrors('serviceName')}" th:errors="*{serviceName}">
+                    serviceName Error
+                </div>
+                <br/>
+                <label for="serviceDescription">Введите описание услуги</label>
+                <input type="text" th:field="*{serviceDescription}" id="serviceDescription"/>
+                <div style="color:red" th:if="${#fields.hasErrors('serviceDescription')}"
+                     th:errors="*{serviceDescription}">serviceDescription Error
+                </div>
+                <br/>
+                <label for="cost">Введите цену услуги</label>
+                <input type="number" th:field="*{cost}" id="cost"/>
+                <div style="color:red" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}">
+                    cost Error
+                </div>
+                <br/>
+
+                <input class="form_button" type="submit" value="Создать"/>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

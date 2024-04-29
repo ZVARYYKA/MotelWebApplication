@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.repositories;
 
 import com.zvaryyka.motelwebapplication.dto.BookingDTO;
+import com.zvaryyka.motelwebapplication.dto.RoomDTO;
 import com.zvaryyka.motelwebapplication.dto.TypeOfRoomsDTO;
 import com.zvaryyka.motelwebapplication.models.Rooms;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -21,6 +22,11 @@ public class RoomTypeRepository extends JdbcTemplateClass {
     public int findTypeIdByRoomName(BookingDTO bookingDTO) {
 
         return findTypeIdByRoomTypeName(bookingDTO.getRoomType());
+
+    }
+    public int findTypeIdByRoomName(String typeName) {
+
+        return findTypeIdByRoomTypeName(typeName);
 
     }
 
@@ -52,4 +58,12 @@ public class RoomTypeRepository extends JdbcTemplateClass {
     }
 
 
+    public List<RoomDTO> getAllRoomDTO() {
+        return jdbcTemplate.query("SELECT rooms.room_id,types_of_rooms.room_type " +
+                "FROM rooms join types_of_rooms on rooms.room_type_id = types_of_rooms.type_id",
+                new BeanPropertyRowMapper<>(RoomDTO.class));
+    }
+    public void addNewRoom(int roomTypeId) {
+        jdbcTemplate.update("INSERT into rooms (room_type_id) VALUES (?)",roomTypeId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.zvaryyka.motelwebapplication.services;
 
 import com.zvaryyka.motelwebapplication.dto.BookingDTO;
+import com.zvaryyka.motelwebapplication.dto.RoomDTO;
 import com.zvaryyka.motelwebapplication.dto.TypeOfRoomsDTO;
 import com.zvaryyka.motelwebapplication.models.Rooms;
 import com.zvaryyka.motelwebapplication.repositories.RoomTypeRepository;
@@ -26,7 +27,22 @@ public class RoomTypeService {
     public int findTypeIdByRoomTypeName(BookingDTO bookingDTO) {
         return roomTypeRepository.findTypeIdByRoomName(bookingDTO);
     }
+    public int findTypeIdByRoomTypeName(String typeName) {
+        return roomTypeRepository.findTypeIdByRoomName(typeName);
+    }
     public List<Rooms> findRoomsByTypeIdAndDate(int typeId,BookingDTO bookingDTO) {
         return roomTypeRepository.findRoomsByTypeIdAndDate(typeId,bookingDTO);
     }
+
+    public List<RoomDTO> getAllRoomDTO() {
+
+        return roomTypeRepository.getAllRoomDTO();
+
+
+    }
+
+    public void addNewRoom(RoomDTO roomDTO) {
+        roomTypeRepository.addNewRoom(findTypeIdByRoomTypeName(roomDTO.getRoom_type()));
+    }
+
 }
