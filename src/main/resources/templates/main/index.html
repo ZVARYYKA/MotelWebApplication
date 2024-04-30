@@ -8,6 +8,10 @@
           rel="stylesheet">
     <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <title>Motel</title>
+    <style>
+        .consultation_form {
+        }
+    </style>
 
 </head>
 <body>
@@ -151,8 +155,22 @@
     </div>
 
 </div>
+
+<div>
+    <h1>Запрос на консультацию</h1>
+
+    <form  class="consultation_form" th:method="POST" th:action="@{/index/sendEmail}" th:object="${emailForConsultation}">
+        <label for="mail">Введите свою почту</label>
+        <input type="email" class = "form-control" th:field="*{mail}" id="mail"/>
+        <div style="color:red" th:if="${#fields.hasErrors('mail')}"  th:errors="*{mail}">mail Error</div>
+        <br/>
+        <input type="submit" value="Оставить заявку" class="form_button"/>
+    </form>
+</div>
+
 <footer>
     <p>Мотель на Мальдивах. Все права защищены. 2024</p>
+
 </footer>
 
 <script>
