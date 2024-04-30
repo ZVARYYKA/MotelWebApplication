@@ -4,6 +4,7 @@ import com.zvaryyka.motelwebapplication.dto.BookingDTO;
 import com.zvaryyka.motelwebapplication.dto.RoomDTO;
 import com.zvaryyka.motelwebapplication.dto.TypeOfRoomsDTO;
 import com.zvaryyka.motelwebapplication.models.Rooms;
+import com.zvaryyka.motelwebapplication.models.TypeOfRooms;
 import com.zvaryyka.motelwebapplication.repositories.RoomTypeRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +46,11 @@ public class RoomTypeService {
         roomTypeRepository.addNewRoom(findTypeIdByRoomTypeName(roomDTO.getRoom_type()));
     }
 
+    public void addNewTypeOfRoom(TypeOfRooms typeOfRooms) {
+        roomTypeRepository.addNewTypeOfRoom(typeOfRooms);
+    }
+
+    public List<TypeOfRooms> getAllTypeOfRooms() {
+        return roomTypeRepository.getAllTypeOfRooms();
+    }
 }

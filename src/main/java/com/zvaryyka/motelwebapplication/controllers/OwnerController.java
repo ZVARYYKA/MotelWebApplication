@@ -4,6 +4,7 @@ import com.zvaryyka.motelwebapplication.dto.PersonDTO;
 import com.zvaryyka.motelwebapplication.dto.RoomDTO;
 import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.models.Rooms;
+import com.zvaryyka.motelwebapplication.models.TypeOfRooms;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import com.zvaryyka.motelwebapplication.services.RegistrationService;
 import com.zvaryyka.motelwebapplication.services.RoomTypeService;
@@ -119,9 +120,19 @@ public class OwnerController {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
+        model.addAttribute("typeOfRoomList",roomTypeService.getAllTypeOfRooms());
+        model.addAttribute("createdTypeOfRoom", new TypeOfRooms());
 
 
         return "owner-type-of-rooms";
+    }
+    @PostMapping("/owner/typeOfRooms/createNewTypeOfRooms")
+    public String createNewTypeOfRooms(@ModelAttribute("createdTypeOfRoom") TypeOfRooms typeOfRooms) {
+
+        roomTypeService.addNewTypeOfRoom(typeOfRooms);
+
+
+        return "redirect:/owner/typeOfRooms";
     }
 
 }

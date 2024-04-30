@@ -48,38 +48,31 @@
     </div>
 
     <div>
-        <h1>Услуги</h1>
+        <h1>Типы комнат</h1>
         <div>
-            <div class="article_cards_stuff" th:each="service : ${services}">
+            <div class="article_cards_stuff" th:each="typeOfRoom : ${typeOfRoomList}">
                 <a class="box"
-                   th:text="${'Услуга ' + service.getServiceName() + ' Описание ' + service.getServiceDescription()
-               + ' Стоимость '
-               + service.getCost()
-               }">
-                    Service title
+                   th:text="${'Название ' + typeOfRoom.getRoomType() + ' Стоимость ' + typeOfRoom.getOneDayCost()  }">
+                    TypeOfRooms title
                 </a>
 
             </div>
             <!--        All articles-->
         </div>
-        <h1>Создать услугу</h1>
+        <h1>Создать новый тип комнаты</h1>
         <div>
-            <form th:method="POST" th:action="@{/admin/services/createNewService}" th:object="${addService}">
-                <label for="serviceName">Введите название услуги</label>
-                <input type="text" th:field="*{serviceName}" id="serviceName"/>
-                <div style="color:red" th:if="${#fields.hasErrors('serviceName')}" th:errors="*{serviceName}">
-                    serviceName Error
+            <form th:method="POST" th:action="@{/owner/typeOfRooms/createNewTypeOfRooms}" th:object="${createdTypeOfRoom}">
+                <label for="roomType">Введите название типа</label>
+                <input type="text" th:field="*{roomType}" id="roomType"/>
+                <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">
+                    roomType Error
                 </div>
                 <br/>
-                <label for="serviceDescription">Введите описание услуги</label>
-                <input type="text" th:field="*{serviceDescription}" id="serviceDescription"/>
-                <div style="color:red" th:if="${#fields.hasErrors('serviceDescription')}"
-                     th:errors="*{serviceDescription}">serviceDescription Error
-                </div>
+
                 <br/>
-                <label for="cost">Введите цену услуги</label>
-                <input type="number" th:field="*{cost}" id="cost"/>
-                <div style="color:red" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}">
+                <label for="oneDayCost">Введите цену типа комнаты</label>
+                <input type="number" th:field="*{oneDayCost}" id="oneDayCost"/>
+                <div style="color:red" th:if="${#fields.hasErrors('oneDayCost')}" th:errors="*{oneDayCost}">
                     cost Error
                 </div>
                 <br/>
@@ -88,6 +81,6 @@
             </form>
         </div>
     </div>
-
+</div>
 </body>
 </html>

@@ -66,7 +66,7 @@
     <div th:each="futureBooking : ${futureBookings}">
         <div class="box">
             <p th:text="'Дата приезда: ' + ${futureBooking.getCheckInDate()}
-            + ' - Дата отьезда:: ' + ${futureBooking.getCheckOutDate()}
+            + ' - Дата отьезда: ' + ${futureBooking.getCheckOutDate()}
             + ' Номер комнаты:: ' + ${futureBooking.getRoomId()}
             + ' Тип комнаты:: ' + ${futureBooking.getRoomType()}">
                 Booking</p>
@@ -107,8 +107,8 @@
         </div>
         <br/>
         <label for="roomType">Выберите тип комнаты</label>
-        <select th:field="*{roomType}" id="roomType" th:each="typeOfRoom : ${typeOfRooms}">
-            <option th:value="${typeOfRoom.getRoomType()}" th:text="${typeOfRoom.getRoomType()}"></option>
+        <select th:field="*{roomType}" id="roomType">
+            <option th:each="typeOfRoom : ${typeOfRooms}" th:value="${typeOfRoom.getRoomType()}" th:text="${typeOfRoom.getRoomType()}"></option>
         </select>
         <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">roomType Error</div>
         <br/>
