@@ -8,10 +8,7 @@
           rel="stylesheet">
     <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <title>Motel</title>
-    <style>
-        .consultation_form {
-        }
-    </style>
+
 
 </head>
 <body>
@@ -156,16 +153,23 @@
 
 </div>
 
-<div>
-    <h1>Запрос на консультацию</h1>
+<div class="consultation_block">
+    <h1 class="consultation-title">Остались вопросы?</h1>
+    <p class="consultation-des">Оставьте заявку и мы с вами свяжемся в ближайшее время</p>
+<div class="consultation_container">
 
-    <form  class="consultation_form" th:method="POST" th:action="@{/index/sendEmail}" th:object="${emailForConsultation}">
-        <label for="mail">Введите свою почту</label>
-        <input type="email" class = "form-control" th:field="*{mail}" id="mail"/>
-        <div style="color:red" th:if="${#fields.hasErrors('mail')}"  th:errors="*{mail}">mail Error</div>
-        <br/>
-        <input type="submit" value="Оставить заявку" class="form_button"/>
-    </form>
+    <div>
+        <form  class="consultation-form" th:method="POST" th:action="@{/index/sendEmail}" th:object="${emailForConsultation}">
+            <label for="mail">Введите свою почту</label>
+            <input style="margin-top: 20px" type="email" class = "form-control" th:field="*{mail}" id="mail"/>
+            <div style="color:red" th:if="${#fields.hasErrors('mail')}"  th:errors="*{mail}">mail Error</div>
+            <br/>
+            <input type="submit" value="Оставить заявку" class="form_button"/>
+        </form>
+    </div>
+
+</div>
+
 </div>
 
 <footer>
@@ -187,6 +191,15 @@
             }
         });
     });
+    // Функция для открытия/закрытия мобильного меню при клике на бургер
+    function toggleMenu() {
+        var mobileNavLinks = document.getElementById("mobileNavLinks");
+        var overlay = document.getElementById("overlay");
+        var burgerMenu = document.querySelector(".burger-menu");
+        burgerMenu.classList.toggle("active");
+        mobileNavLinks.classList.toggle("active");
+        overlay.classList.toggle("active");
+    }
 </script>
 
 </body>

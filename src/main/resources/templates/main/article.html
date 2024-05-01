@@ -6,14 +6,83 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
     <link media="all" rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #303030; /* Черный цвет фона */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .article-container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: #424242; /* Серый цвет контейнера */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff; /* Белый цвет заголовков */
+            font-weight: 700;
+            margin-bottom: 10px;
+            animation: slideInDown 1s ease;
+        }
+
+        p {
+            color: #cccccc; /* Светло-серый цвет текста */
+            line-height: 1.6;
+            animation: slideInUp 1s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Article</title>
 </head>
 <body>
-<h1 th:text = "${articleDTO.getTitle()}"></h1>
-<h1 th:text = "${articleDTO.getUserName()}"></h1>
-<h1 th:text = "${articleDTO.getUserSurname()}"></h1>
-<p th:text = "${articleDTO.getArticle()}"></p>
-
+<div class="article-container">
+    <h1 th:text="${articleDTO.getTitle()}"></h1>
+    <h1 th:text="${articleDTO.getUserName()}"></h1>
+    <h1 th:text="${articleDTO.getUserSurname()}"></h1>
+    <p th:text="${articleDTO.getArticle()}"></p>
+</div>
 </body>
 </html>
