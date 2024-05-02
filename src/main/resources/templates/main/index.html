@@ -111,7 +111,7 @@
         <div class="feedback_information">
 
 
-            <div class="all_feedbacks" th:each="feedback : ${feedBacksDTO}">
+            <div class="feedback_info" th:each="feedback : ${feedBacksDTO}">
                 <div class="feedback_box">
                     <div class="feedback_box_name_and_pick">
                         <img class="feedback_box_pic" src="../../static/img/feedback/user.png" th:src="@{/img/feedback/user.png}" alt=""/>
@@ -126,27 +126,29 @@
                     
                 </div>
 
+
             </div>
-            <div th:if="${person.getName() == null}">
-                <P>Авторизуйтесь, чтобы оставлять отзыв</P>
+
             </div>
-            <div class="feedback_form" th:if="${person.getName() != null}">
-                <h1>Добавить отзыв</h1>
-                <div>
-                    <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
-                        <label for="mark">Введите оценку:</label>
-                        <input type="number" class = "form-control" th:field="*{mark}" id="mark"/>
-                        <div style="color:red" th:if="${#fields.hasErrors('mark')}"  th:errors="*{mark}">Mark Error</div>
-                        <br/>
-                        <label for="message">Введите сообщение:</label>
-                        <input type="text" class = "form-control" th:field="*{message}" id="message"/>
-                        <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message
-                            Error
-                        </div>
-                        <br/>
-                        <input type="submit" value="Создать" class="form_button"/>
-                    </form>
-                </div>
+        <div th:if="${person.getName() == null}">
+            <p class="feedback-non-auth-des">Авторизуйтесь, чтобы оставлять отзыв</p>
+        </div>
+        <div class="feedback_form" th:if="${person.getName() != null}">
+            <h1>Добавить отзыв</h1>
+            <div>
+                <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
+                    <label for="mark">Введите оценку:</label>
+                    <input type="number" class = "form-control" th:field="*{mark}" id="mark"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('mark')}"  th:errors="*{mark}">Mark Error</div>
+                    <br/>
+                    <label for="message">Введите сообщение:</label>
+                    <input type="text" class = "form-control" th:field="*{message}" id="message"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message
+                        Error
+                    </div>
+                    <br/>
+                    <input type="submit" value="Создать" class="form_button"/>
+                </form>
             </div>
         </div>
     </div>
