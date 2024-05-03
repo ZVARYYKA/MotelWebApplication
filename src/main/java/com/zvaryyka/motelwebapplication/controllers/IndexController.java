@@ -30,6 +30,7 @@ public class IndexController {
     private final ArticleService articleService;
 
     private final EmailSenderService emailSenderService;
+
     @Autowired
     public IndexController(PersonDetailsService personDetailsService, FeedBackService feedBackService, ArticleService articleService, EmailSenderService emailSenderService) {
         this.personDetailsService = personDetailsService;
@@ -56,11 +57,7 @@ public class IndexController {
         model.addAttribute("articlesDTO", articleService.getAllArticleDTO());
         model.addAttribute("emailForConsultation", new EmailDTO());
 
-        if (principal == null) {
-            model.addAttribute("person", new Person());
-            model.addAttribute("perAccount", "/login");
-
-        } else {
+        if (principal != null) {
 
             Person person = personDetailsService.findByLogin(principal.getName())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -76,6 +73,11 @@ public class IndexController {
 
             model.addAttribute("person", person);
 
+
+        } else {
+
+            model.addAttribute("person", new Person());
+            model.addAttribute("perAccount", "/login");
 
         }
 
@@ -99,11 +101,10 @@ public class IndexController {
         return "redirect:/index";
     }
 
-    @PostMapping("/index/sendEmail")
+    @PostMapping("/sendEmail")
     public String sendEmail(@ModelAttribute("emailForConsultation") EmailDTO emailDTO) {
-        emailSenderService.sendEmail(emailDTO.getMail(), "Гостиница Motel!",
-                "Спасибо, скоро с вами свяжеться администрация отеля");
-        emailSenderService.sendEmail("nzvarykin@gmail.com","Запрос на консультацию",emailDTO.getMail() +" Запросил консультацию!" );
+
+        emailSenderService.sendEmailsAboutConsultation(emailDTO.getMail());
 
         return "redirect:/index";
     }

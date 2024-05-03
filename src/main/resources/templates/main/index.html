@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<div  th:if="${person.getName() != null}">
+<div th:if="${person.getName() != null}">
     <div class="nav-bar">
         <div class="nav_bar_container">
             <div class="logo">
@@ -24,12 +24,12 @@
             <a href="#articles">Статьи</a>
             <a href="#feedback">Отзывы</a>
             <a th:href="${perAccount}">Личный кабинет</a>
-            <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
+            <a class="button_login_blue" th:text="'Привет '+${person.getName()}">Person Name</a>
             <a class="button_login_black" href="/logout">Выход</a>
         </div>
     </div>
 </div>
-<div  th:if="${person.getName() == null}">
+<div th:if="${person.getName() == null}">
     <div class="nav-bar">
         <div class="nav_bar_container">
             <div class="logo">
@@ -47,16 +47,18 @@
     </div>
 </div>
 
-<div id="main" class="banner_main" th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${mainBannerImageUrl} + ');'">
+<div id="main" class="banner_main"
+     th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${mainBannerImageUrl} + ');'">
     <div class="container">
         <div class="main_information">
-            <h1 class="main_title" >Почувствуй уровень кайфа</h1>
-            <h2 class="main_des" >Вместе с Motel</h2>
+            <h1 class="main_title">Почувствуй уровень кайфа</h1>
+            <h2 class="main_des">Вместе с Motel</h2>
         </div>
     </div>
 </div>
 
-<div id="about" class="banner_about" th:style="'background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%),url(' + ${aboutBannerImageUrl} + ');'">
+<div id="about" class="banner_about"
+     th:style="'background-image: linear-gradient(90deg, rgba(47, 47, 47, 0.20) 0%, rgba(47, 47, 47, 0.80) 37.74%, #2F2F2F 51.27%),url(' + ${aboutBannerImageUrl} + ');'">
     <div class="container_for_about_us">
         <div class="about_information">
             <h1 class="main_title">О нас</h1>
@@ -71,7 +73,8 @@
         </div>
     </div>
 </div>
-<div id="contacts" class="banner_contacts" th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${contactsBannerImageUrl} + ');'">
+<div id="contacts" class="banner_contacts"
+     th:style="'background-image: linear-gradient(90deg, #2F2F2F 48.73%, rgba(47, 47, 47, 0.80) 62.26%, rgba(47, 47, 47, 0.20) 100%), url(' + ${contactsBannerImageUrl} + ');'">
     <div class="container">
         <div class="contact_information">
             <h1 class="main_title">Контакты</h1>
@@ -81,7 +84,7 @@
             <h1 class="main_title">Карта</h1>
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.5843077786303!2d73.09727630624853!3d-0.6205585746101838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sca!4v1707332046362!5m2!1sen!2sca"
                     width="450" height="600" style="border:0; margin-top: 25px" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade" ></iframe>
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 </div>
@@ -104,7 +107,7 @@
     </div>
 
 </div>
-<div id= "feedback" class="feedbacks">
+<div id="feedback" class="feedbacks">
     <h1 class="feedback-title">Отзывы</h1>
     <div class="container_feedback">
 
@@ -114,35 +117,39 @@
             <div class="feedback_info" th:each="feedback : ${feedBacksDTO}">
                 <div class="feedback_box">
                     <div class="feedback_box_name_and_pick">
-                        <img class="feedback_box_pic" src="../../static/img/feedback/user.png" th:src="@{/img/feedback/user.png}" alt=""/>
-                        <p class="feedback_box_name" th:text="${feedback.getUserName() + feedback.getUserSurname()}">Имя</p>
+                        <img class="feedback_box_pic" src="../../static/img/feedback/user.png"
+                             th:src="@{/img/feedback/user.png}" alt=""/>
+                        <p class="feedback_box_name" th:text="${feedback.getUserName() + feedback.getUserSurname()}">
+                            Имя</p>
                     </div>
                     <div class="feedback_box_mark">
                         <p th:text="${feedback.getMark()}">Оценка: 5</p>
                     </div>
                     <div class="feedback_box_message">
-                        <p th:text="${feedback.getMessage()}">Сообщение о отеле Сообщение о отеле Сообщение о отеле</p><br>
+                        <p th:text="${feedback.getMessage()}">Сообщение о отеле Сообщение о отеле Сообщение о отеле</p>
+                        <br>
                     </div>
-                    
+
                 </div>
 
 
             </div>
 
-            </div>
+        </div>
         <div th:if="${person.getName() == null}">
             <p class="feedback-non-auth-des">Авторизуйтесь, чтобы оставлять отзыв</p>
         </div>
         <div class="feedback_form" th:if="${person.getName() != null}">
             <h1>Добавить отзыв</h1>
             <div>
-                <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}" th:object="${feedBackDTO}">
+                <form class="createNewFeedBackForm" th:method="POST" th:action="@{/index/createNewFeedBack}"
+                      th:object="${feedBackDTO}">
                     <label for="mark">Введите оценку:</label>
-                    <input type="number" class = "form-control" th:field="*{mark}" id="mark"/>
-                    <div style="color:red" th:if="${#fields.hasErrors('mark')}"  th:errors="*{mark}">Mark Error</div>
+                    <input type="number" class="form-control" th:field="*{mark}" id="mark"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('mark')}" th:errors="*{mark}">Mark Error</div>
                     <br/>
                     <label for="message">Введите сообщение:</label>
-                    <input type="text" class = "form-control" th:field="*{message}" id="message"/>
+                    <input type="text" class="form-control" th:field="*{message}" id="message"/>
                     <div style="color:red" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message
                         Error
                     </div>
@@ -158,19 +165,20 @@
 <div class="consultation_block">
     <h1 class="consultation-title">Остались вопросы?</h1>
     <p class="consultation-des">Оставьте заявку и мы с вами свяжемся в ближайшее время</p>
-<div class="consultation_container">
+    <div class="consultation_container">
 
-    <div>
-        <form  class="consultation-form" th:method="POST" th:action="@{/index/sendEmail}" th:object="${emailForConsultation}">
-            <label for="mail">Введите свою почту</label>
-            <input style="margin-top: 20px" type="email" class = "form-control" th:field="*{mail}" id="mail"/>
-            <div style="color:red" th:if="${#fields.hasErrors('mail')}"  th:errors="*{mail}">mail Error</div>
-            <br/>
-            <input type="submit" value="Оставить заявку" class="form_button"/>
-        </form>
+        <div>
+            <form class="consultation-form" th:method="post" th:action="@{/sendEmail}" th:object="${emailForConsultation}">
+
+                <label for="mail">Введите свою почту:</label>
+                <input style="margin-top: 20px" type="email" class="form-control" th:field="*{mail}" id="mail"/>
+                <div style="color:red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">mail Error</div>
+                <br/>
+                <input type="submit" value="Оставить заявку" class="form_button"/>
+            </form>
+        </div>
+
     </div>
-
-</div>
 
 </div>
 
@@ -193,15 +201,8 @@
             }
         });
     });
-    // Функция для открытия/закрытия мобильного меню при клике на бургер
-    function toggleMenu() {
-        var mobileNavLinks = document.getElementById("mobileNavLinks");
-        var overlay = document.getElementById("overlay");
-        var burgerMenu = document.querySelector(".burger-menu");
-        burgerMenu.classList.toggle("active");
-        mobileNavLinks.classList.toggle("active");
-        overlay.classList.toggle("active");
-    }
+
+
 </script>
 
 </body>

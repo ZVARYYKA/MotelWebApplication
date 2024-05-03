@@ -33,8 +33,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/guest").hasAuthority("ROLE_USER")
                         .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
-                        .requestMatchers("/index/**", "/registration","/resources/static/css/**","/style.css","/css/style.css","/img/**","/statistics","/graphic",
-                                "/totalRevenue","/totalBookings").permitAll() //TODO REWORK STATISTIC BECAUSE NON AUTHENTICATED
+                        .requestMatchers("/super-user").hasAuthority("ROLE_SUPERUSER")
+                        .requestMatchers("/index/**", "/registration", "/resources/static/css/**", "/style.css", "/css/style.css", "/img/**", "/statistics", "/graphic",
+                                "/totalRevenue", "/totalBookings", "/sendEmail").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -53,6 +54,8 @@ public class SecurityConfig {
                                 response.sendRedirect("/guest");
                             } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_STUFF"))) {
                                 response.sendRedirect("/stuff");
+                            } else if (authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_SUPERUSER"))) {
+                                response.sendRedirect("/super-user");
                             } else {
                                 // Если у пользователя нет определенной роли, перенаправляем на общую страницу
                                 response.sendRedirect("/index");
