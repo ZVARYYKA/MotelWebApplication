@@ -12,4 +12,14 @@ public class Services {
     private String serviceName;
     private String serviceDescription;
     private int cost; //May Rewrite
+
+    @Override
+    public String toString() {
+        return "Services{" +
+                "serviceId=" + serviceId +
+                ", serviceName='" + serviceName + '\'' +
+                ", serviceDescription='" + serviceDescription + '\'' +
+                ", cost=" + cost +
+                '}';
+    }
 }

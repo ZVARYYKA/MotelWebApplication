@@ -13,5 +13,16 @@ public class AdditionalServices {
     private int serviceId;
     private String comment;
     private boolean status;
+
+    @Override
+    public String toString() {
+        return "AdditionalServices{" +
+                "addServiceId=" + addServiceId +
+                ", bookingId=" + bookingId +
+                ", serviceId=" + serviceId +
+                ", comment='" + comment + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
 

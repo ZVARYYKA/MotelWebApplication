@@ -1,4 +1,5 @@
 package com.zvaryyka.motelwebapplication.services;
+
 import com.zvaryyka.motelwebapplication.models.Person;
 import com.zvaryyka.motelwebapplication.repositories.PeopleRepository;
 import com.zvaryyka.motelwebapplication.security.PersonDetails;
@@ -7,12 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PersonDetailsService implements UserDetailsService {
     private final PeopleRepository userRepository;
 
@@ -34,6 +37,7 @@ public class PersonDetailsService implements UserDetailsService {
     public Optional<Person> findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
+
     private Person getCurrentPerson(Principal principal) {
         if (principal == null) {
             return new Person();
@@ -43,22 +47,25 @@ public class PersonDetailsService implements UserDetailsService {
         }
 
     }
+
     public List<Person> showAllStuffs() {
         return userRepository.showStaff();
     }
+
     public List<Person> showAllWorkers() {
         return userRepository.showWorkers();
     }
 
-
     public void delete(int id) {
+        log.info("Deleting user with id {}", id);
         userRepository.delete(id);
+        log.info("User deleted successfully with id {}", id);
     }
 
     public void updateStuff(int id, Person person) {
+        log.info("Updating stuff with id {}", id);
         person.setUserRole("ROLE_STUFF");
-
-        userRepository.updateWorker(id,person);
+        userRepository.updateWorker(id, person);
+        log.info("Stuff updated successfully with id {}", id);
     }
 }
-

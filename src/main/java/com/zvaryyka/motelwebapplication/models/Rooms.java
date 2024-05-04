@@ -14,4 +14,11 @@ public class Rooms {
     private int roomTypeId;
 
 
+    @Override
+    public String toString() {
+        return "Rooms{" +
+                "RoomId=" + RoomId +
+                ", roomTypeId=" + roomTypeId +
+                '}';
+    }
 }

@@ -13,6 +13,19 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Person {
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", password='" + password + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
 
     private int id;
 

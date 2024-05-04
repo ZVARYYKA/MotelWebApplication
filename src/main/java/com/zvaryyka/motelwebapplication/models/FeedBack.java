@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class FeedBack {
-    //TODO конструктор класса с параметрами
+
     private int feedbackId;
     @NotNull(message = "Данное поле не должно быть пустым.")
     @Min(value = 0, message = "Оценка должна быть больше 0")
@@ -30,5 +30,15 @@ public class FeedBack {
         feedBack.setMark(feedBackDTO.getMark());
         feedBack.setMessage(feedBackDTO.getMessage());
         return feedBack;
+    }
+
+    @Override
+    public String toString() {
+        return "FeedBack{" +
+                "feedbackId=" + feedbackId +
+                ", mark=" + mark +
+                ", userId=" + userId +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

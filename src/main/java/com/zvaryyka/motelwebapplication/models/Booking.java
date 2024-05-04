@@ -26,5 +26,15 @@ public class Booking {
     private int summary_cost;
 
 
-
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingId=" + bookingId +
+                ", userId=" + userId +
+                ", roomId=" + roomId +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                ", summary_cost=" + summary_cost +
+                '}';
+    }
 }

@@ -7,16 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.Objects;
 
 @Service
+@Transactional
+@Slf4j
 public class RegistrationService {
 
     private final PeopleRepository peopleRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final RandomService randomService;
 
     @Autowired
@@ -26,87 +28,90 @@ public class RegistrationService {
         this.randomService = randomService;
     }
 
-    @Transactional
     public void regGuest(Person person) {
+        log.info("Registering guest: {}", person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_USER");
         peopleRepository.save(person);
+        log.info("Guest registered successfully");
     }
 
-    @Transactional
     public void regStuff(Person person) {
+        log.info("Registering staff: {}", person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_STUFF");
         peopleRepository.saveWithSalary(person);
+        log.info("Staff registered successfully");
     }
 
-    @Transactional
     public void regAdmin(Person person) {
+        log.info("Registering admin: {}", person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_ADMIN");
         peopleRepository.saveWithSalary(person);
+        log.info("Admin registered successfully");
     }
 
-    @Transactional
     public void regOwner(Person person) {
+        log.info("Registering owner: {}", person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_OWNER");
         peopleRepository.saveWithSalary(person);
+        log.info("Owner registered successfully");
     }
 
-    @Transactional
     public void editAdmin(Person person, int id) {
+        log.info("Editing admin with ID {}: {}", id, person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_ADMIN");
         peopleRepository.updateWorker(id, person);
+        log.info("Admin edited successfully");
     }
 
-    @Transactional
     public void editOwner(Person person, int id) {
+        log.info("Editing owner with ID {}: {}", id, person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_OWNER");
         peopleRepository.updateWorker(id, person);
+        log.info("Owner edited successfully");
     }
 
-
-    @Transactional
     public void updateStuff(Person updatePerson, int id) {
+        log.info("Updating staff with ID {}: {}", id, updatePerson);
         updatePerson.setPassword(passwordEncoder.encode(updatePerson.getPassword()));
         updatePerson.setUserRole("ROLE_STUFF");
         peopleRepository.updateWorker(id, updatePerson);
+        log.info("Staff updated successfully");
     }
 
-    @Transactional
     public void delete(int id) {
+        log.info("Deleting user with ID {}", id);
         peopleRepository.delete(id);
+        log.info("User deleted successfully");
     }
-
 
     public void regWorker(PersonDTO personDTO) {
         if (Objects.equals(personDTO.getRole(), "Администратор")) {
-
             regAdmin(convertToPerson(personDTO));
         }
         if (Objects.equals(personDTO.getRole(), "Персонал")) {
-
             regStuff(convertToPerson(personDTO));
         }
     }
 
-    @Transactional
     public void updateAdmin(Person person, int id) {
+        log.info("Updating admin with ID {}: {}", id, person);
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setUserRole("ROLE_ADMIN");
         peopleRepository.updateWorker(id, person);
+        log.info("Admin updated successfully");
     }
 
     public void changeWorker(PersonDTO personDTO, int id) {
         if (Objects.equals(personDTO.getRole(), "Администратор")) {
-
             updateAdmin(convertToPerson(personDTO), id);
         }
         if (Objects.equals(personDTO.getRole(), "Персонал")) {
-
             updateStuff(convertToPerson(personDTO), id);
         }
     }
@@ -121,12 +126,9 @@ public class RegistrationService {
         person.setSalary(personDTO.getSalary());
 
         return person;
-
     }
 
-    @Transactional
-    public Person registerNewRandomOwner() { //Использовать данные владельца
-
+    public Person registerNewRandomOwner() {
         Person person = new Person();
         //TODO Change to constructor
         String password = randomService.createRandomString(20);
@@ -141,8 +143,6 @@ public class RegistrationService {
 
         person.setPassword(password);
 
-
         return person;
-
     }
 }

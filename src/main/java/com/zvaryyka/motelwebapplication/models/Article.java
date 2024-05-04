@@ -12,4 +12,14 @@ public class Article {
     private String title;
     private int stuffId;
     private String article;
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "articleId=" + articleId +
+                ", title='" + title + '\'' +
+                ", stuffId=" + stuffId +
+                ", article='" + article + '\'' +
+                '}';
+    }
 }
