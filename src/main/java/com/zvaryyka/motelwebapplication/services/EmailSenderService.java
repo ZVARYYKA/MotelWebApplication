@@ -19,7 +19,8 @@ public class EmailSenderService {
         this.mailSender = mailSender;
     }
 
-    public void sendEmail(String toEmail,String subject,String body) {
+    @Async
+    public void sendEmail(String toEmail, String subject, String body) {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("nzvarykin@gmail.com");
@@ -36,13 +37,13 @@ public class EmailSenderService {
     public void sendEmailsAboutConsultation(String email) {
         sendEmail(email, "Гостиница Motel!",
                 "Спасибо, скоро с вами свяжеться администрация отеля");
-        sendEmail("nzvarykin@gmail.com","Запрос на консультацию",email +" Запросил консультацию!" );
+        sendEmail("nzvarykin@gmail.com", "Запрос на консультацию", email + " Запросил консультацию!");
 
     }
 
     public void sendEmailAboutCreatedNewOwner(Person person) {
 
-        sendEmail("nzvarykin@gmail.com","Создан аккаунт владельца!",
+        sendEmail("nzvarykin@gmail.com", "Создан аккаунт владельца!",
                 "Был создан новый акканут владельца, данные: \nЛогин: " + "\n" + person.getLogin() + "\nПароль: "
                         + "\n" + person.getPassword());
 

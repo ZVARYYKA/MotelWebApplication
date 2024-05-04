@@ -4,9 +4,12 @@ import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
                         .requestMatchers("/super-user").hasAuthority("ROLE_SUPERUSER")
                         .requestMatchers("/index/**", "/registration", "/resources/static/css/**", "/style.css", "/css/style.css", "/img/**", "/statistics", "/graphic",
-                                "/totalRevenue", "/totalBookings", "/sendEmail").permitAll()
+                                "/totalRevenue", "/totalBookings").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -81,5 +85,6 @@ public class SecurityConfig {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }

@@ -101,13 +101,12 @@ public class IndexController {
         return "redirect:/index";
     }
 
-    @PostMapping("/sendEmail")
+    @GetMapping("index/sendEmail")
     public String sendEmail(@ModelAttribute("emailForConsultation") EmailDTO emailDTO) {
-
         emailSenderService.sendEmailsAboutConsultation(emailDTO.getMail());
-
-        return "redirect:/index";
+        return "message-about-consultation";
     }
+
 
 
 }
