@@ -53,10 +53,11 @@
     <h1>Работники</h1>
     <div th:each="worker : ${workers}">
         <div class="box">
-            <p th:text="'Name ' + ${worker.getName()} + '  Surname: ' + ${worker.getSurname()} + ' Salary ' + ${worker.getSalary()}">worker</p>
+            <p th:text="'Имя: ' + ${worker.getName()} + ' Фамилия: ' + ${worker.getSurname()} + ' Зарплата: ' + ${worker.getSalary()}">worker</p>
 
         </div>
-        <form th:action="@{/owner/workers/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
+        <button class="form_button" onclick="toggleForm('editForm')">Изменить</button>
+        <form  id="editForm"  style="display: none;" th:action="@{/owner/workers/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
 
                 <label for="updateLogin" class="form-label">Enter login:</label>
                 <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
@@ -84,7 +85,7 @@
 
 
                 <label for="updateRole" class="form-label">Select role:</label>
-                <select th:field="*{role}" id="updateRole" class="form-select">
+                <select  th:field="*{role}" id="updateRole" class="form-option">
                     <option value="Администратор">Администратор</option>
                     <option value="Персонал">Персонал</option>
                 </select>
@@ -133,7 +134,7 @@
         </div>
         <div class="mb-3">
             <label for="role" class="form-label">Select role:</label>
-            <select th:field="*{role}" id="role" class="form-select">
+            <select th:field="*{role}" id="role" class="form-option">
                 <option value="Администратор">Администратор</option>
                 <option value="Персонал">Персонал</option>
             </select>
@@ -152,5 +153,15 @@
     <h1>Составление отчета</h1>
     <a href="/graphic">Составить отчет</a>
 </div>
+<script>
+    function toggleForm(id) {
+        var form = document.getElementById(id);
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>

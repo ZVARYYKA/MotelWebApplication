@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="container-admin-service">
         <h1>Услуги</h1>
         <div>
             <div class="article_cards_stuff" th:each="service : ${services}">
@@ -60,25 +60,25 @@
                 </a>
 
             </div>
-            <!--        All articles-->
+
         </div>
         <h1>Создать услугу</h1>
         <div>
             <form th:method="POST" th:action="@{/admin/services/createNewService}" th:object="${addService}">
-                <label for="serviceName">Введите название услуги</label>
-                <input type="text" th:field="*{serviceName}" id="serviceName"/>
+                <label for="serviceName">Введите название услуги: </label>
+                <input class="form-control" type="text" th:field="*{serviceName}" id="serviceName"/>
                 <div style="color:red" th:if="${#fields.hasErrors('serviceName')}" th:errors="*{serviceName}">
                     serviceName Error
                 </div>
                 <br/>
-                <label for="serviceDescription">Введите описание услуги</label>
-                <input type="text" th:field="*{serviceDescription}" id="serviceDescription"/>
+                <label for="serviceDescription">Введите описание услуги: </label>
+                <input class="form-control" type="text" th:field="*{serviceDescription}" id="serviceDescription"/>
                 <div style="color:red" th:if="${#fields.hasErrors('serviceDescription')}"
                      th:errors="*{serviceDescription}">serviceDescription Error
                 </div>
                 <br/>
-                <label for="cost">Введите цену услуги</label>
-                <input type="number" th:field="*{cost}" id="cost"/>
+                <label for="cost">Введите цену услуги: </label>
+                <input class="form-control" type="number" th:field="*{cost}" id="cost"/>
                 <div style="color:red" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}">
                     cost Error
                 </div>
@@ -88,6 +88,6 @@
             </form>
         </div>
     </div>
-
+</div>
 </body>
 </html>

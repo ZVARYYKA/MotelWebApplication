@@ -9,16 +9,15 @@ import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
 import com.zvaryyka.motelwebapplication.services.RegistrationService;
 import com.zvaryyka.motelwebapplication.services.RoomTypeService;
 import com.zvaryyka.motelwebapplication.util.validation.PersonValidator;
+import com.zvaryyka.motelwebapplication.util.validation.TypeOfRoomsValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -30,14 +29,18 @@ public class OwnerController {
 
     private final RoomTypeService roomTypeService;
 
+    private final TypeOfRoomsValidator typeOfRoomsValidator;
+
 
     @Autowired
-    public OwnerController(RegistrationService registrationService, PersonValidator personValidator, PersonDetailsService personDetailsService, RoomTypeService roomTypeService) {
+    public OwnerController(RegistrationService registrationService, PersonValidator personValidator, PersonDetailsService personDetailsService, RoomTypeService roomTypeService, TypeOfRoomsValidator typeOfRoomsValidator) {
         this.registrationService = registrationService;
         this.personValidator = personValidator;
         this.personDetailsService = personDetailsService;
         this.roomTypeService = roomTypeService;
+        this.typeOfRoomsValidator = typeOfRoomsValidator;
     }
+
     @GetMapping("/owner")
     public String getOwnerPanel(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
@@ -53,11 +56,12 @@ public class OwnerController {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
-        model.addAttribute("personDTO",new PersonDTO());
-        model.addAttribute("workers",personDetailsService.showAllWorkers());
+        model.addAttribute("personDTO", new PersonDTO());
+        model.addAttribute("workers", personDetailsService.showAllWorkers());
 
         return "owner-workers";
     }
+
     @PostMapping("/owner/workers/regNewWorker")
     public String createNewWorker(@ModelAttribute("personDTO") @Valid PersonDTO personDTO,
                                   BindingResult bindingResult) {
@@ -70,6 +74,7 @@ public class OwnerController {
         return "redirect:/owner/workers";
 
     }
+
     @PostMapping("/owner/workers/changeWorker/{id}")
     public String changeWorker(@ModelAttribute("personDTO") @Valid PersonDTO personDTO,
                                BindingResult bindingResult, @PathVariable("id") int id) {
@@ -78,10 +83,11 @@ public class OwnerController {
         if (bindingResult.hasErrors()) {
             return "owner-workers";
         }
-        registrationService.changeWorker(personDTO,id);
+        registrationService.changeWorker(personDTO, id);
         return "redirect:/owner/workers";
 
     }
+
     @PostMapping("/owner/workers/deleteWorker/{id}")
     public String deleteWorker(@PathVariable("id") int id) {
         personDetailsService.delete(id);
@@ -98,41 +104,57 @@ public class OwnerController {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
-        model.addAttribute("rooms",roomTypeService.getAllRoomDTO());
-        model.addAttribute("roomDTO",new RoomDTO());
+        model.addAttribute("rooms", roomTypeService.getAllRoomDTO());
+        model.addAttribute("roomDTO", new RoomDTO());
         model.addAttribute("typeOfRooms", roomTypeService.allTypeOfRooms());
 
 
         return "owner-rooms";
     }
+
     @PostMapping("/owner/rooms/addNewRoom")
     public String addNewRoom(@ModelAttribute("room") RoomDTO roomDTO) {
 
         roomTypeService.addNewRoom(roomDTO);
 
 
-
         return "redirect:/owner/rooms";
 
     }
+
     @GetMapping("/owner/typeOfRooms")
     public String getOwnerTypeOfRooms(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
-        model.addAttribute("typeOfRoomList",roomTypeService.getAllTypeOfRooms());
+        model.addAttribute("typeOfRoomList", roomTypeService.getAllTypeOfRooms());
         model.addAttribute("createdTypeOfRoom", new TypeOfRooms());
 
 
         return "owner-type-of-rooms";
     }
+
     @PostMapping("/owner/typeOfRooms/createNewTypeOfRooms")
-    public String createNewTypeOfRooms(@ModelAttribute("createdTypeOfRoom") TypeOfRooms typeOfRooms) {
+    public String createNewTypeOfRooms(@ModelAttribute("createdTypeOfRoom") TypeOfRooms typeOfRooms,
+                                       BindingResult bindingResult,Principal principal,
+                                       Model model) {
 
+        // Применяем валидацию к объекту TypeOfRooms
+        typeOfRoomsValidator.validate(typeOfRooms, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            Person person = personDetailsService.findByLogin(principal.getName())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            model.addAttribute("person", person);
+            model.addAttribute("typeOfRoomList", roomTypeService.getAllTypeOfRooms());
+            return "owner-type-of-rooms";
+        }
+
+        // Сохраняем новый тип комнаты
         roomTypeService.addNewTypeOfRoom(typeOfRooms);
-
 
         return "redirect:/owner/typeOfRooms";
     }
+
 
 }

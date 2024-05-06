@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<div>
+<div class="article-stuff-container">
     <h1>Статьи</h1>
     <div>
         <div class="article_cards_stuff" th:each="articleDTO : ${articles}">
@@ -61,8 +61,8 @@
     <h1>Создать статью</h1>
     <div>
         <form th:method="POST" th:action="@{/stuff/articles/createArticle}" th:object="${createdArticle}">
-            <label for="title">Введите название статьи:</label>
-            <input type="text" th:field="*{title}" id="title"/>
+            <label  for="title">Введите название статьи:</label>
+            <input class="form-control" type="text" th:field="*{title}" id="title"/>
             <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title Error</div>
             <br/>
 

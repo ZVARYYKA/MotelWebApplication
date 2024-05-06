@@ -11,135 +11,145 @@
 </head>
 <body>
 
-<div>
-    <div  th:if="${person.getName() != null}">
-        <div class="nav-bar">
-            <div class="nav_bar_container">
-                <div class="logo">
-                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+<div class="container-admin-stuff">
+    <div>
+        <div th:if="${person.getName() != null}">
+            <div class="nav-bar">
+                <div class="nav_bar_container">
+                    <div class="logo">
+                        <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}"
+                             alt="logo">
+                    </div>
+                    <a href="/index">Motel</a>
+                    <a href="/index">О нас</a>
+                    <a href="/index">Контакты</a>
+                    <a href="/index">Статьи</a>
+                    <a href="/index">Отзывы</a>
+                    <a th:href="${perAccount}">Личный кабинет</a>
+                    <a class="button_login_blue" th:text="'Привет '+${person.getName()}">Person Name</a>
+                    <a class="button_login_black" href="/logout">Выход</a>
                 </div>
-                <a href="/index">Motel</a>
-                <a href="/index">О нас</a>
-                <a href="/index">Контакты</a>
-                <a href="/index">Статьи</a>
-                <a href="/index">Отзывы</a>
-                <a th:href="${perAccount}">Личный кабинет</a>
-                <a class="button_login_blue" th:text = "'Привет '+${person.getName()}" >Person Name</a>
-                <a class="button_login_black" href="/logout">Выход</a>
             </div>
         </div>
-    </div>
-    <div  th:if="${person.getName() == null}">
-        <div class="nav-bar">
-            <div class="nav_bar_container">
-                <div class="logo">
-                    <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}" alt="logo">
+        <div th:if="${person.getName() == null}">
+            <div class="nav-bar">
+                <div class="nav_bar_container">
+                    <div class="logo">
+                        <img class="logo_img" src="../static/img/logo/logo.png" th:src="@{/img/logo/logo.png}"
+                             alt="logo">
+                    </div>
+                    <a href="/index">Motel</a>
+                    <a href="/index">О нас</a>
+                    <a href="/index">Контакты</a>
+                    <a href="/index">Статьи</a>
+                    <a href="/index">Отзывы</a>
+                    <a th:href="/admin">Личный кабинет</a>
+                    <a class="button_login_blue" href="/registration">Регистрация</a>
+                    <a class="button_login_black" href="/login">Логин</a>
                 </div>
-                <a href="/index">Motel</a>
-                <a href="/index">О нас</a>
-                <a href="/index">Контакты</a>
-                <a href="/index">Статьи</a>
-                <a href="/index">Отзывы</a>
-                <a th:href="/admin">Личный кабинет</a>
-                <a class="button_login_blue" href="/registration">Регистрация</a>
-                <a class="button_login_black" href="/login">Логин</a>
             </div>
         </div>
-    </div>
-    <h1 class="other_titles">Персонал</h1>
-    <div th:each="stuff : ${stuffs}">
+        <h1 class="other_titles">Персонал</h1>
+        <div th:each="stuff : ${stuffs}">
             <div class="box">
-                <p  th:text="'Name ' + ${stuff.getName()} + '  Surname: ' + ${stuff.getSurname()} + ' Salary ' + ${stuff.getSalary()}">
+                <p th:text="'Name ' + ${stuff.getName()} + '  Surname: ' + ${stuff.getSurname()} + ' Salary ' + ${stuff.getSalary()}">
                     Stuff</p>
             </div>
 
-        <form class="guest_forms" th:action="@{/admin/stuff/deleteStuff/{id}(id=${stuff.getId()})}" th:method="DELETE">
-            <button class="form_button" type="submit">Удалить</button>
-        </form>
-        <button class="form_button" onclick="toggleForm(this)">Изменить</button>
-        <form th:method="PATCH"  th:action="@{/admin/stuff/updateStuff/{id}(id=${stuff.getId()})}" th:object="${updatePerson}" method="post" style="display: none;">
+            <form class="guest_forms" th:action="@{/admin/stuff/deleteStuff/{id}(id=${stuff.getId()})}"
+                  th:method="DELETE">
+                <button class="form_button" type="submit">Удалить</button>
+            </form>
+            <button class="form_button" onclick="toggleForm(this)">Изменить</button>
+            <form th:method="PATCH" th:action="@{/admin/stuff/updateStuff/{id}(id=${stuff.getId()})}"
+                  th:object="${updatePerson}" method="post" style="display: none;">
 
-            <label for="updateLogin" class="form-label">Enter login:</label>
-            <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
+                <label for="updateLogin" class="form-label">Enter login:</label>
+                <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
+
+
+                <label for="updateName" class="form-label">Enter your name:</label>
+                <input type="text" th:field="*{name}" id="updateName" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error
+                </div>
+
+
+                <label for="updateSurname" class="form-label">Enter your surname:</label>
+                <input type="text" th:field="*{surname}" id="updateSurname" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth
+                    Error
+                </div>
+
+
+                <label for="updateDateOfBirth" class="form-label">Enter your date of birth:</label>
+                <input type="date" th:field="*{dateOfBirth}" id="updateDateOfBirth" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of
+                    birth
+                    Error
+                </div>
+
+
+                <label for="updatePassword" class="form-label">Enter password:</label>
+                <input type="password" th:field="*{password}" id="updatePassword" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error
+                </div>
+
+
+                <label for="updateSalary" class="form-label">Enter salary:</label>
+                <input type="number" th:field="*{salary}" id="updateSalary" class="form-control"/>
+                <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
+
+
+                <button type="submit" class="form_button">Обновить</button>
+            </form>
+
+        </div>
+    </div>
+    <div>
+        <h1>Создать новый персонал</h1>
+        <form th:method="POST" th:action="@{/admin/stuff/regNewStuff}" th:object="${person}" class="mt-5">
+
+            <label for="login" class="form-label">Enter login:</label>
+            <input type="text" th:field="*{login}" id="login" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
 
 
-            <label for="updateName" class="form-label">Enter your name:</label>
-            <input type="text" th:field="*{name}" id="updateName" class="form-control"/>
+            <label for="name" class="form-label">Enter your name:</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
 
 
-            <label for="updateSurname" class="form-label">Enter your surname:</label>
-            <input type="text" th:field="*{surname}" id="updateSurname" class="form-control"/>
+            <label for="surname" class="form-label">Enter your surname:</label>
+            <input type="text" th:field="*{surname}" id="surname" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth Error
             </div>
 
 
-            <label for="updateDateOfBirth" class="form-label">Enter your date of birth:</label>
-            <input type="date" th:field="*{dateOfBirth}" id="updateDateOfBirth" class="form-control"/>
+            <label for="dateOfBirth" class="form-label">Enter your date of birth:</label>
+            <input type="date" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth
                 Error
             </div>
 
 
-            <label for="updatePassword" class="form-label">Enter password:</label>
-            <input type="password" th:field="*{password}" id="updatePassword" class="form-control"/>
+            <label for="password" class="form-label">Enter password:</label>
+            <input type="password" th:field="*{password}" id="password" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
 
 
-            <label for="updateSalary" class="form-label">Enter salary:</label>
-            <input type="number" th:field="*{salary}" id="updateSalary" class="form-control"/>
+            <label for="salary" class="form-label">Enter salary:</label>
+            <input type="number" th:field="*{salary}" id="salary" class="form-control"/>
             <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
 
 
-            <button type="submit" class="form_button">Обновить</button>
+            <button type="submit" class="form_button">Создать</button>
         </form>
-
     </div>
-</div>
-<div>
-    <h1>Создать новый персонал</h1>
-    <form th:method="POST" th:action="@{/admin/stuff/regNewStuff}" th:object="${person}" class="mt-5">
-
-        <label for="login" class="form-label">Enter login:</label>
-        <input type="text" th:field="*{login}" id="login" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
-
-
-        <label for="name" class="form-label">Enter your name:</label>
-        <input type="text" th:field="*{name}" id="name" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
-
-
-        <label for="surname" class="form-label">Enter your surname:</label>
-        <input type="text" th:field="*{surname}" id="surname" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth Error
-        </div>
-
-
-        <label for="dateOfBirth" class="form-label">Enter your date of birth:</label>
-        <input type="date" th:field="*{dateOfBirth}" id="dateOfBirth" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth
-            Error
-        </div>
-
-
-        <label for="password" class="form-label">Enter password:</label>
-        <input type="password" th:field="*{password}" id="password" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-
-
-        <label for="salary" class="form-label">Enter salary:</label>
-        <input type="number" th:field="*{salary}" id="salary" class="form-control"/>
-        <div style="color:red" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</div>
-
-
-        <button type="submit" class="form_button">Создать</button>
-    </form>
-</div>
-<div>
-    <h1>Составление отчета</h1>
-    <a href="/graphic">Составить отчет</a>
+    <div>
+        <h1>Составление отчета</h1>
+        <a href="/graphic">Составить отчет</a>
+    </div>
 </div>
 <script>
     function toggleForm(button) {

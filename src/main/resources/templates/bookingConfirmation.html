@@ -24,7 +24,7 @@
     <input type="hidden" th:name="checkOutDate" th:value="${#dates.format(acceptBookingDTO.checkOutDate, 'yyyy-MM-dd')}">
     <input type="hidden" th:name="roomType" th:value="${acceptBookingDTO.roomType}">
     <input type="hidden" th:name="totalCost" th:value="${totalCost}">
-    <button type="submit">Подтвердить бронирование</button>
+    <button class="form_button" type="submit">Подтвердить бронирование</button>
 </form>
 
 </body>

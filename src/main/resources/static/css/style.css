@@ -330,7 +330,7 @@ body {
 }
 
 .article {
-    height: 800px;
+
 }
 
 .feedbacks {
@@ -411,7 +411,7 @@ body {
 
 .form-label {
     color: #F5F2F2;
-    padding: 10px;
+    padding: 5px;
     text-align: left;
 
 }
@@ -423,7 +423,15 @@ body {
 .feedback_box_message {
     margin-top: 10px;
 }
+.form-option {
+    color: white;
+    border-radius: 5px;
 
+    padding: 10px;
+    background-color: #3A3A3A;
+
+    border: 2px solid #F5F2F2;
+}
 .form-control {
     color: white;
     border-radius: 5px;
@@ -532,6 +540,12 @@ footer {
 }
 
 .large_text_box {
+    color: white;
+    border-radius: 5px;
+
+    background-color: #3A3A3A;
+
+    border: 2px solid #F5F2F2;
     height: 400px;
     width: 300px;
 }
@@ -633,4 +647,24 @@ footer {
 }
 
 .feedback_info {
+}
+
+.article-stuff-container {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.container-admin-service {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.container-admin-stuff {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.container-owner-service {
+    margin-top: 20px;
+    margin-left: 20px;
 }

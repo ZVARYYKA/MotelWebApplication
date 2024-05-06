@@ -95,20 +95,20 @@
 <div>
     <form class="guest_forms" th:method="POST" th:action="@{/guest}" th:object="${bookingDTO}">
         <label for="checkInDate">Введите начальную дату:</label>
-        <input type="date" th:field="*{checkInDate}" id="checkInDate"/>
+        <input class="form-control" type="date" th:field="*{checkInDate}" id="checkInDate"/>
         <div style="color:red" th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}">checkInDate
             Error
         </div>
         <br/>
         <label for="checkOutDate">Введите окончательную дату:</label>
-        <input type="date" th:field="*{checkOutDate}" id="checkOutDate"/>
+        <input class="form-control" type="date" th:field="*{checkOutDate}" id="checkOutDate"/>
         <div style="color:red" th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}">checkOutDate
             Error
         </div>
         <br/>
         <label for="roomType">Выберите тип комнаты</label>
-        <select th:field="*{roomType}" id="roomType">
-            <option th:each="typeOfRoom : ${typeOfRooms}" th:value="${typeOfRoom.getRoomType()}" th:text="${typeOfRoom.getRoomType()}"></option>
+        <select class="form-option" th:field="*{roomType}" id="roomType">
+            <option   th:each="typeOfRoom : ${typeOfRooms}" th:value="${typeOfRoom.getRoomType()}" th:text="${typeOfRoom.getRoomType()}"></option>
         </select>
         <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">roomType Error</div>
         <br/>
@@ -156,8 +156,8 @@
 
     <div>
         <form class="guest_forms" th:method="POST" th:action="@{/quest/saveAddService}" th:object="${additionalServiceDTO}">
-            <label for="serviceName">Выберите услугу</label>
-            <select th:field="*{serviceName}" id="serviceName" onchange="updateServiceDetails()">
+            <label for="serviceName">Выберите услугу: </label>
+            <select class="form-option" th:field="*{serviceName}" id="serviceName" onchange="updateServiceDetails()">
                 <option value="">Выберите услугу</option>
                 <th:block th:each="service : ${services}">
                     <option th:value="${service.getServiceName()}" th:text="${service.getServiceName()}"></option>
@@ -172,7 +172,7 @@
             </div>
             <br/>
             <label for="comment">Введите комментарий:</label>
-            <input type="text" th:field="*{comment}" id="comment"/>
+            <input class="form-control" type="text" th:field="*{comment}" id="comment"/>
             <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">comment
                 Error
             </div>
