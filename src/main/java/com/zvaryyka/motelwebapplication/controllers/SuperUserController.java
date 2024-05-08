@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -35,7 +36,7 @@ public class SuperUserController {
     }
 
     @GetMapping("/super-user")
-    private String getSuperUserPanel(Principal principal, Model model) {
+    public String getSuperUserPanel(Principal principal, Model model) {
         Person person = personDetailsService.findByLogin(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         model.addAttribute("person", person);
@@ -45,11 +46,13 @@ public class SuperUserController {
     }
 
     @GetMapping("/super-user/createNewRandomOwner")
-    private String createNewRandomOwner() {
+    public String createNewRandomOwner() {
 
         Person person = registrationService.registerNewRandomOwner();
         log.info("Created new random owner in super user panel");
         emailSenderService.sendEmailAboutCreatedNewOwner(person);
+
+
 
         return "message-about-created-new-owner";
 

@@ -8,6 +8,7 @@ import com.zvaryyka.motelwebapplication.services.ArticleService;
 import com.zvaryyka.motelwebapplication.services.EmailSenderService;
 import com.zvaryyka.motelwebapplication.services.FeedBackService;
 import com.zvaryyka.motelwebapplication.services.PersonDetailsService;
+import com.zvaryyka.motelwebapplication.util.validation.FeedBackDTOValidator;
 import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,17 @@ public class IndexController {
 
     private final EmailSenderService emailSenderService;
 
+    private final FeedBackDTOValidator feedBackDTOValidator;
+
     @Autowired
-    public IndexController(PersonDetailsService personDetailsService, FeedBackService feedBackService, ArticleService articleService, EmailSenderService emailSenderService) {
+    public IndexController(PersonDetailsService personDetailsService, FeedBackService feedBackService, ArticleService articleService, EmailSenderService emailSenderService, FeedBackDTOValidator feedBackDTOValidator) {
         this.personDetailsService = personDetailsService;
 
         this.feedBackService = feedBackService;
         this.articleService = articleService;
 
         this.emailSenderService = emailSenderService;
+        this.feedBackDTOValidator = feedBackDTOValidator;
     }
 
     @GetMapping("/index")
@@ -91,10 +95,43 @@ public class IndexController {
         return "main/article";
     }
 
-    @PostMapping("/index/createNewFeedBack")
-    public String index(@ModelAttribute("feedbackDTO") @Valid FeedBackDTO feedBackDTO, Principal principal, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "main/index";
+    @PostMapping("/index/createNewFeedBack") //TODO REWORK BINDING RESULT SYSTEM
+    public String createNewFeedBack(@ModelAttribute("feedbackDTO")  FeedBackDTO feedBackDTO, Principal principal,
+                        BindingResult bindingResult, Model model) {
+        feedBackDTOValidator.validate(feedBackDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            String mainBannerImageUrl = "/img/main/main_pic.png";
+            String aboutBannerImageUrl = "/img/main/main_pic.png";
+            String contactsBannerImageUrl = "/img/main/main_contacts.png";
+
+            model.addAttribute("mainBannerImageUrl", mainBannerImageUrl);
+            model.addAttribute("aboutBannerImageUrl", aboutBannerImageUrl);
+            model.addAttribute("contactsBannerImageUrl", contactsBannerImageUrl);
+
+            model.addAttribute("feedBacksDTO", feedBackService.getAllFeedBacksDTO());
+            model.addAttribute("feedBackDTO", new FeedBackDTO());
+            model.addAttribute("articlesDTO", articleService.getAllArticleDTO());
+            model.addAttribute("emailForConsultation", new EmailDTO());
+            if (principal != null) {
+
+                Person person = personDetailsService.findByLogin(principal.getName())
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                if (Objects.equals(person.getUserRole(), "ROLE_USER")) {
+                    model.addAttribute("perAccount", "/guest");
+                } else if (Objects.equals(person.getUserRole(), "ROLE_STUFF")) {
+                    model.addAttribute("perAccount", "/stuff");
+                } else if (Objects.equals(person.getUserRole(), "ROLE_ADMIN")) {
+                    model.addAttribute("perAccount", "/admin");
+                } else if (Objects.equals(person.getUserRole(), "ROLE_OWNER")) {
+                    model.addAttribute("perAccount", "/owner");
+                }
+
+                model.addAttribute("person", person);
+
+
+                return "main/index";
+            }
+        }
         Person person = personDetailsService.findByLogin(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         feedBackDTO.setUserId(person.getId());
         feedBackService.save(FeedBack.convertToFeedBack(feedBackDTO));
