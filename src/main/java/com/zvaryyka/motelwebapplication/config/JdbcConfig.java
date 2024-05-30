@@ -13,8 +13,6 @@ public class JdbcConfig {
 
     private final DatabaseValueConfig dbConfig = new DatabaseValueConfig();
 
-
-
     @Bean
     public DataSource postgreDataSource() {
 

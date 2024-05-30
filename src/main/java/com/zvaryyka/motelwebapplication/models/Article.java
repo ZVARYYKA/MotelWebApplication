@@ -4,10 +4,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Article {
     private int articleId;
     @NotNull(message = "Заголовок не может быть пустым")
@@ -16,13 +18,5 @@ public class Article {
     @NotNull(message = "Статья не может быть пустой")
     private String article;
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "articleId=" + articleId +
-                ", title='" + title + '\'' +
-                ", stuffId=" + stuffId +
-                ", article='" + article + '\'' +
-                '}';
-    }
+
 }

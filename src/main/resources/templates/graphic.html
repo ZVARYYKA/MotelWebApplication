@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-    <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <meta charset="UTF-8">
     <title>Graphic</title>
+    <link media="all" rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}" type="text/css"/>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-<form id="dateForm">
+<h1 class="stat-title">Статистика за определенное время</h1>
+<form id="dateForm" class="stat-form-container">
     <label for="startDate">Дата начала:</label>
-    <input type="date" id="startDate" name="startDate">
+    <input type="date" id="startDate" name="startDate" class="form-option">
     <label for="endDate">Дата конца:</label>
-    <input type="date" id="endDate" name="endDate">
-    <button type="submit">Получить статистику</button>
+    <input type="date" id="endDate" name="endDate" class="form-option">
+    <button type="submit" class="form_button">Получить статистику</button>
 </form>
-<p id="totalRevenue"></p>
-<p id="totalBookings"></p>
-<div id="chartContainer"></div>
-<button id="exportPNG" style="display: none;">Экспортировать в PNG график</button>
+<div class="stat-container">
+    <p id="totalRevenue" class="total-revenue-title"></p>
+    <p id="totalBookings" class="total-bookings-title"></p>
+    <div id="chartContainer" class="chart-container"></div>
+    <button id="exportPDF" style="display: none;" class="form_button">
+        Экспортировать в PDF страницу или распечатать</button>
+</div>
+
+
 
 <script>
     document.getElementById('dateForm').addEventListener('submit', function(event) {
@@ -55,11 +56,11 @@
                 createChart(statistics);
 
                 // Вывод информации о общей сумме и количестве бронирований
-                document.getElementById('totalRevenue').innerText = 'Total Revenue: ' + totalRevenue;
-                document.getElementById('totalBookings').innerText = 'Total Bookings: ' + totalBookings;
+                document.getElementById('totalRevenue').innerText = 'Общая выручка: ' + totalRevenue;
+                document.getElementById('totalBookings').innerText = 'Всего бронирований: ' + totalBookings;
 
                 // Показываем кнопку экспорта
-                document.getElementById('exportPNG').style.display = 'block';
+                document.getElementById('exportPDF').style.display = 'block';
             })
             .catch(error => console.error('Ошибка:', error));
     });
@@ -69,9 +70,9 @@
         d3.select("#chartContainer").selectAll("*").remove();
 
         // Создание контейнера для графика
-        let svgWidth = 600;
-        let svgHeight = 400;
-        let margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        let svgWidth = 800;
+        let svgHeight = 500;
+        let margin = { top: 50, right: 50, bottom: 50, left: 50 };
         let width = svgWidth - margin.left - margin.right;
         let height = svgHeight - margin.top - margin.bottom;
 
@@ -100,49 +101,41 @@
         svg.append("g")
             .call(d3.axisLeft(y));
 
-        // Создание столбцов графика
-        svg.selectAll(".bar")
+        // Создание линии графика
+        svg.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "orange")
+            .attr("stroke-width", 2)
+            .attr("d", d3.line()
+                .x(function(d) { return x(d.date) + x.bandwidth() / 2; })
+                .y(function(d) { return y(d.value); })
+            );
+
+        // Добавление точек
+        svg.selectAll("dot")
             .data(data)
-            .enter().append("rect")
-            .attr("class", "bar")
-            .attr("x", function(d) { return x(d.date); })
-            .attr("width", x.bandwidth())
-            .attr("y", function(d) { return y(d.value); })
-            .attr("height", function(d) { return height - y(d.value); });
+            .enter().append("circle")
+            .attr("fill", "orange")
+            .attr("cx", function(d) { return x(d.date) + x.bandwidth() / 2; })
+            .attr("cy", function(d) { return y(d.value); })
+            .attr("r", 5);
+
+        // Оформление чисел и рамки графика оранжевым цветом
+        svg.selectAll("text")
+            .attr("fill", "orange");
+
+        svg.selectAll("path.domain")
+            .attr("stroke", "orange");
+
+        svg.selectAll(".tick line")
+            .attr("stroke", "orange");
     }
 
-    document.getElementById('exportPNG').addEventListener('click', function() {
-        exportToPNG();
+    document.getElementById('exportPDF').addEventListener('click', function() {
+        window.print();
     });
 
-    function exportToPNG() {
-        // Получаем данные графика
-        let svg = document.getElementById('chartSVG');
-
-        // Преобразуем SVG в data URL
-        let svgData = new XMLSerializer().serializeToString(svg);
-        let canvas = document.createElement("canvas");
-        let ctx = canvas.getContext("2d");
-        let img = new Image();
-
-        img.onload = function() {
-            // Отрисовываем изображение на canvas
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            // Создаем ссылку для скачивания
-            let link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'statistics.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        // Устанавливаем src для изображения
-        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
-    }
 </script>
 </body>
 </html>

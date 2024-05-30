@@ -3,10 +3,12 @@ package com.zvaryyka.motelwebapplication.models;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Rooms {
 
 
@@ -14,11 +16,5 @@ public class Rooms {
     private int roomTypeId;
 
 
-    @Override
-    public String toString() {
-        return "Rooms{" +
-                "RoomId=" + RoomId +
-                ", roomTypeId=" + roomTypeId +
-                '}';
-    }
+
 }

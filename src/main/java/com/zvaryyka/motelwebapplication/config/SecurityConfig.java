@@ -37,7 +37,8 @@ public class SecurityConfig {
                         .requestMatchers("/guest").hasAuthority("ROLE_USER")
                         .requestMatchers("/stuff").hasAuthority("ROLE_STUFF")
                         .requestMatchers("/super-user").hasAuthority("ROLE_SUPERUSER")
-                        .requestMatchers("/index/**", "/registration", "/resources/static/css/**", "/style.css", "/css/style.css", "/img/**", "/statistics", "/graphic",
+                        .requestMatchers("/index/**", "/registration", "/resources/static/css/**",
+                                "/style.css", "/css/style.css", "/img/**", "/statistics", "/graphic",
                                 "/totalRevenue", "/totalBookings").permitAll()
 
                         .anyRequest().authenticated()

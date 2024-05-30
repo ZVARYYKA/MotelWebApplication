@@ -52,7 +52,7 @@ public class AuthController {
 
     }
 
-    @InitBinder //TODO Rewrite this code
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Booking {
 
 
@@ -26,15 +28,4 @@ public class Booking {
     private int summary_cost;
 
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingId=" + bookingId +
-                ", userId=" + userId +
-                ", roomId=" + roomId +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                ", summary_cost=" + summary_cost +
-                '}';
-    }
 }

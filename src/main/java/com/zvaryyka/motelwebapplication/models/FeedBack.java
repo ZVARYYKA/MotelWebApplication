@@ -8,10 +8,12 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class FeedBack {
 
     private int feedbackId;
@@ -32,13 +34,4 @@ public class FeedBack {
         return feedBack;
     }
 
-    @Override
-    public String toString() {
-        return "FeedBack{" +
-                "feedbackId=" + feedbackId +
-                ", mark=" + mark +
-                ", userId=" + userId +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }

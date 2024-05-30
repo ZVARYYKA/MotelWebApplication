@@ -15,23 +15,13 @@ import java.util.Date;
 
 @SpringBootApplication
 public class MotelWebApplication {
-    private final EmailSenderService senderService;
 
-    @Autowired
-    public MotelWebApplication(EmailSenderService senderService) {
-        this.senderService = senderService;
-    }
 
     public static void main(String[] args) {
 
         SpringApplication.run(MotelWebApplication.class, args);
 
     }
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void sendMail() {
-//        senderService.sendEmail("nzvarykin@gmail.com",
-//                "This is subject",
-//                "This is body");
-//    }
+
 
 }

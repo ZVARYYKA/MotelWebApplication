@@ -135,7 +135,7 @@ body {
     max-width: 1900px; /* Максимальная ширина контейнера */
 
     padding: 20px;
-    margin-right: 300px;
+    margin-right: 27%;
 
 }
 
@@ -667,4 +667,39 @@ footer {
 .container-owner-service {
     margin-top: 20px;
     margin-left: 20px;
+}
+
+.stat-title {
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.chart-container {
+}
+
+.stat-form-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 1px orange;
+    border-radius: 5px;
+}
+
+.total-revenue-title {
+    padding: 10px;
+}
+
+.total-bookings-title {
+    padding: 10px;
 }

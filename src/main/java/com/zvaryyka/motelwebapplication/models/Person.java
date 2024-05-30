@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -12,20 +13,9 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Person {
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", password='" + password + '\'' +
-                ", userRole='" + userRole + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
+
 
     private int id;
 
