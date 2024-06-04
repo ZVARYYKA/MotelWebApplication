@@ -52,34 +52,41 @@
     </div>
     <h1>Работники</h1>
     <div th:each="worker : ${workers}">
-        <div class="box">
-            <p th:text="'Имя: ' + ${worker.getName()} + ' Фамилия: ' + ${worker.getSurname()} + ' Зарплата: ' + ${worker.getSalary()}">worker</p>
+        <div class="workers-info">
+            <div class="box">
+                <p th:text="'Имя: ' + ${worker.getName()} + ' Фамилия: ' + ${worker.getSurname()} + ' Зарплата: ' + ${worker.getSalary()}">worker</p>
 
+            </div>
+            <button class="form_button" onclick="toggleForm('editForm')">Изменить</button>
+            <form th:action="@{/owner/workers/deleteWorker/{id}(id=${worker.getId()})}" method="post">
+                <button class="form_button" type="submit">Удалить</button>
+            </form>
         </div>
-        <button class="form_button" onclick="toggleForm('editForm')">Изменить</button>
+
+
         <form  id="editForm"  style="display: none;" th:action="@{/owner/workers/changeWorker/{id}(id=${worker.getId()})}" th:object="${personDTO}" th:method = "PATCH">
 
-                <label for="updateLogin" class="form-label">Enter login:</label>
+                <label for="updateLogin" class="form-label">Введите логин:</label>
                 <input type="text" th:field="*{login}" id="updateLogin" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</div>
 
 
-                <label for="updateName" class="form-label">Enter your name:</label>
+                <label for="updateName" class="form-label">Введите имя:</label>
                 <input type="text" th:field="*{name}" id="updateName" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name of birth Error</div>
 
 
-                <label for="updateSurname" class="form-label">Enter your surname:</label>
+                <label for="updateSurname" class="form-label">Введите фамилию:</label>
                 <input type="text" th:field="*{surname}" id="updateSurname" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname of birth Error</div>
 
 
-                <label for="updateDateOfBirth" class="form-label">Enter your date of birth:</label>
+                <label for="updateDateOfBirth" class="form-label">Введите дату рождения:</label>
                 <input type="date" th:field="*{dateOfBirth}" id="updateDateOfBirth" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of birth Error</div>
 
 
-                <label for="updatePassword" class="form-label">Enter password:</label>
+                <label for="updatePassword" class="form-label">Введите пароль:</label>
                 <input type="password" th:field="*{password}" id="updatePassword" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
 
@@ -99,9 +106,7 @@
             <button type="submit" class="form_button">Обновить</button>
         </form>
         <!-- Форма удаления работника -->
-        <form th:action="@{/owner/workers/deleteWorker/{id}(id=${worker.getId()})}" method="post">
-            <button class="form_button" type="submit">Удалить</button>
-        </form>
+
     </div>
 </div>
 <div>
@@ -151,7 +156,7 @@
 </div>
 <div>
     <h1>Составление отчета</h1>
-    <a href="/graphic">Составить отчет</a>
+    <a href="/statistics">Составить отчет</a>
 </div>
 <script>
     function toggleForm(id) {

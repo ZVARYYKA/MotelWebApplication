@@ -63,7 +63,7 @@
         <div>
             <form th:method="POST" th:action="@{/owner/typeOfRooms/createNewTypeOfRooms}" th:object="${createdTypeOfRoom}">
                 <label for="roomType">Введите название типа</label>
-                <input type="text" th:field="*{roomType}" id="roomType"/>
+                <input type="text" th:field="*{roomType}" id="roomType" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}">
                     roomType Error
                 </div>
@@ -71,7 +71,7 @@
 
                 <br/>
                 <label for="oneDayCost">Введите цену типа комнаты</label>
-                <input type="number" th:field="*{oneDayCost}" id="oneDayCost"/>
+                <input type="number" th:field="*{oneDayCost}" id="oneDayCost" class="form-control"/>
                 <div style="color:red" th:if="${#fields.hasErrors('oneDayCost')}" th:errors="*{oneDayCost}">
                     cost Error
                 </div>
