@@ -496,7 +496,8 @@ body {
     width: 60%;
     margin-bottom: 10px;
     margin-top: 10px;
-    color: slateblue;
+    /*color: slateblue;*/
+    color: white;
 }
 
 .other_titles {

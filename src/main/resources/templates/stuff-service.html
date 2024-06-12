@@ -54,8 +54,7 @@
         <div class="box">
             <p th:text="${'Услуга '+additionalServiceWhereStatusFalse.getServiceName()+' Описание услуги '
             +additionalServiceWhereStatusFalse.getServiceDescription() + ' Комментарий '
-            + additionalServiceWhereStatusFalse.getComment() +' Статус '
-            + additionalServiceWhereStatusFalse.isStatus()}">Service info</p>
+            + additionalServiceWhereStatusFalse.getComment() }">Service info</p>
         </div>
 
         <form th:method="PATCH"

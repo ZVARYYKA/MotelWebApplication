@@ -119,7 +119,7 @@
                     <div class="feedback_box_name_and_pick">
                         <img class="feedback_box_pic" src="../../static/img/feedback/user.png"
                              th:src="@{/img/feedback/user.png}" alt=""/>
-                        <p class="feedback_box_name" th:text="${feedback.getUserName() + feedback.getUserSurname()}">
+                        <p class="feedback_box_name" th:text="${feedback.getUserName() +' '+feedback.getUserSurname()}">
                             Имя</p>
                     </div>
                     <div class="feedback_box_mark">

@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<h1 class="other_titles">Actual Booking</h1>
+<h1 class="other_titles">Актуальная бронь</h1>
 <div th:if="${actualBookings.isEmpty()}">
     <p class="other_titles"> На данный момент у вас нет активных броней</p>
 </div>
@@ -62,7 +62,7 @@
 </div>
 
 <div th:if="${!futureBookings.isEmpty()}">
-    <h1 class="other_titles">Future Booking</h1>
+    <h1 class="other_titles">Бронирования в будущем</h1>
     <div th:each="futureBooking : ${futureBookings}">
         <div class="box">
             <p th:text="'Дата приезда: ' + ${futureBooking.getCheckInDate()}
@@ -76,7 +76,7 @@
 
 </div>
 <div th:if="${!historyBookings.isEmpty()}">
-    <h1 class="other_titles">History Booking</h1>
+    <h1 class="other_titles">История броней</h1>
 
     <div th:each="historyBooking : ${historyBookings}">
         <div class="box">
