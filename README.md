@@ -7,6 +7,7 @@
 * Spring MVC
 * Spring Security
 * Lombok
+* Java mail sender
 * JDBC Template
 * PostgreSQL
 * HTML/CSS
